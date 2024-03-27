@@ -1,0 +1,58 @@
+.register-page {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .register-page::before,
+  .register-page::after {
+    content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background-size: cover;
+  background-position: center;
+  }
+  
+  .register-page::before {
+    left: 0;
+    height: 100%;
+    background-image: url('../../bg/login-bgleft.svg');
+  }
+  
+  .register-page::after {
+    right: 0;
+    height: 100%;
+    background-image: url('../../bg/login-bg-right.svg');
+  }
+  
+  .loginContainer {
+    position: relative;
+    top: 20px;
+    z-index: 1;
+    max-width: 550px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .logo-container {
+    text-align: center;
+  }
+  
+  .logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .small {
+    color: orange;
+  }
+  
+  /* Ajustement de l'image de fond à droite */
+  .register-page::after {
+    width: calc(70% + 275px); /* La largeur est de 50% plus la moitié de la largeur du conteneur */
+    right: calc(-275px); /* Décalez l'image vers la gauche de la moitié de la largeur du conteneur */
+  }
+  

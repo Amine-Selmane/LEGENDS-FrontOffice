@@ -15,6 +15,11 @@ import Blogs from "./Pages/Blogs";
 import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
 import ListEvent from "./Pages/Events/ListEvent";
+import RegisterFormik from "./Component/auth/RegisterFormik";
+import LoginFormik from "./Component/auth/LoginFormik";
+import RecoverPassword from "./Component/auth/RecoverPassword";
+import Maintanance from "./Component/auth/Maintanance";
+import LockScreen from "./Component/auth/LockScreen";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +50,26 @@ const router = createBrowserRouter([
   {
     path: "/course-3",
     element: <Course3 />,
+  },
+  {
+    path: "/register",
+    element: <RegisterFormik />,
+  },
+  {
+    path: "/login",
+    element: <LoginFormik />,
+  },
+  {
+    path: "/recovery",
+    element: <RecoverPassword />,
+  },
+  {
+    path: "/otp",
+    element: <Maintanance />,
+  },
+  {
+    path: "/reset",
+    element: <LockScreen />,
   },
   {
     path: "/single-course",
