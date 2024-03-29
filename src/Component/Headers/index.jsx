@@ -109,7 +109,7 @@ function Header({ className, logo, joinBtn, search }) {
                         <Link to="/EventList">List Of Events</Link>
                       </li>
                       <li>
-                        <Link to="/Card">My Card</Link>
+                        <Link to="/Cart">My Card</Link>
                       </li>
                     </ul>
                   </li>

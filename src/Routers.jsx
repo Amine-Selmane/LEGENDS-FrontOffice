@@ -15,6 +15,8 @@ import Blogs from "./Pages/Blogs";
 import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
 import ListEvent from "./Pages/Events/ListEvent";
+import CartEvent from "./Pages/Events/CartEvent";
+import Chekout from "./Pages/Events/Chekout";
 
 const router = createBrowserRouter([
   {
@@ -22,10 +24,17 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
+    path: "/checkout-success",
+    element: <Chekout/>,
+  },
+  {
     path: "/EventList",
     element: <ListEvent/>,
   },
-
+  {
+    path: "/Cart",
+    element: <CartEvent/>,
+  },
   {
     path: "/home-2",
     element: <Home2 />,
