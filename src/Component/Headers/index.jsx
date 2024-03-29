@@ -1,12 +1,27 @@
 import ProtoTypes from "prop-types";
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import useWindowPosition from "../../Hooks/useWindowPosition";
+import {  FaHeart } from 'react-icons/fa'; // Import the heart and cart icons from Font Awesome
 
 function Header({ className, logo, joinBtn, search }) {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);
+  const [cartItems, setCartItems] = useState(0);
   const windowPosition = useWindowPosition();
+
+  // Dummy function to simulate fetching cart items
+  const fetchCartItems = () => {
+    // Replace this with actual logic to fetch cart items from your state management or API
+    return 0; // For example, return 5 as the number of items in the cart
+  };
+
+  useEffect(() => {
+    // Fetch cart items and update cartItems state
+    const items = fetchCartItems();
+    setCartItems(items);
+  }, []); // Empty dependency array ensures this effect runs only once on component mount
+
   return (
     <header
       className={`${className ? className : "header-01"} sticky ${
@@ -114,6 +129,8 @@ function Header({ className, logo, joinBtn, search }) {
                     </ul>
                   </li>
 
+                 
+                  
                   <li
                     className="menu-item-has-children"
                     onClick={() =>
@@ -152,6 +169,43 @@ function Header({ className, logo, joinBtn, search }) {
                       </li>
                     </ul>
                   </li>
+                              {/* Books */}
+
+                  <li
+                    className="menu-item-has-children"
+                    onClick={() =>
+                      setActiveSubMobileMenu(
+                        activeMobileSubMenu === "Books" ? false : "Books"
+                      )
+                    }
+                  >
+                    <a>Book Store</a>
+                    <span className="submenu-toggler">
+                      <i
+                        className={`fal ${
+                          activeMobileSubMenu === "Books"
+                            ? "fa-minus"
+                            : "fa-plus"
+                        }`}
+                      ></i>
+                    </span>
+                    <ul
+                      className="sub-menu"
+                      style={{
+                        display: activeMobileSubMenu === "Books" && "block",
+                      }}
+                    >
+                      <li>
+                        <Link to="/books">Books</Link>
+                      </li>
+                      <li>
+                        <Link to="/wishlist"> favorites</Link>
+                      </li>
+                    
+
+                    </ul>
+                    </li>
+
                   <li
                     className="menu-item-has-children"
                     name="pages"
@@ -223,38 +277,7 @@ function Header({ className, logo, joinBtn, search }) {
                       </li>
                     </ul>
                   </li>
-                  <li
-                    className="menu-item-has-children"
-                    onClick={() =>
-                      setActiveSubMobileMenu(
-                        activeMobileSubMenu === "blog" ? false : "blog"
-                      )
-                    }
-                  >
-                    <a>Blog</a>
-                    <span className="submenu-toggler">
-                      <i
-                        className={`fal ${
-                          activeMobileSubMenu === "blog"
-                            ? "fa-minus"
-                            : "fa-plus"
-                        }`}
-                      ></i>
-                    </span>
-                    <ul
-                      className="sub-menu"
-                      style={{
-                        display: activeMobileSubMenu === "blog" && "block",
-                      }}
-                    >
-                      <li>
-                        <Link to="/blog">Blog Page</Link>
-                      </li>
-                      <li>
-                        <Link to="/single-post">Blog Details</Link>
-                      </li>
-                    </ul>
-                  </li>
+                 
                   <li>
                     <Link to="/contact">Contact</Link>
                   </li>
@@ -276,7 +299,16 @@ function Header({ className, logo, joinBtn, search }) {
                   Join for Free
                 </a>
               )}
+                {/* Nav Menu Start  */}
+                <div
+                className="collapse navbar-collapse"
+                style={{ display: activeMobileMenu && "block" }}
+              >
+                {/* Your navigation menu */}
+              </div>
+              {/* Nav Menu End  */}
 
+             
               {/* Join Btn   */}
               {search && (
                 <form className="search-box" method="post" action="#">
@@ -290,6 +322,17 @@ function Header({ className, logo, joinBtn, search }) {
                   </button>
                 </form>
               )}
+                   {/* Basket Icon */}
+                   <Link to="/cart" className="basket-icon">
+                <i className="fas fa-shopping-cart" style={{ color: 'white', fontSize: '24px', marginRight: '10px' }}>
+                  {cartItems > 0 && <span className="badge">{cartItems}</span>} {/* Display the number of items in the cart */}
+                </i>
+              </Link>
+              
+              {/* Heart Icon for Wishlist */}
+              <Link to="/wishlist" className="wishlist-icon">
+                <FaHeart style={{ color: 'white', fontSize: '24px', marginLeft: '10px' }} />
+              </Link>
             </nav>
           </div>
         </div>

@@ -14,7 +14,12 @@ import Error from "./Pages/Error";
 import Blogs from "./Pages/Blogs";
 import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
-import ListEvent from "./Pages/Events/ListEvent";
+import BookList from "./Pages/BookStore/BookList";
+import Cart from "./Pages/BookStore/Cart";
+import ChatComponent from "./Pages/BookStore/ChatComponent";
+import ShowBook from "./Pages/BookStore/ShowBook";
+import CheckoutSuccess from "./Pages/BookStore/CheckoutSuccess";
+import Wishlist from "./Pages/BookStore/wishlist";
 
 const router = createBrowserRouter([
   {
@@ -22,9 +27,35 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/EventList",
-    element: <ListEvent/>,
+    path: "/wishlist",
+    element: < Wishlist/>,
   },
+  
+  {
+    path: "/books/details/:id",
+    element: <ShowBook/>,
+  },
+   
+  {
+    path: "/checkout-success",
+    element: <CheckoutSuccess/>,
+  },
+  
+ {
+    path: "/books",
+    element: <BookList/>,
+  },
+  {
+    path: "/cart",
+    element: <Cart/>,
+  }, 
+  {
+    path: "/chat",
+    element: <ChatComponent/>,
+  }, 
+ 
+ 
+ 
 
   {
     path: "/home-2",

@@ -1,0 +1,73 @@
+/* ShowBook.css */
+.show-book-container {
+    padding: 20px;
+  }
+  
+  .book-details {
+    display: flex;
+    align-items: center;
+  }
+  
+  .book-image {
+    margin-right: 20px;
+  }
+  
+  .book-info {
+    flex: 1;
+  }
+  
+  .review-section {
+    margin-top: 20px;
+  }
+  
+  .comment-input {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .rating-input {
+    margin-top: 10px;
+  }
+  /* ShowBook.css */
+.submit-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff; /* Blue color */
+  color: #fff; /* White text */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #0056b3; /* Darker blue color on hover */
+}
+.review-box {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.review-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating-stars {
+  display: flex;
+}
+
+.rating-stars svg {
+  margin-right: 4px;
+}
