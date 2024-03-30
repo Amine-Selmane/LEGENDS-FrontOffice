@@ -152,6 +152,11 @@ function Header({ className, logo, joinBtn, search }) {
                       </li>
                     </ul>
                   </li>
+                  {/* Reports */}
+
+                  <li>
+                    <Link to="/StudentReport">Reports</Link>
+                  </li>
                   <li
                     className="menu-item-has-children"
                     name="pages"

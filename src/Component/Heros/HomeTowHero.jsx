@@ -51,6 +51,11 @@ function HomeTowHero() {
               <Link to="/course-1" className="bisylms-btn-2">
                 Ready to Get Started?
               </Link>
+              {/* Reports */}
+
+              <li>
+                    <Link to="/StudentReport">Reports</Link>
+                  </li>
             </div>
           </div>
         </div>
