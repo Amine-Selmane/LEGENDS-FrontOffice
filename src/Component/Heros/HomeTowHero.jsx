@@ -53,9 +53,7 @@ function HomeTowHero() {
               </Link>
               {/* Reports */}
 
-              <li>
-                    <Link to="/StudentReport">Reports</Link>
-                  </li>
+             
             </div>
           </div>
         </div>
