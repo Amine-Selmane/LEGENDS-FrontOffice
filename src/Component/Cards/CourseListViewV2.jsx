@@ -22,10 +22,7 @@ function CourseListViewV2({ course }) {
         </Link>
       </div>
       <div className="course-details">
-        <Link to={courseLink} className="c-cate">
-          <i className="icon_tag_alt"></i>
-          {title}
-        </Link>
+        
         <h4>
           <Link to={courseLink}>{heading}</Link>
         </h4>
