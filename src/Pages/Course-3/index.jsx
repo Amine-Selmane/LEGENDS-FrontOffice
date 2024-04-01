@@ -11,6 +11,8 @@ import FilterForm from "../../Component/Form/FilterForm";
 import GotoTop from "../../Component/GotoTop";
 import axios from "axios";
 function Course3() {
+  /////////////////////////////////////////////////
+  const [query, setQuery] = useState("");
   const [courses, setCourses] = useState([]);
   const fetchPosts = async () => {
     const res = await axios.get('http://localhost:5000/courses/getCourse')
@@ -20,11 +22,45 @@ function Course3() {
   useEffect(() => {
     fetchPosts();
   }, []);
+//////////////////////////////////////////////////////////////
+//////////////////////SEARCHBAR/////////////////////////////
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredCourses, setFilteredCourses] = useState(courses);
+
+  useEffect(() => {
+    const filterCourses = () => {
+      if (searchTerm) {
+        const filtered = courses.filter((course) =>
+          course.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredCourses(filtered);
+      } else {
+        setFilteredCourses(courses); // Reset to all courses when search term is empty
+      }
+    };
+
+    filterCourses();
+  }, [searchTerm, courses]); // Update filteredCourses when searchTerm or courses change
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const searchIcon = document.getElementById('searchIcon');
+  function searchIconDisappearDependingOnEvent () {
+    if (searchTerm) {
+      searchIcon.style.display = 'none';
+    } else {
+      searchIcon.style.display = 'inline-block';
+    }
+  }
+////////////////////////////////////////////////////////////////////
+
 
   const [isLoading, setIsLoading] = useState(true);
   const [activeView, setActiveView] = useState("grid");
   let content = undefined;
-  
+
   useEffect(() => {
     setIsLoading(false);
   }, [isLoading]);
@@ -62,16 +98,21 @@ function Course3() {
                     </li>
 
                     <li>
-                    <form className="search-box" method="post" action="#" style={{ marginLeft : "15px" }}>
-                    <input
-                      type="search"
-                      name="s"
-                      placeholder="Search Courses..."
-                    />
-                    <button type="submit">
-                      <i className="ti-search"></i>
-                    </button>
-                  </form>
+                      <form className="search-box" method="post" action="/" style={{ marginLeft: "15px" }}>
+                        <input
+                          type="search"
+                          name="search"
+                          id="searchInput"
+                          placeholder="Search Courses..."
+                          value = {searchTerm}
+                          onChange={handleSearchChange}
+                          onSelect={searchIconDisappearDependingOnEvent}
+                         
+                        />
+                        <button disabled>
+                          <i className="ti-search" id="searchIcon"></i>
+                        </button>
+                      </form>
                     </li>
                   </ul>
                 </div>
@@ -90,7 +131,7 @@ function Course3() {
                     }}
                   >
                     <div className="row">
-                      {courses.map((item) =>
+                      {filteredCourses.map((item) =>
                         activeView === "grid" ? (
                           <FeatureCourseCard
                             course={item}
