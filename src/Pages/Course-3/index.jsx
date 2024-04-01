@@ -60,12 +60,25 @@ function Course3() {
                         <i className="icon_menu"></i>List
                       </a>
                     </li>
+
+                    <li>
+                    <form className="search-box" method="post" action="#" style={{ marginLeft : "15px" }}>
+                    <input
+                      type="search"
+                      name="s"
+                      placeholder="Search Courses..."
+                    />
+                    <button type="submit">
+                      <i className="ti-search"></i>
+                    </button>
+                  </form>
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-9">
+              <div className="col-lg-11">
                 <div className="tab-content">
                   <div
                     className="tab-pane fade show in active"
@@ -90,33 +103,6 @@ function Course3() {
                       )}
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="course-sidebar">
-                  <aside className="widget">
-                    <h3 className="widget-title">Courses Available</h3>
-                    <ul>
-                      <li>
-                        <Link to="/">Web Design</Link>
-                      </li>
-                      <li>
-                        <Link to="/">Marketing</Link>
-                      </li>
-                      <li>
-                        <Link to="/">Frontend</Link>
-                      </li>
-                      <li>
-                        <Link to="/">IT &amp; Software</Link>
-                      </li>
-                      <li>
-                        <Link to="/">Photography</Link>
-                      </li>
-                      <li>
-                        <Link to="/">Technology</Link>
-                      </li>
-                    </ul>
-                  </aside>
                 </div>
               </div>
             </div>
