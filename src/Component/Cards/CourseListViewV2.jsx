@@ -1,46 +1,49 @@
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
+const bgCourse = "../../assets/images/course/l2.jpg"
+const bgTeacher = "../../assets/images/course/1.jpg"
 
 function CourseListViewV2({ course }) {
   const {
-    img5,
-    courseLink,
-    author,
-    title,
-    heading,
-    price,
-    rating,
-    reviews,
-    offerPrice,
+    name,
+    classroom,
+    teacher_name,
+    nbrQuiz,
+    halfYearlyPrice,
+    yearlyPrice,
   } = course;
   return (
     <div className="course-item-4" style={{ width: "100%" }}>
       <div className="ci-thumb">
-        <img src={img5} alt="" />
-        <Link className="enroll" href={courseLink}>
+        <img src={bgCourse} alt="" />
+        <Link className="enroll">
           Enroll Now
         </Link>
       </div>
       <div className="course-details">
-        
         <h4>
-          <Link to={courseLink}>{heading}</Link>
+          <Link to="#">{name}</Link>
         </h4>
+        <div style={{ marginBottom: "10px", fontSize: "14px", color: "black" }}>
+            Duration : <span style={{ fontWeight: "bold" }}>30 minutes</span></div>
+
+          <div style={{ marginBottom: "10px", fontSize: "14px", color: "black" }}>
+            Number of quizzes : <span style={{ fontWeight: "bold" }}>{nbrQuiz}</span></div>
         <div className="author">
-          <img src="assets/images/home3/course/a6.png" alt="" />
-          <Link to={author.profile}>{author.name}</Link>
+          <img src={bgTeacher} alt="" />
+          <Link>{teacher_name}</Link>
         </div>
         <div className="price-rate">
-          <div className="course-price">
-            {offerPrice}
-            <span>${price}</span>
+            <p style={{ fontWeight: "bold" }}>Yearly Price: </p>
+            <div className="course-price">
+             <p>{yearlyPrice} Dt</p>
+            </div>
           </div>
-          <div className="ratings">
-            <i className="icon_star"></i>
-            <span>
-              {rating} ({reviews})
-            </span>
-          </div>
+          <div className="price-rate">
+          <p style={{ fontWeight: "bold" }}>Half-yearly Price: </p>
+            <div className="course-price">
+              <p>{halfYearlyPrice} Dt</p>
+            </div>
         </div>
       </div>
     </div>
