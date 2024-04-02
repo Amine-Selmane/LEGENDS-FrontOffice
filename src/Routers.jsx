@@ -20,6 +20,7 @@ import LoginFormik from "./Component/auth/LoginFormik";
 import RecoverPassword from "./Component/auth/RecoverPassword";
 import Maintanance from "./Component/auth/Maintanance";
 import LockScreen from "./Component/auth/LockScreen";
+import StudentProfile from "./Pages/StudentProfile";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <InstructorProfile />,
+  },
+  {
+    path: "/profilestudent",
+    element: <StudentProfile />,
   },
   {
     path: "/blog",

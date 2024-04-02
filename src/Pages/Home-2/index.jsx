@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Preloader from "../../Component/Preloader";
 import Topbar from "../../Component/Headers/Topbar";
 import Header from "../../Component/Headers";
+import Home2Header from "../../Component/Headers/Home2Header";
+
 import HomeTowHero from "../../Component/Heros/HomeTowHero";
 import Home2PopularCourse from "../../Component/Course/Home2PopularCourse";
 import FeatureHome2 from "../../Component/Features/FeatureHome2";
@@ -24,12 +26,7 @@ function Home2() {
   } else {
     content = (
       <>
-        <Topbar />
-        <Header
-          className="header-02"
-          logo="assets/images/logo2.png"
-          search={true}
-        />
+        <Home2Header />
         <HomeTowHero />
         <Home2PopularCourse />
         <FeatureHome2 />

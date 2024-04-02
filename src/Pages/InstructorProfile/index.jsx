@@ -78,7 +78,7 @@ function InstructorProfile() {
   } else {
     content = (
       <>
-        <Header logo="assets/images/logo4.png" joinBtn={true} />
+        <Header logo="assets/images/logo4.png"  joinBtn={true} />
         <Banner title="Profile" background="assets/images/banner.jpg" />
         <section className="profile-section">
           <div className="container">

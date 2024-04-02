@@ -1,34 +1,77 @@
-import ProtoTypes from "prop-types";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState , useEffect } from "react";
 import useWindowPosition from "../../Hooks/useWindowPosition";
-
-function Header({ className, logo, joinBtn, search }) {
+import { Link , useNavigate } from "react-router-dom";
+import axios from 'axios'; // Import Axios for making HTTP requests
+import {
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownItem,
+  DropdownMenu,
+  Button,
+} from 'reactstrap';
+import InstructorProfile from "../../Pages/InstructorProfile";
+import { Envelope, Person, PersonFill } from 'react-bootstrap-icons'; // Import des icônes nécessaires
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+function Home2Header() {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [filter, setActiveFilter] = useState("Explore");
+  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get('http://localhost:5000/api/userToken', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const userLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+    window.location.reload();
+  };
   const windowPosition = useWindowPosition();
+
+  const handleFilter = (e) => {
+    setActiveFilter(e.target.innerText);
+  };
+  
   return (
-    <header
-      className={`${className ? className : "header-01"} sticky ${
-        windowPosition > 0 && "fix-header animated fadeInDown"
-      } `}
-    >
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            <nav className="navbar navbar-expand-lg">
-              {/* logo Start */}
-              <Link className="navbar-brand" to="/">
-                <img src={logo} alt="" />
-                <img
-                  className="sticky-logo"
-                  src="assets/images/logo.png"
-                  alt=""
-                />
-              </Link>
+    <header className={`header-03 sticky ${windowPosition > 0 && "fix-header animated fadeInDown"}`}>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-lg-12">
+          <nav className="navbar navbar-expand-lg">
+            {/* Logo */}
+            <Link className="navbar-brand" to="/">
+              <img src="assets/images/logo.png" alt="" />
+            </Link>
               {/* logo End */}
 
-              {/* Moblie Btn Start  */}
+
+
+              {/* Moblie Btn Start */}
               <button
                 className="navbar-toggler"
                 type="button"
@@ -36,9 +79,9 @@ function Header({ className, logo, joinBtn, search }) {
               >
                 <i className="fal fa-bars"></i>
               </button>
-              {/*  Moblie Btn End  */}
+              {/* Moblie Btn End */}
 
-              {/* Nav Menu Start  */}
+              {/* Nav Menu Start */}
               <div
                 className="collapse navbar-collapse"
                 style={{ display: activeMobileMenu && "block" }}
@@ -79,8 +122,6 @@ function Header({ className, logo, joinBtn, search }) {
                       </li>
                     </ul>
                   </li>
-
-            {/* Events */}
                   <li
                     className="menu-item-has-children"
                     onClick={() =>
@@ -113,7 +154,6 @@ function Header({ className, logo, joinBtn, search }) {
                       </li>
                     </ul>
                   </li>
-
                   <li
                     className="menu-item-has-children"
                     onClick={() =>
@@ -216,7 +256,7 @@ function Header({ className, logo, joinBtn, search }) {
                         <Link to="/instructor">Instructor Page</Link>
                       </li>
                       <li>
-                        <Link to="/profile">Instructor Profile</Link>
+                        <Link to="/profilestudent">Profile</Link>
                       </li>
                       <li>
                         <Link to="/404">404 Page</Link>
@@ -261,35 +301,48 @@ function Header({ className, logo, joinBtn, search }) {
                 </ul>
               </div>
               {/* Nav Menu End  */}
+              <div className="dropdown ml-auto">
+  {userData && (
+    <UncontrolledDropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+      <DropdownToggle color="transparent" className="nav-link dropdown-toggle d-flex align-items-center">
+        {/* Image de profil à gauche du bouton dropdown */}
+        <div className="rounded-circle overflow-hidden mr-2" style={{ width: '30px', height: '30px' }}>
+          <img src={userData.profile || user1} alt="profile" className="w-100 h-100 object-fit-cover" />
+        </div>
+        <div>
+          <p className="mb-0 font-weight-bold" style={{ fontSize: '1.2em' }}>{userData.firstName} {userData.lastName}</p>
+          <p className="mb-0" style={{ fontSize: '0.9em', fontWeight: 'normal' }}>{userData.email}</p>
+        </div>
+      </DropdownToggle>
+      <DropdownMenu className="dropdown-menu-left custom-dropdown-menu text-left" style={{ minWidth: '250px'}}>
+       
+     
+      <DropdownItem>
+  <Link to="/profilestudent" className="text-dark text-decoration-none">
+    <FontAwesomeIcon icon={faUser} className="me-2 text-primary" /> {/* Ajoutez la classe text-primary pour définir la couleur de l'icône */}
+    My Profile
+  </Link>
+</DropdownItem>
+<DropdownItem>
+  <Link to="#" className="text-dark text-decoration-none">
+    <FontAwesomeIcon icon={faEnvelope} className="me-2 text-info" /> {/* Utilisez une autre classe de couleur, par exemple text-info */}
+    Inbox
+  </Link>
+</DropdownItem>
+<DropdownItem onClick={userLogout} className="text-center"> {/* Ajoutez la classe text-center pour centrer le contenu */}
+  <Button color="primary" size="sm">Logout</Button>
+</DropdownItem>
 
-              {/*  User Btn  */}
-              {className !== "header-02" && (
-                <a href="/login" className="user-btn">
-                  <i className="ti-user"></i>
-                </a>
-              )}
-              {/*  User Btn  */}
+      </DropdownMenu>
+    </UncontrolledDropdown>
+  )}
+</div>
 
-              {/* Join Btn  */}
-              {joinBtn && (
-                <a href="/register" className="join-btn">
-                  Join Us! 
-                </a>
-              )}
 
-              {/* Join Btn   */}
-              {search && (
-                <form className="search-box" method="post" action="#">
-                  <input
-                    type="search"
-                    name="s"
-                    placeholder="Search Courses..."
-                  />
-                  <button type="submit">
-                    <i className="ti-search"></i>
-                  </button>
-                </form>
-              )}
+
+
+
+     
             </nav>
           </div>
         </div>
@@ -298,11 +351,4 @@ function Header({ className, logo, joinBtn, search }) {
   );
 }
 
-Header.propTypes = {
-  className: ProtoTypes.string,
-  logo: ProtoTypes.string,
-  joinBtn: ProtoTypes.bool,
-  search: ProtoTypes.bool,
-};
-
-export default Header;
+export default Home2Header;
