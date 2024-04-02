@@ -3,24 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import useWindowPosition from "../../Hooks/useWindowPosition";
 import {  FaHeart } from 'react-icons/fa'; // Import the heart and cart icons from Font Awesome
+import { useSelector } from 'react-redux'; // Import useSelector hook to retrieve data from Redux store
+import { selectCartItems } from '../../Pages/BookStore/Action/cartSlice'; // Import the selector function for cart items
 
 function Header({ className, logo, joinBtn, search }) {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);
-  const [cartItems, setCartItems] = useState(0);
   const windowPosition = useWindowPosition();
+  const cartItems = useSelector(selectCartItems); // Retrieve cart items from Redux store
 
-  // Dummy function to simulate fetching cart items
-  const fetchCartItems = () => {
-    // Replace this with actual logic to fetch cart items from your state management or API
-    return 0; // For example, return 5 as the number of items in the cart
-  };
 
-  useEffect(() => {
-    // Fetch cart items and update cartItems state
-    const items = fetchCartItems();
-    setCartItems(items);
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
 
   return (
     <header
@@ -198,9 +190,7 @@ function Header({ className, logo, joinBtn, search }) {
                       <li>
                         <Link to="/books">Books</Link>
                       </li>
-                      <li>
-                        <Link to="/wishlist"> favorites</Link>
-                      </li>
+                     
                     
 
                     </ul>
@@ -322,10 +312,10 @@ function Header({ className, logo, joinBtn, search }) {
                   </button>
                 </form>
               )}
-                   {/* Basket Icon */}
-                   <Link to="/cart" className="basket-icon">
+                    {/* Basket Icon */}
+              <Link to="/cart" className="basket-icon">
                 <i className="fas fa-shopping-cart" style={{ color: 'white', fontSize: '24px', marginRight: '10px' }}>
-                  {cartItems > 0 && <span className="badge">{cartItems}</span>} {/* Display the number of items in the cart */}
+                  {cartItems.length > 0 && <span className="badge">{cartItems.length}</span>} {/* Display the number of items in the cart */}
                 </i>
               </Link>
               

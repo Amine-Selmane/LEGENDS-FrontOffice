@@ -20,6 +20,7 @@ import ChatComponent from "./Pages/BookStore/ChatComponent";
 import ShowBook from "./Pages/BookStore/ShowBook";
 import CheckoutSuccess from "./Pages/BookStore/CheckoutSuccess";
 import Wishlist from "./Pages/BookStore/wishlist";
+import OrderHistory from "./Pages/BookStore/OrderHistory";
 
 const router = createBrowserRouter([
   {
@@ -37,8 +38,12 @@ const router = createBrowserRouter([
   },
    
   {
-    path: "/checkout-success",
+    path: "/book/checkout-success",
     element: <CheckoutSuccess/>,
+  },
+  {
+    path: "/History",
+    element: <OrderHistory/>,
   },
   
  {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import { Rate,message } from 'antd';
+import { Rate, message } from 'antd';
 import bookImage from './bookImage.jpg';
 import './ShowBook.css'; // Import the CSS file
 
@@ -11,6 +11,7 @@ const ShowBook = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [ratings, setRatings] = useState([]); // State to store ratings
+  const [userReview, setUserReview] = useState(null); // State to store user's review for the current book
   const { id } = useParams();
 
   useEffect(() => {
@@ -38,31 +39,53 @@ const ShowBook = () => {
         console.log(error);
         setLoading(false);
       });
+
+    // Fetch user's review for the book
+    axios
+      .get(`http://localhost:5000/ratings/getuserreviewforbook/${id}`)
+      .then((response) => {
+        console.log('User Review:', response.data); // Log user's review data
+        setUserReview(response.data); // Update user's review state
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
+  // Function to handle rating change
   const handleRatingChange = (value) => {
     setRating(value);
   };
 
+  // Function to handle comment change
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
 
+  // Function to handle rating submission
   const handleRatingSubmit = async () => {
     try {
+      // Check if the user has already submitted a review for the current book
+      if (userReview) {
+        message.error('You have already submitted a review for this book');
+        return;
+      }
+
       // Check if the rating value is within the valid range (1 to 5)
       if (rating < 1 || rating > 5) {
         console.error('Rating value must be between 1 and 5');
         return;
       }
-  
+
       // Submit the review if the rating value is valid
       await axios.post('http://localhost:5000/ratings/addRate', {
         bookId: id,
         rating,
         comment
       });
-  
+
       message.success('Rating submitted successfully');
       setComment('');
       setRating(0); // Reset the rating after submission
@@ -70,27 +93,26 @@ const ShowBook = () => {
       console.error('Error submitting rating:', error);
       message.error('Failed to submit rating');
     }
-      // Refresh ratings after submitting a new one
-      axios
-        .get(`http://localhost:5000/ratings/getratingsforbook/${id}`)
-        .then((response) => {
-          setRatings(response.data);
-        })
-        .catch((error) => {
-          console.error('Error fetching ratings:', error);
-        });
-    
-  
-      // Refresh ratings after submitting a new one
-      axios
-        .get(`http://localhost:5000/ratings/getratingsforbook/${id}`)
-        .then((response) => {
-          setRatings(response.data);
-        })
-        .catch((error) => {
-          console.error('Error fetching ratings:', error);
-        });
-   
+
+    // Refresh ratings after submitting a new one
+    axios
+      .get(`http://localhost:5000/ratings/getratingsforbook/${id}`)
+      .then((response) => {
+        setRatings(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching ratings:', error);
+      });
+
+    // Refresh user's review after submitting a new one
+    axios
+      .get(`http://localhost:5000/ratings/getuserreviewforbook/${id}`)
+      .then((response) => {
+        setUserReview(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user review:', error);
+      });
   };
 
   return (

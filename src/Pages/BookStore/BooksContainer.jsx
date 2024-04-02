@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Typography, Button, Pagination, Modal, Rate } from 'antd';
-import { ShoppingCartOutlined, HeartOutlined, EyeOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, HeartFilled, EyeOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { addToCart } from "./Action/cartSlice";
 import { addToWishlist } from "./Action/wishlistSlice";
@@ -73,12 +73,10 @@ const BooksContainer = () => {
 
   const handleAddToCart = (book) => {
     dispatch(addToCart(book));
-    toast.success(`${book.title} added to cart`, { position: "bottom-left" });
   };
 
   const handleAddToWishlist = (book) => {
     dispatch(addToWishlist(book));
-    toast.success(`${book.title} added to wishlist`, { position: "bottom-left" });
   };
 
   const indexOfLastBook = currentPage * booksPerPage;
@@ -102,7 +100,7 @@ const BooksContainer = () => {
               <Rate value={book.averageRating} disabled allowHalf />
               <div style={{ marginTop: '5px' }}>
                 <Button type="link" onClick={() => handleViewDetails(book)} icon={<EyeOutlined />} />
-                <Button type="link"  onClick={() => handleAddToWishlist(book)}icon={<HeartOutlined />} />
+                <Button type="link"  onClick={() => handleAddToWishlist(book)}icon={<HeartFilled />} />
                 <Button type="link" onClick={() => handleAddToCart(book)} icon={<ShoppingCartOutlined />} />
               </div>
             </div>
@@ -128,9 +126,14 @@ const BooksContainer = () => {
       >
         {selectedBook && (
           <div>
+             <img
+                src={bookImage}
+                style={{ width: '30%', height: '50%', objectFit: 'cover', borderRadius: '10px', cursor: 'pointer' }}
+              />
             <p>Title: {selectedBook.title}</p>
             <p>Description: {showFullDescription ? selectedBook.description : `${selectedBook.description.slice(0, 100)}...`} <Button type="link" onClick={toggleDescription}>{showFullDescription ? 'See Less' : 'See More'}</Button></p>
             <p>Price: {selectedBook.price}</p>
+
           </div>
         )}
       </Modal>
