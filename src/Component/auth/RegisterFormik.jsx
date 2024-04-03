@@ -10,29 +10,9 @@ import logo from '../../logos/logo.png';
 import './RegisterFormik.css';
 import { Table } from 'react-bootstrap';
 import Modal from '@mui/material/Modal';
-
-
-const style = {
-  modalTable: {
-    width: '100%', // Adjust the width as needed
-    fontSize: '0.8em', // Reduce the font size
-  },
-  tableRow: {
-    height: '25px', // Adjust the height of each row
-  },
-  tableCell: {
-    padding: '3px', // Adjust the padding within cells
-    textAlign: 'center', // Center align text within cells
-  },
-  checkboxInput: {
-    margin: '0 auto', // Center align checkboxes
-    display: 'block', // Display checkboxes as blocks
-  },
-};
-
+import { GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
 
 const RegisterFormik = () => {
-
   const navigate = useNavigate();
   const [uploadedFile, setUploadedFile] = useState('');
   const [courses, setCourses] = useState([]);
@@ -42,7 +22,6 @@ const RegisterFormik = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const initialValues = {
     firstName: '',
     lastName: '',
@@ -55,15 +34,10 @@ const RegisterFormik = () => {
     confirmPassword: '',
     acceptTerms: false,
     selectedCourses: [], // Ajout de selectedCourses dans les valeurs initiales
-    availability: [{ jour: '', heureDebut: '', heureFin: '' }],
+    availability: [],
 
 
   };
-
- 
-  
- 
-
   const handleCheckboxChange = (e) => {
     const slotName = e.target.name;
     const [jour, heureDebut, heureFin] = slotName.split('_').slice(0, 3);
@@ -122,15 +96,7 @@ const RegisterFormik = () => {
     });
   };
   
-  const handleAddAvailability = () => {
-    // Add an empty availability slot with initialized time fields
-    setAvailability((prevAvailability) => [...prevAvailability, { jour: '', heureDebut: '', heureFin: '' }]);
-  };
-
-  const handleRemoveAvailability = (index) => {
-    // Remove the availability slot at the specified index
-    setAvailability((prevAvailability) => [...prevAvailability.slice(0, index), ...prevAvailability.slice(index + 1)]);
-  };
+ 
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name is required'),
@@ -171,7 +137,6 @@ const RegisterFormik = () => {
         sexe,
         address,
         mobile,
-        availability,
         acceptTerms,
       } = fields;
   
@@ -179,12 +144,12 @@ const RegisterFormik = () => {
       const formattedDateNaiss = dateNaiss.toISOString().split('T')[0]; // Format 'yyyy-MM-dd'
   
       /// Assurez-vous que les données de disponibilité sont correctement formatées
-const formattedAvailability = availability.map((avail) => ({
-  jour: avail.jour,
-  heureDebut: avail.heureDebut,
-  heureFin: avail.heureFin,
-}));
-      
+      const formattedAvailability = selectedSlots.map((slot) => ({
+        jour: slot.jour,
+        heureDebut: slot.heureDebut,
+        heureFin: slot.heureFin,
+      }));
+  
       // Construire l'objet d'utilisateur à envoyer au backend
       const userObject = {
         username: userName,
@@ -220,7 +185,6 @@ const formattedAvailability = availability.map((avail) => ({
       alert(error.message || 'Registration failed. Please try again.');
     }
   };
-  
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -233,6 +197,33 @@ const formattedAvailability = availability.map((avail) => ({
   const onUpload = async (e) => {
     const base64 = await convertToBase64(e.target.files[0]);
     setUploadedFile(base64);
+  };
+
+
+  const responseGoogle = (response) => {
+    console.log('Google response:', response);
+  
+    // Check if profileObj exists
+    if (response.profileObj) {
+      // Destructure properties if profileObj exists
+      const { givenName, familyName, email, imageUrl } = response.profileObj;
+      // Remplir le formulaire d'inscription avec les données récupérées
+      const fields = {
+        firstName: givenName,
+        lastName: familyName,
+        email: email,
+        profilePicture: imageUrl,
+        // Vous pouvez également préremplir d'autres champs si vous le souhaitez
+      };
+      handleSubmit(fields); // Appeler la fonction handleSubmit avec les données récupérées
+    } else {
+      console.error("Profile object is undefined in response.");
+    }
+  };
+  
+  
+  const handleErrorGoogle = (error) => {
+    console.error('Error during Google login:', error);
   };
 
   return (
@@ -447,205 +438,204 @@ const formattedAvailability = availability.map((avail) => ({
                             ))}
                           </Row>
                        </FormGroup>
-      <Label>Availability</Label>
-      <Button onClick={handleOpen}>Open modal</Button>
-      <Modal
-        keepMounted
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-        style={{ maxHeight: '900px', overflowY: 'auto', maxWidth:'900px',marginLeft:'300px',backgroundColor:'white' }}
-      >   
-                     
-       <Table striped bordered responsive  >
-      
-       <tbody >
-         {/* Adjust maxHeight as per your requirement */}
-  <tr className="tr_pair" style={{ backgroundColor: '#ffff' }}>
-  <th></th>
-  <th style={{whiteSpace: 'nowrap'}}>MONDAY</th>
-  <th style={{whiteSpace: 'nowrap'}}>TUESDAY</th>
-  <th style={{whiteSpace: 'nowrap'}}>WEDNESDAY</th>
-  <th style={{whiteSpace: 'nowrap'}}>THURSDAY</th>
-  <th style={{whiteSpace: 'nowrap'}}>FRIDAY</th>
-  <th style={{whiteSpace: 'nowrap'}}>SATURDAY</th>
-  <th style={{whiteSpace: 'nowrap'}}>SUNDAY</th>
-</tr>
+                        {/* Disponibilité */}
+                        <Button onClick={handleOpen}>Click to Add your availability</Button>
+                          <Modal
+                            keepMounted
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="keep-mounted-modal-title"
+                            aria-describedby="keep-mounted-modal-description"
+                            style={{ maxHeight: '900px', overflowY: 'auto', maxWidth:'900px',marginLeft:'300px',backgroundColor:'white' }}
+                          >   
+                                        
+                          <Table striped bordered responsive  >
+                          
+                          <tbody >
+                            {/* Adjust maxHeight as per your requirement */}
+                      <tr className="tr_pair" style={{ backgroundColor: '#ffff' }}>
+                      <th></th>
+                      <th style={{whiteSpace: 'nowrap'}}>MONDAY</th>
+                      <th style={{whiteSpace: 'nowrap'}}>TUESDAY</th>
+                      <th style={{whiteSpace: 'nowrap'}}>WEDNESDAY</th>
+                      <th style={{whiteSpace: 'nowrap'}}>THURSDAY</th>
+                      <th style={{whiteSpace: 'nowrap'}}>FRIDAY</th>
+                      <th style={{whiteSpace: 'nowrap'}}>SATURDAY</th>
+                      <th style={{whiteSpace: 'nowrap'}}>SUNDAY</th>
+                    </tr>
 
-<tr className="tr_impair">																	
-<td >10:00-10:30</td>
-<td colSpan="5"></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_10:00_10:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_10:00_10:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>10:30-11:00</td>
-  <td colSpan="5"></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_10:30_11:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_10:30_11:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td>11:00-11:30</td>
-  <td colSpan="5"></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_11:00_11:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_11:00_11:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>11:30-12:00</td>
-  <td colSpan="5"></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_11:30_12:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_11:30_12:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td>12:00-12:30</td>
-  <td colSpan="5"></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_12:00_12:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_12:00_12:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td >12:30-13:00</td>
-  <td colSpan="5"></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_12:30_13:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_12:30_13:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td>13:00-13:30</td>
-  <td colSpan="5"></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_13:00_13:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_13:00_13:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>13:30-14:00</td>	
-  <td colSpan="5"></td>										
-  <td style={{ textAlign: 'center' }}> <Input type="checkbox" name="saturday_13:30_14:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_13:30_14:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td>14:00-14:30</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_14:00_14:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_14:00_14:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_14:00_14:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_14:00_14:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_14:00_14:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_14:00_14:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_14:00_14:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>14:30-15:00</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_14:30_15:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_14:30_15:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_14:30_15:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_14:30_15:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_14:30_15:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_14:30_15:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_14:30_15:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td>15:00-15:30</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_15:00_15:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_15:00_15:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_15:00_15:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_15:00_15:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_15:00_15:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_15:00_15:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_15:00_15:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>15:30-16:00</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_15:30_16:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_15:30_16:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_15:30_16:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_15:30_16:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_15:30_16:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_15:30_16:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_15:30_16:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td>16:00-16:30</td>
-  <td style={{ textAlign: 'center' }}>  <Input type="checkbox" name="monday_16:00_16:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_16:00_16:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_16:00_16:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_16:00_16:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_16:00_16:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_16:00_16:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_16:00_16:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>16:30-17:00</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_16:30_17:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_16:30_17:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_16:30_17:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_16:30_17:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_16:30_17:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_16:30_17:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_16:30_17:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td>17:00-17:30</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_17:00_17:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_17:00_17:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_17:00_17:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_17:00_17:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_17:00_17:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_17:00_17:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_17:00_17:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>17:30-18:00</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_17:30_18:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_17:30_18:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_17:30_18:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_17:30_18:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_17:30_18:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_17:30_18:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_17:30_18:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td>18:00-18:30</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_18:00_18:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_18:00_18:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_18:00_18:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_18:00_18:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_18:00_18:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_18:00_18:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_18:00_18:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>18:30-19:00</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_18:30_19:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_18:30_19:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_18:30_19:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_18:30_19:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_18:30_19:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_18:30_19:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_18:30_19:00" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_impair">
-  <td >19:00-19:30</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_19:00_19:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_19:00_19:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_19:00_19:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_19:00_19:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_19:00_19:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_19:00_19:30" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_19:00_19:30" onChange={handleCheckboxChange} /></td>
-</tr>
-<tr className="tr_pair">
-  <td>19:30-20:00</td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_19:30_20:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_19:30_20:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_19:30_20:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_19:30_20:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_19:30_20:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_19:30_20:00" onChange={handleCheckboxChange} /></td>
-  <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_19:30_20:00" onChange={handleCheckboxChange} /></td>
-</tr>
+                    <tr className="tr_impair">																	
+                    <td >10:00-10:30</td>
+                    <td colSpan="5"></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_10:00_10:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_10:00_10:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>10:30-11:00</td>
+                      <td colSpan="5"></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_10:30_11:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_10:30_11:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td>11:00-11:30</td>
+                      <td colSpan="5"></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_11:00_11:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_11:00_11:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>11:30-12:00</td>
+                      <td colSpan="5"></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_11:30_12:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_11:30_12:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td>12:00-12:30</td>
+                      <td colSpan="5"></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_12:00_12:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_12:00_12:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td >12:30-13:00</td>
+                      <td colSpan="5"></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_12:30_13:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_12:30_13:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td>13:00-13:30</td>
+                      <td colSpan="5"></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_13:00_13:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_13:00_13:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>13:30-14:00</td>	
+                      <td colSpan="5"></td>										
+                      <td style={{ textAlign: 'center' }}> <Input type="checkbox" name="saturday_13:30_14:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_13:30_14:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td>14:00-14:30</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_14:00_14:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_14:00_14:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_14:00_14:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_14:00_14:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_14:00_14:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_14:00_14:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_14:00_14:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>14:30-15:00</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_14:30_15:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_14:30_15:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_14:30_15:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_14:30_15:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_14:30_15:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_14:30_15:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_14:30_15:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td>15:00-15:30</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_15:00_15:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_15:00_15:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_15:00_15:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_15:00_15:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_15:00_15:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_15:00_15:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_15:00_15:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>15:30-16:00</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_15:30_16:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_15:30_16:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_15:30_16:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_15:30_16:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_15:30_16:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_15:30_16:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_15:30_16:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td>16:00-16:30</td>
+                      <td style={{ textAlign: 'center' }}>  <Input type="checkbox" name="monday_16:00_16:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_16:00_16:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_16:00_16:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_16:00_16:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_16:00_16:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_16:00_16:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_16:00_16:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>16:30-17:00</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_16:30_17:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_16:30_17:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_16:30_17:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_16:30_17:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_16:30_17:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_16:30_17:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_16:30_17:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td>17:00-17:30</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_17:00_17:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_17:00_17:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_17:00_17:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_17:00_17:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_17:00_17:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_17:00_17:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_17:00_17:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>17:30-18:00</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_17:30_18:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_17:30_18:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_17:30_18:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_17:30_18:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_17:30_18:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_17:30_18:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_17:30_18:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td>18:00-18:30</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_18:00_18:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_18:00_18:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_18:00_18:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_18:00_18:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_18:00_18:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_18:00_18:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_18:00_18:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>18:30-19:00</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_18:30_19:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_18:30_19:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_18:30_19:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_18:30_19:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_18:30_19:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_18:30_19:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_18:30_19:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_impair">
+                      <td >19:00-19:30</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_19:00_19:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_19:00_19:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_19:00_19:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_19:00_19:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_19:00_19:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_19:00_19:30" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_19:00_19:30" onChange={handleCheckboxChange} /></td>
+                    </tr>
+                    <tr className="tr_pair">
+                      <td>19:30-20:00</td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_19:30_20:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_19:30_20:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="wednesday_19:30_20:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="thursday_19:30_20:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="friday_19:30_20:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_19:30_20:00" onChange={handleCheckboxChange} /></td>
+                      <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_19:30_20:00" onChange={handleCheckboxChange} /></td>
+                    </tr>
 
-</tbody></Table>
-</Modal>
+                    </tbody></Table>
+                    </Modal>
 
-                     
                         <FormGroup>
                           <Field
                             type="checkbox"
@@ -673,13 +663,23 @@ const formattedAvailability = availability.map((avail) => ({
 
                                         )}
                                       />
+                                      <GoogleOAuthProvider
+                              clientId="896312425867-1lca6buc68keb943v602n1n6adi72hn9.apps.googleusercontent.com"
+                              >
+                             <GoogleLogin
+                                buttonText="Sign in with Google"
+                                onSuccess={responseGoogle}
+                                onFailure={handleErrorGoogle}
+                                cookiePolicy={'single_host_origin'}
+                              />
+                              </GoogleOAuthProvider>
                                     </CardBody>
                                   </Card>
                                 </Col>
                               </Row>
+                              
                             </Container>
                            
-         
                           </div>
                         );
                       };
