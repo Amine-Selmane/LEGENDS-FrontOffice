@@ -1,7 +1,40 @@
-import ProtoTypes from "prop-types";
-import CourseItemCard from "../Cards/CourseItemCard";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import CourseItemCard from '../Cards/CourseItemCard'; // Assuming CourseItemCard component is imported from the correct path
 
-function PopularCourse({ course, heading }) {
+const baseURL = 'http://localhost:5000';
+
+const PopularBooks = ({ heading }) => {
+  const [popularBooks, setPopularBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchPopularBooks();
+  }, []);
+
+  const fetchPopularBooks = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/ratings/popular`);
+      
+      // Check if response.data is an array
+      if (!Array.isArray(response.data)) {
+        throw new Error('Response data is not an array');
+      }
+  
+      // Filter the data only if it's an array
+      const filteredBooks = response.data.filter(book => calculateAverageRating(book) > 4);
+      setPopularBooks(filteredBooks);
+    } catch (error) {
+      console.error('Error fetching popular books:', error);
+    }
+  };
+  
+  const calculateAverageRating = (book) => {
+    if (book.ratings.length === 0) return 0;
+    const totalRating = book.ratings.reduce((acc, rating) => acc + rating, 0);
+    return totalRating / book.ratings.length;
+  };
+
   return (
     <section className="popular-course-section">
       <div className="container">
@@ -9,128 +42,31 @@ function PopularCourse({ course, heading }) {
           <div className="row">
             <div className="col-md-8">
               <h2 className="sec-title">
-                <span>Explore</span> Our Popular Courses
+                <span>Explore</span> Our Popular Books
               </h2>
             </div>
             <div className="col-md-4">
               <a className="read-more" href="#">
-                Browse Online Courses<i className="arrow_right"></i>
+                Browse Online Books<i className="arrow_right"></i>
               </a>
             </div>
           </div>
         )}
-        {course && (
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="course-wrapper">
-                <CourseItemCard title="Computer Science" link="single-course">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    width="74"
-                    height="60"
-                    viewBox="0 0 74 60"
-                  >
-                    <defs>
-                      <pattern
-                        id="pattern"
-                        preserveAspectRatio="xMidYMid slice"
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 74 60"
-                      >
-                        <image
-                          width="74"
-                          height="60"
-                          xlinkHref="assets/images/home/desktop1-image.png"
-                        />
-                      </pattern>
-                    </defs>
-                    <path
-                      id="desktop1"
-                      className="cls-1"
-                      style={{ fill: "url(#pattern)" }}
-                      d="M0,0H74V60H0Z"
-                    />
-                  </svg>
-                </CourseItemCard>
-                <CourseItemCard
-                  title="Data Analysis & Statistics"
-                  link="single-course"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    width="64"
-                    height="64"
-                    viewBox="0 0 64 64"
-                  >
-                    <image
-                      id="data"
-                      width="64"
-                      height="64"
-                      xlinkHref="assets/images/home/data-image.png"
-                    />
-                  </svg>
-                </CourseItemCard>
-                <CourseItemCard
-                  title="Business & Management"
-                  link="single-course"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    width="74"
-                    height="70"
-                    viewBox="0 0 74 70"
-                  >
-                    <image
-                      id="proposal"
-                      width="74"
-                      height="70"
-                      xlinkHref="assets/images/home/proposal-image.png"
-                    />
-                  </svg>
-                </CourseItemCard>
-                <CourseItemCard title="Social Sciences" link="single-course">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    width="80"
-                    height="67"
-                    viewBox="0 0 80 67"
-                  >
-                    <image
-                      id="chat"
-                      width="80"
-                      height="67"
-                      xlinkHref="assets/images/home/chat-image.png"
-                    />
-                  </svg>
-                </CourseItemCard>
-                <CourseItemCard
-                  title="Biology & Life Sciences"
-                  link="single-course"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    width="58"
-                    height="73"
-                    viewBox="0 0 58 73"
-                  >
-                    <image
-                      id="mind"
-                      width="58"
-                      height="73"
-                      xlinkHref="assets/images/home/mind-image.png"
-                    />
-                  </svg>
-                </CourseItemCard>
-              </div>
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="course-wrapper">
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                popularBooks.map(book => (
+                  <CourseItemCard key={book.id} title={book.title} link="single-course">
+                    <img src={book.image} alt={book.title} />
+                  </CourseItemCard>
+                ))
+              )}
             </div>
           </div>
-        )}
+        </div>
         <div className="row mt-120">
           <div className="col-lg-7 col-md-6">
             <div className="ab-thumb">
@@ -157,11 +93,6 @@ function PopularCourse({ course, heading }) {
       </div>
     </section>
   );
-}
-
-PopularCourse.propTypes = {
-  course: ProtoTypes.bool,
-  heading: ProtoTypes.bool,
 };
 
-export default PopularCourse;
+export default PopularBooks;

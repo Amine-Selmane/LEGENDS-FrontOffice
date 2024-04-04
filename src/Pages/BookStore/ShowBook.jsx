@@ -148,7 +148,7 @@ const ShowBook = () => {
             {ratings.map((rating) => (
               <div key={rating._id} className="review-box">
                 <div className="review-header">
-                  <p className="user-name">User: {rating.userName}</p>
+                  <p className="user-name">User: {rating.user}</p> {/* Display the username */}
                 </div>
                 <div className="review-content">
                   <Rate value={rating.rating} disabled />

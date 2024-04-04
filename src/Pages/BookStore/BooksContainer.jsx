@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Typography, Button, Pagination, Modal, Rate } from 'antd';
-import { ShoppingCartOutlined, HeartFilled, EyeOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux'; 
+import { ShoppingCartOutlined, HeartFilled, EyeOutlined, AudioOutlined, AudioMutedOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux'; 
 import { addToCart } from "./Action/cartSlice";
 import { addToWishlist } from "./Action/wishlistSlice";
 import axios from 'axios';
@@ -23,6 +23,7 @@ const BooksContainer = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     fetchBooks();
@@ -79,6 +80,17 @@ const BooksContainer = () => {
     dispatch(addToWishlist(book));
   };
 
+  const toggleAudio = () => {
+    setIsMuted(!isMuted);
+  };
+
+  const speakDescription = (description) => {
+    if (!isMuted) {
+      const speech = new SpeechSynthesisUtterance(description);
+      window.speechSynthesis.speak(speech);
+    }
+  };
+
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
@@ -102,6 +114,8 @@ const BooksContainer = () => {
                 <Button type="link" onClick={() => handleViewDetails(book)} icon={<EyeOutlined />} />
                 <Button type="link"  onClick={() => handleAddToWishlist(book)}icon={<HeartFilled />} />
                 <Button type="link" onClick={() => handleAddToCart(book)} icon={<ShoppingCartOutlined />} />
+                <Button type="link" onClick={() => speakDescription(book.description)} icon={<AudioOutlined />} />
+
               </div>
             </div>
           </div>
@@ -126,14 +140,13 @@ const BooksContainer = () => {
       >
         {selectedBook && (
           <div>
-             <img
-                src={bookImage}
-                style={{ width: '30%', height: '50%', objectFit: 'cover', borderRadius: '10px', cursor: 'pointer' }}
-              />
+            <img
+              src={bookImage}
+              style={{ width: '30%', height: '50%', objectFit: 'cover', borderRadius: '10px', cursor: 'pointer' }}
+            />
             <p>Title: {selectedBook.title}</p>
             <p>Description: {showFullDescription ? selectedBook.description : `${selectedBook.description.slice(0, 100)}...`} <Button type="link" onClick={toggleDescription}>{showFullDescription ? 'See Less' : 'See More'}</Button></p>
             <p>Price: {selectedBook.price}</p>
-
           </div>
         )}
       </Modal>

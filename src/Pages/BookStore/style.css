@@ -434,3 +434,38 @@
     margin-bottom: 2rem;
   }
 }
+.checkout-success-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.checkout-success {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.checkout-success-title {
+  color: #007bff;
+}
+
+.checkout-success-content {
+  margin-bottom: 20px;
+}
+
+.checkout-success-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.checkout-success-link svg {
+  margin-right: 5px;
+}
+
