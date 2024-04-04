@@ -1,7 +1,7 @@
 import React, { useState , useEffect} from 'react';
 import axios from 'axios';
 import { Button, Label, FormGroup, Container, Row, Col, Card, CardBody,Input } from 'reactstrap';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, Form, ErrorMessage ,useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,9 +10,12 @@ import logo from '../../logos/logo.png';
 import './RegisterFormik.css';
 import { Table } from 'react-bootstrap';
 import Modal from '@mui/material/Modal';
-import { GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import {GoogleLogin} from 'react-google-login';
+import { gapi } from 'gapi-script';
 
 const RegisterFormik = () => {
+
   const navigate = useNavigate();
   const [uploadedFile, setUploadedFile] = useState('');
   const [courses, setCourses] = useState([]);
@@ -22,22 +25,31 @@ const RegisterFormik = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+const [googleUserData, setGoogleUserData] = useState({});
+const [initialImage, setInitialImage] = useState('');
+const [profileUrl, setProfileUrl] = useState('');
+const [profileObj, setProfileObj] = useState(null);
+
+
+
   const initialValues = {
     firstName: '',
     lastName: '',
     userName: '',
     email: '',
-    dateNaiss: new Date(),
+    dateNaiss: '',
     sexe: '',
     role: '',
     password: '',
     confirmPassword: '',
+    profile: '',
     acceptTerms: false,
     selectedCourses: [], // Ajout de selectedCourses dans les valeurs initiales
     availability: [],
 
-
   };
+  const [fields, setFields] = useState({initialValues });
+
   const handleCheckboxChange = (e) => {
     const slotName = e.target.name;
     const [jour, heureDebut, heureFin] = slotName.split('_').slice(0, 3);
@@ -156,7 +168,8 @@ const RegisterFormik = () => {
         password,
         firstName,
         lastName,
-        profile: uploadedFile,
+ 
+        profile: uploadedFile || profileUrl,
         email,
         dateNaiss: formattedDateNaiss,
         address,
@@ -185,6 +198,8 @@ const RegisterFormik = () => {
       alert(error.message || 'Registration failed. Please try again.');
     }
   };
+
+  
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -193,39 +208,75 @@ const RegisterFormik = () => {
       reader.readAsDataURL(file);
     });
   };
-
+  
   const onUpload = async (e) => {
     const base64 = await convertToBase64(e.target.files[0]);
     setUploadedFile(base64);
+    setProfileUrl(base64); // Add this line to update the image URL
   };
-
-
-  const responseGoogle = (response) => {
-    console.log('Google response:', response);
+ 
+  useEffect(() => {
+    return () => setProfileObj(null);
+  }, []);
   
-    // Check if profileObj exists
-    if (response.profileObj) {
-      // Destructure properties if profileObj exists
-      const { givenName, familyName, email, imageUrl } = response.profileObj;
-      // Remplir le formulaire d'inscription avec les données récupérées
-      const fields = {
+  // Update the googleUserData when the profileObj changes
+ 
+  
+  const handlegoogle = (profileObj, setFieldValue) => {
+    console.log("Profile Object:", profileObj); // Log the profileObj
+  
+    // Extracting data from profileObj
+    const { email, givenName, familyName, name, imageUrl } = profileObj.profileObj;
+  
+    console.log("Extracted Data:", { email, givenName, familyName, name, imageUrl });
+  
+    // Update fields using setFieldValue
+    setFieldValue('userName', googleUserData.userName);
+    setFieldValue('firstName', googleUserData.firstName);
+    setFieldValue('lastName', googleUserData.lastName);
+    setFieldValue('email', googleUserData.email);
+    setProfileUrl(googleUserData.profileUrl);
+    setProfileObj(profileObj);
+
+  };
+  useEffect(() => {
+    if (profileObj) {
+      const { email, givenName, familyName, name, imageUrl } = profileObj.profileObj;
+      setGoogleUserData({
+        userName: name,
         firstName: givenName,
         lastName: familyName,
         email: email,
-        profilePicture: imageUrl,
-        // Vous pouvez également préremplir d'autres champs si vous le souhaitez
-      };
-      handleSubmit(fields); // Appeler la fonction handleSubmit avec les données récupérées
-    } else {
-      console.error("Profile object is undefined in response.");
+        profileUrl: imageUrl,
+      });
     }
-  };
-  
+  }, [profileObj]);
   
   const handleErrorGoogle = (error) => {
     console.error('Error during Google login:', error);
   };
+  
 
+  const clientId = "896312425867-1lca6buc68keb943v602n1n6adi72hn9.apps.googleusercontent.com"; // Replace with your actual Google OAuth 2.0 client ID
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: ""
+      })
+      .then(() => {
+        console.log('Google API client initialized');
+      })
+      .catch((error) => {
+        console.error('Error initializing Google API client:', error);
+      });
+    }
+  
+    gapi.load('client:auth2', start);
+  }, []);
+  
+  
   return (
 <div className="register-page"> 
   <Container fluid className="h-100">
@@ -244,9 +295,30 @@ const RegisterFormik = () => {
                   initialValues={initialValues}
                   validationSchema={validationSchema}
                   onSubmit={handleSubmit}
-                  render={({ errors, touched }) => (
+                  render={({ errors, touched  ,setFieldValue , values}) => (
+                    
                     <Form>
-                        <FormGroup>
+                          <div className="google-login-container">
+      <GoogleLogin
+        clientId="896312425867-1lca6buc68keb943v602n1n6adi72hn9.apps.googleusercontent.com"
+        buttonText="Sign Up with Google"
+        onSuccess={(response) => handlegoogle(response, setFieldValue)}
+        onFailure={handleErrorGoogle}
+        cookiePolicy={'single_host_origin'}
+        isSignedIn={true}
+        render={renderProps => (
+          <button
+            className="btn btn-lg btn-block btn-primary google-login-button pulse-animation"
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+            type="button"
+          >
+            <i className="fab fa-google me-2"></i> Sign Up with Google
+          </button>
+        )}
+      />
+    </div><br/>
+                        <FormGroup >
                           <Label htmlFor="firstName">First Name</Label>
                           <Field
                             name="firstName"
@@ -403,22 +475,28 @@ const RegisterFormik = () => {
                             className="invalid-feedback"
                           />
                         </FormGroup>
-
                         <FormGroup>
-                          <Label htmlFor="profile">Profile Picture</Label>
-                          <Field
-                            name="profile"
+                          <label htmlFor="profile">Profile Picture</label>
+                          <div>
+                            <img
+                              className="profile-preview"
+                              src={profileUrl}
+                              alt="Profile Preview"
+                            />
+                            <input
+                              type="hidden"
+                              name="profile"
+                              value={profileUrl}
+                            />
+                          </div>
+                          <input
                             type="file"
                             className={`form-control ${
                               errors.profile && touched.profile ? ' is-invalid' : ''
                             }`}
-                            onChange={onUpload}
+                            onChange={(event) => onUpload(event, setFieldValue)}
                           />
-                          <ErrorMessage
-                            name="profile"
-                            component="div"
-                            className="invalid-feedback"
-                          />
+                          <ErrorMessage name="profile" component="div" className="invalid-feedback" />
                         </FormGroup>
                         <FormGroup>
                           <Label>Select Courses</Label>
@@ -438,16 +516,20 @@ const RegisterFormik = () => {
                             ))}
                           </Row>
                        </FormGroup>
+                       <br/>
                         {/* Disponibilité */}
-                        <Button onClick={handleOpen}>Click to Add your availability</Button>
-                          <Modal
-                            keepMounted
-                            open={open}
-                            onClose={handleClose}
-                            aria-labelledby="keep-mounted-modal-title"
-                            aria-describedby="keep-mounted-modal-description"
-                            style={{ maxHeight: '900px', overflowY: 'auto', maxWidth:'900px',marginLeft:'300px',backgroundColor:'white' }}
-                          >   
+                        <div className='google-login-container'>
+                        <Button className="btn btn-lg btn-block btn-primary google-login-button pulse-animation" onClick={handleOpen}> Check your availability</Button><br/>
+                        
+                        </div>
+                        <Modal
+                          keepMounted
+                          open={open}
+                          onClose={handleClose}
+                          aria-labelledby="keep-mounted-modal-title"
+                          aria-describedby="keep-mounted-modal-description"
+                          style={{ maxHeight: '900px', overflowY: 'auto', maxWidth:'900px', marginLeft:'300px', backgroundColor:'#ffff' }}
+                        >
                                         
                           <Table striped bordered responsive  >
                           
@@ -464,55 +546,55 @@ const RegisterFormik = () => {
                       <th style={{whiteSpace: 'nowrap'}}>SUNDAY</th>
                     </tr>
 
-                    <tr className="tr_impair">																	
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>																	
                     <td >10:00-10:30</td>
                     <td colSpan="5"></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_10:00_10:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_10:00_10:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>10:30-11:00</td>
                       <td colSpan="5"></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_10:30_11:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_10:30_11:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>
                       <td>11:00-11:30</td>
                       <td colSpan="5"></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_11:00_11:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_11:00_11:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>11:30-12:00</td>
                       <td colSpan="5"></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_11:30_12:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_11:30_12:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair "  style={{ backgroundColor: '#ffff' }}>
                       <td>12:00-12:30</td>
                       <td colSpan="5"></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_12:00_12:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_12:00_12:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td >12:30-13:00</td>
                       <td colSpan="5"></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_12:30_13:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_12:30_13:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>
                       <td>13:00-13:30</td>
                       <td colSpan="5"></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_13:00_13:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_13:00_13:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>13:30-14:00</td>	
                       <td colSpan="5"></td>										
                       <td style={{ textAlign: 'center' }}> <Input type="checkbox" name="saturday_13:30_14:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_13:30_14:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>
                       <td>14:00-14:30</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_14:00_14:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_14:00_14:30" onChange={handleCheckboxChange} /></td>
@@ -522,7 +604,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_14:00_14:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_14:00_14:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>14:30-15:00</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_14:30_15:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_14:30_15:00" onChange={handleCheckboxChange} /></td>
@@ -532,7 +614,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_14:30_15:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_14:30_15:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>
                       <td>15:00-15:30</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_15:00_15:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_15:00_15:30" onChange={handleCheckboxChange} /></td>
@@ -542,7 +624,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_15:00_15:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_15:00_15:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>15:30-16:00</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_15:30_16:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_15:30_16:00" onChange={handleCheckboxChange} /></td>
@@ -552,7 +634,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_15:30_16:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_15:30_16:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>
                       <td>16:00-16:30</td>
                       <td style={{ textAlign: 'center' }}>  <Input type="checkbox" name="monday_16:00_16:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_16:00_16:30" onChange={handleCheckboxChange} /></td>
@@ -562,7 +644,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_16:00_16:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_16:00_16:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>16:30-17:00</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_16:30_17:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_16:30_17:00" onChange={handleCheckboxChange} /></td>
@@ -572,7 +654,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_16:30_17:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_16:30_17:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>
                       <td>17:00-17:30</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_17:00_17:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_17:00_17:30" onChange={handleCheckboxChange} /></td>
@@ -582,7 +664,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_17:00_17:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_17:00_17:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>17:30-18:00</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_17:30_18:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_17:30_18:00" onChange={handleCheckboxChange} /></td>
@@ -592,7 +674,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_17:30_18:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_17:30_18:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>
                       <td>18:00-18:30</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_18:00_18:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_18:00_18:30" onChange={handleCheckboxChange} /></td>
@@ -602,7 +684,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_18:00_18:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_18:00_18:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>18:30-19:00</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_18:30_19:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_18:30_19:00" onChange={handleCheckboxChange} /></td>
@@ -612,7 +694,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_18:30_19:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_18:30_19:00" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_impair">
+                    <tr className="tr_impair"  style={{ backgroundColor: '#ffff' }}>
                       <td >19:00-19:30</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_19:00_19:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_19:00_19:30" onChange={handleCheckboxChange} /></td>
@@ -622,7 +704,7 @@ const RegisterFormik = () => {
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="saturday_19:00_19:30" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="sunday_19:00_19:30" onChange={handleCheckboxChange} /></td>
                     </tr>
-                    <tr className="tr_pair">
+                    <tr className="tr_pair"  style={{ backgroundColor: '#ffff' }}>
                       <td>19:30-20:00</td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="monday_19:30_20:00" onChange={handleCheckboxChange} /></td>
                       <td style={{ textAlign: 'center' }}><Input type="checkbox" name="tuesday_19:30_20:00" onChange={handleCheckboxChange} /></td>
@@ -662,17 +744,7 @@ const RegisterFormik = () => {
                       </Form>
 
                                         )}
-                                      />
-                                      <GoogleOAuthProvider
-                              clientId="896312425867-1lca6buc68keb943v602n1n6adi72hn9.apps.googleusercontent.com"
-                              >
-                             <GoogleLogin
-                                buttonText="Sign in with Google"
-                                onSuccess={responseGoogle}
-                                onFailure={handleErrorGoogle}
-                                cookiePolicy={'single_host_origin'}
-                              />
-                              </GoogleOAuthProvider>
+                                      />  
                                     </CardBody>
                                   </Card>
                                 </Col>
