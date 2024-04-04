@@ -1,0 +1,139 @@
+import React from 'react';
+import axios from 'axios'; // Make sure to import axios
+
+import {
+  Button,
+  Label,
+  FormGroup,
+  CardTitle,
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+} from 'reactstrap';
+import { useNavigate , useLocation } from 'react-router-dom';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import toast, { Toaster } from 'react-hot-toast';
+
+import * as Yup from 'yup';
+import './LoginFormik.css';
+
+import img1 from '../../bg/user4.jpg';
+
+const LockScreen = () => {
+  const { state } = useLocation();
+  const user = state?.user || {};
+  
+  const navigate = useNavigate();
+
+  const initialValues = {
+    password: '',
+    confirmPassword: '',
+
+  };
+
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm Password is required'),
+  });
+
+  const handlePasswordReset = async (values) => {
+
+    try {
+      
+      const response = await axios.get('http://localhost:5000/api/createResetSession');
+
+      if (response.status === 201) {
+        // Session is valid, proceed with password reset
+        await axios.put('http://localhost:5000/api/resetPassword', {
+          username: user.username, // You may need to replace this with the actual username
+          password: values.password,
+        });
+
+        alert('Password reset successful!');
+        navigate('/');
+      } else {
+        alert('Session expired. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      alert('Error resetting password. Please try again.');
+    }
+  };
+
+  return (
+    <div className="login-page"> 
+      <Container fluid className="h-100">
+        <Row className="justify-content-center align-items-center h-100">
+          <Col lg="12" className="login-form-container">
+          <Card>
+              <CardBody className="p-4 m-1">
+                <div className="text-center">
+                <img src={user.profile || img1} alt="avatar" className="rounded-circle" width="95" />
+                  <CardTitle tag="h4" className="mt-2">
+                    {user.username}
+                  </CardTitle>
+                </div>
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={(fields) => handlePasswordReset(fields)}
+                  render={({ errors, touched }) => (
+                    <Form className="mt-3">
+                      <FormGroup>
+                        <Label htmlFor="password">Password</Label>
+                        <Field
+                          name="password"
+                          type="password"
+                          className={`form-control${
+                            errors.password && touched.password ? ' is-invalid' : ''
+                          }`}
+                        />
+                        <ErrorMessage
+                          name="password"
+                          component="div"
+                          className="invalid-feedback"
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                          <Label htmlFor="confirmPassword">Confirm Password</Label>
+                          <Field
+                            name="confirmPassword"
+                            type="password"
+                            className={`form-control ${
+                              errors.confirmPassword && touched.confirmPassword
+                                ? ' is-invalid'
+                                : ''
+                            }`}
+                          />
+                          <ErrorMessage
+                            name="confirmPassword"
+                            component="div"
+                            className="invalid-feedback"
+                          />
+                        </FormGroup>
+                      <FormGroup>
+                        <Button type="submit" color="info" block className="me-2">
+                          Reset Password
+                        </Button>
+                      </FormGroup>
+                    </Form>
+                  )}
+                />
+              </CardBody>
+            </Card>
+
+          </Col>
+        </Row>
+      </Container>
+      <Toaster position='top-center' reverseOrder={false} />
+    </div>
+  );
+};
+
+export default LockScreen;

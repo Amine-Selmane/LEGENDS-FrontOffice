@@ -1,0 +1,82 @@
+.login-page {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-page::before,
+.login-page::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background-size: cover;
+  background-position: center;
+}
+.login-page::before {
+  left: 0;
+  height: 100%;
+  background-image: url('../../bg/login-bgleft.svg');
+}
+
+.login-page::after {
+  right: 0;
+  height: 100%;
+  background-image: url('../../bg/login-bg-right.svg');
+}
+
+
+.login-form-container {
+  max-width: 550px;
+  width: 100%;
+}
+
+.login-logo-container {
+  text-align: center;
+}
+
+.login-logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  padding: 4px;
+  margin: 1px;
+}
+
+.login-form-label {
+  margin-bottom: 0.5rem;
+}
+
+.login-form-control {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.login-form-control.invalid {
+  border-color: #dc3545;
+}
+
+.login-form-check {
+  display: flex;
+  align-items: center;
+}
+
+.login-form-check-label {
+  margin-bottom: 0;
+}
+
+.login-form-check-input {
+  margin-right: 0.25rem;
+}
+
+.login-submit-btn {
+  width: 100%;
+}

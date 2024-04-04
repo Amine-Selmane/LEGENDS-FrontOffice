@@ -13,7 +13,7 @@ import InstructorProfile from "../../Pages/InstructorProfile";
 import { Envelope, Person, PersonFill } from 'react-bootstrap-icons'; // Import des icônes nécessaires
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-function Home3Header() {
+function Home2Header() {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -69,8 +69,7 @@ function Home3Header() {
             </Link>
               {/* logo End */}
 
-             
-             
+
 
               {/* Moblie Btn Start */}
               <button
@@ -127,6 +126,38 @@ function Home3Header() {
                     className="menu-item-has-children"
                     onClick={() =>
                       setActiveSubMobileMenu(
+                        activeMobileSubMenu === "Events" ? false : "Events"
+                      )
+                    }
+                  >
+                    <a>Events</a>
+                    <span className="submenu-toggler">
+                      <i
+                        className={`fal ${
+                          activeMobileSubMenu === "Events"
+                            ? "fa-minus"
+                            : "fa-plus"
+                        }`}
+                      ></i>
+                    </span>
+                    <ul
+                      className="sub-menu"
+                      style={{
+                        display: activeMobileSubMenu === "Events" && "block",
+                      }}
+                    >
+                      <li>
+                        <Link to="/EventList">List Of Events</Link>
+                      </li>
+                      <li>
+                        <Link to="/Card">My Card</Link>
+                      </li>
+                    </ul>
+                  </li>
+                  <li
+                    className="menu-item-has-children"
+                    onClick={() =>
+                      setActiveSubMobileMenu(
                         activeMobileSubMenu === "course" ? false : "course"
                       )
                     }
@@ -161,9 +192,6 @@ function Home3Header() {
                       </li>
                     </ul>
                   </li>
-                  <li>
-                        <Link to="/TeacherReport">Reports</Link>
-                      </li>
                   <li
                     className="menu-item-has-children"
                     name="pages"
@@ -228,7 +256,7 @@ function Home3Header() {
                         <Link to="/instructor">Instructor Page</Link>
                       </li>
                       <li>
-                        <Link to="/profile">Instructor Profile</Link>
+                        <Link to="/profilestudent">Profile</Link>
                       </li>
                       <li>
                         <Link to="/404">404 Page</Link>
@@ -290,7 +318,7 @@ function Home3Header() {
        
      
       <DropdownItem>
-  <Link to="/profile" className="text-dark text-decoration-none">
+  <Link to="/profilestudent" className="text-dark text-decoration-none">
     <FontAwesomeIcon icon={faUser} className="me-2 text-primary" /> {/* Ajoutez la classe text-primary pour définir la couleur de l'icône */}
     My Profile
   </Link>
@@ -323,4 +351,4 @@ function Home3Header() {
   );
 }
 
-export default Home3Header;
+export default Home2Header;
