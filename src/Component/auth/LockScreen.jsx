@@ -56,7 +56,7 @@ const LockScreen = () => {
         });
 
         alert('Password reset successful!');
-        navigate('/login');
+        navigate('/');
       } else {
         alert('Session expired. Please try again.');
       }

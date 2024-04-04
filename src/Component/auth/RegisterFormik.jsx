@@ -187,7 +187,7 @@ const [profileObj, setProfileObj] = useState(null);
       if (response.status === 201) {
         // L'enregistrement a réussi
         alert('Registration successful!');
-        navigate('/login');
+        navigate('/');
       } else {
         // L'enregistrement a échoué pour une raison quelconque
         throw new Error('Registration failed. Please try again.');
@@ -289,7 +289,7 @@ const [profileObj, setProfileObj] = useState(null);
             </div>
             <h5 className="mb-0">Register</h5>
             <small className="pb-4 d-block small" >
-              Already have an account? <Link to="/login">Login</Link>
+              Already have an account? <Link to="/">Login</Link>
             </small>
                 <Formik
                   initialValues={initialValues}

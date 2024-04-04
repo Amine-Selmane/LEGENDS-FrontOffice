@@ -1,3 +1,5 @@
+
+
 import React , { useState }from 'react';
 import { Button, Label, FormGroup, Container, Row, Col, Card, CardBody, Input } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
@@ -42,7 +44,7 @@ const LoginFormik = () => {
         navigate('/home-3');
         
       } else {
-        window.location.href = 'http://localhost:3000/auth/loginFormik';
+        window.location.href = 'http://localhost:5173/';
       }
     } catch (error) {
       if (error.response) {

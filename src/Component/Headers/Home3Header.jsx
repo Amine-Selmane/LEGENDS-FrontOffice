@@ -48,7 +48,7 @@ function Home3Header() {
 
   const userLogout = () => {
     localStorage.removeItem('token');
-    navigate('/login');
+    navigate('/');
     window.location.reload();
   };
   const windowPosition = useWindowPosition();
@@ -69,76 +69,8 @@ function Home3Header() {
             </Link>
               {/* logo End */}
 
-              {/* Select Cate Box  */}
-              <div className="catecories-box">
-                <div
-                  className="select-item"
-                  onClick={() => setCategoryOpen(!categoryOpen)}
-                >
-                  <div
-                    className={`nice-select ${categoryOpen && "open"}`}
-                    tabIndex="0"
-                  >
-                    <span className="current">{filter}</span>
-                    <ul className="list">
-                      <li
-                        data-value="1"
-                        className={`option focus ${
-                          filter === "Explore" && "selected"
-                        }`}
-                      >
-                        Explore
-                      </li>
-                      <li
-                        data-value="2"
-                        className={`option ${
-                          filter === "Option 01" && "selected"
-                        }`}
-                        onClick={(e) => handleFilter(e)}
-                      >
-                        Option 01
-                      </li>
-                      <li
-                        data-value="3"
-                        className={`option ${
-                          filter === "Option 02" && "selected"
-                        }`}
-                        onClick={(e) => handleFilter(e)}
-                      >
-                        Option 02
-                      </li>
-                      <li
-                        data-value="4"
-                        className={`option ${
-                          filter === "Option 03" && "selected"
-                        }`}
-                        onClick={(e) => handleFilter(e)}
-                      >
-                        Option 03
-                      </li>
-                      <li
-                        data-value="5"
-                        className={`option ${
-                          filter === "Option 04" && "selected"
-                        }`}
-                        onClick={(e) => handleFilter(e)}
-                      >
-                        Option 04
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              {/* Select Cate Box  */}
-
-              {/* Search Box */}
-              <form className="search-box" method="post" action="#">
-                <input type="search" name="s" placeholder="Search Courses..." />
-                <button type="submit">
-                  <i className="ti-search"></i>
-                </button>
-              </form>
-              {/* Search Box */}
+             
+             
 
               {/* Moblie Btn Start */}
               <button

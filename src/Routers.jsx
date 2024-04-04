@@ -25,13 +25,16 @@ import StudentProfile from "./Pages/StudentProfile";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <LoginFormik />,
   },
   {
     path: "/EventList",
     element: <ListEvent/>,
   },
-
+  {
+    path: "/home",
+    element: <Home />,
+  },
   {
     path: "/home-2",
     element: <Home2 />,
@@ -56,10 +59,7 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterFormik />,
   },
-  {
-    path: "/login",
-    element: <LoginFormik />,
-  },
+
   {
     path: "/recovery",
     element: <RecoverPassword />,

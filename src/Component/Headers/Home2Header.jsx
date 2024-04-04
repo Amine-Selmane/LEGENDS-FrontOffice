@@ -48,7 +48,7 @@ function Home2Header() {
 
   const userLogout = () => {
     localStorage.removeItem('token');
-    navigate('/login');
+    navigate('/');
     window.location.reload();
   };
   const windowPosition = useWindowPosition();
