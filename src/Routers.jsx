@@ -29,7 +29,7 @@ import StudentProfile from "./Pages/StudentProfile";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginFormik />, 
+    element: <Home />, 
   },
   {
     path: "/checkout-success",
@@ -53,8 +53,8 @@ const router = createBrowserRouter([
     path: "/Cart",
     element: <CartEvent/>,
   },  {
-    path: "/home",
-    element: <Home />,
+    path: "/login",
+    element: <LoginFormik />,
   },
   {
     path: "/home-2",

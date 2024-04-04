@@ -289,7 +289,7 @@ const [profileObj, setProfileObj] = useState(null);
             </div>
             <h5 className="mb-0">Register</h5>
             <small className="pb-4 d-block small" >
-              Already have an account? <Link to="/">Login</Link>
+              Already have an account? <Link to="/login">Login</Link>
             </small>
                 <Formik
                   initialValues={initialValues}
