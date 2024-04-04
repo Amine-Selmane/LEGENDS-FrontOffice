@@ -1,7 +1,6 @@
 export const course = [
   {
     id: 1,
-    title: " Business Study",
     heading: "Learning jQuery Mobile for Beginners",
     lesson: 9,
     student: 76,
@@ -19,7 +18,7 @@ export const course = [
       profile: "#",
       img: "assets/images/home/course/author.png",
     },
-    courseLink: "/single-course",
+    courseLink: "/single-scoure",
     category: ["Web Development"],
   },
   {

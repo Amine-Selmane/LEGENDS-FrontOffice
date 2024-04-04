@@ -3,18 +3,64 @@ import Preloader from "../../Component/Preloader";
 import Header from "../../Component/Headers";
 import Footer from "../../Component/Footer/Footer";
 import Banner from "../../Component/Banner/Banner";
-import { course } from "../../Data/course";
 import FeatureCourseCard from "../../Component/Cards/FeatureCourseCard";
 import { Link } from "react-router-dom";
 import CourseListViewV2 from "../../Component/Cards/CourseListViewV2";
 import LatestCourseCard from "../../Component/Cards/LatestCourseCard";
 import FilterForm from "../../Component/Form/FilterForm";
 import GotoTop from "../../Component/GotoTop";
-
+import axios from "axios";
 function Course3() {
+  /////////////////////////////////////////////////
+  const [query, setQuery] = useState("");
+  const [courses, setCourses] = useState([]);
+  const fetchPosts = async () => {
+    const res = await axios.get('http://localhost:5000/courses/getCourse')
+      .then(res => setCourses(res.data));
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+//////////////////////////////////////////////////////////////
+//////////////////////SEARCHBAR/////////////////////////////
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredCourses, setFilteredCourses] = useState(courses);
+
+  useEffect(() => {
+    const filterCourses = () => {
+      if (searchTerm) {
+        const filtered = courses.filter((course) =>
+          course.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredCourses(filtered);
+      } else {
+        setFilteredCourses(courses); // Reset to all courses when search term is empty
+      }
+    };
+
+    filterCourses();
+  }, [searchTerm, courses]); // Update filteredCourses when searchTerm or courses change
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const searchIcon = document.getElementById('searchIcon');
+  function searchIconDisappearDependingOnEvent () {
+    if (searchTerm) {
+      searchIcon.style.display = 'none';
+    } else {
+      searchIcon.style.display = 'inline-block';
+    }
+  }
+////////////////////////////////////////////////////////////////////
+
+
   const [isLoading, setIsLoading] = useState(true);
   const [activeView, setActiveView] = useState("grid");
   let content = undefined;
+
   useEffect(() => {
     setIsLoading(false);
   }, [isLoading]);
@@ -50,35 +96,30 @@ function Course3() {
                         <i className="icon_menu"></i>List
                       </a>
                     </li>
+
+                    <li>
+                      <form className="search-box" method="post" action="/" style={{ marginLeft: "15px" }}>
+                        <input
+                          type="search"
+                          name="search"
+                          id="searchInput"
+                          placeholder="Search Courses..."
+                          value = {searchTerm}
+                          onChange={handleSearchChange}
+                          onSelect={searchIconDisappearDependingOnEvent}
+                         
+                        />
+                        <button disabled>
+                          <i className="ti-search" id="searchIcon"></i>
+                        </button>
+                      </form>
+                    </li>
                   </ul>
-                  <div className="sorting">
-                    <p>Sort by:</p>
-                    <select name="orderby" className="orderby">
-                      <option value="menu_order" defaultValue="selected">
-                        Default
-                      </option>
-                      <option value="new">Newest Course</option>
-                      <option value="popular">Popular Course</option>
-                      <option value="rating">Average Rating</option>
-                      <option value="price">Low to High</option>
-                      <option value="price-desc">High to Low</option>
-                    </select>
-                  </div>
-                  <form className="search-box" method="post" action="#">
-                    <input
-                      type="search"
-                      name="s"
-                      placeholder="Search Courses..."
-                    />
-                    <button type="submit">
-                      <i className="ti-search"></i>
-                    </button>
-                  </form>
                 </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-9">
+              <div className="col-lg-11">
                 <div className="tab-content">
                   <div
                     className="tab-pane fade show in active"
@@ -90,7 +131,7 @@ function Course3() {
                     }}
                   >
                     <div className="row">
-                      {course.map((item) =>
+                      {filteredCourses.map((item) =>
                         activeView === "grid" ? (
                           <FeatureCourseCard
                             course={item}
@@ -102,78 +143,7 @@ function Course3() {
                         )
                       )}
                     </div>
-                    <div className="row">
-                      <div className="col-lg-12">
-                        <div className="bisylms-pagination">
-                          <span className="current">01</span>
-                          <a>02</a>
-                          <a className="next">
-                            next<i className="arrow_right"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="course-sidebar">
-                  <aside className="widget">
-                    <h3 className="widget-title">Course Categories</h3>
-                    <ul>
-                      <li>
-                        <Link to="/">Web Design</Link>
-                      </li>
-                      <li>
-                        <Link to="/">Marketing</Link>
-                      </li>
-                      <li>
-                        <Link to="/">Frontend</Link>
-                      </li>
-                      <li>
-                        <Link to="/">IT &amp; Software</Link>
-                      </li>
-                      <li>
-                        <Link to="/">Photography</Link>
-                      </li>
-                      <li>
-                        <Link to="/">Technology</Link>
-                      </li>
-                      <li>
-                        <Link to="/">General</Link>
-                      </li>
-                    </ul>
-                  </aside>
-                  <aside className="widget widget-filter">
-                    <h3 className="widget-title">Price Filter</h3>
-                    <FilterForm />
-                  </aside>
-                  <aside className="widget">
-                    <h3 className="widget-title">Latest Courses</h3>
-                    <LatestCourseCard
-                      img="assets/images/course/1.jpg"
-                      name="Using creative problem Solving"
-                      price="24.00"
-                    />
-                    <LatestCourseCard
-                      img="assets/images/course/2.jpg"
-                      name="Fundamentals of UI Design"
-                      price="76.00"
-                      offerPrice="Free"
-                    />
-                    <LatestCourseCard
-                      img="assets/images/course/3.jpg"
-                      name="Making music Other people"
-                      price="76.00"
-                      offerPrice="$46"
-                    />
-                    <LatestCourseCard
-                      img="assets/images/course/4.jpg"
-                      name="Learning jQuery mobile."
-                      price="94.00"
-                      offerPrice="$74.00"
-                    />
-                  </aside>
                 </div>
               </div>
             </div>

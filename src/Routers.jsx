@@ -15,6 +15,8 @@ import Blogs from "./Pages/Blogs";
 import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
 import ListEvent from "./Pages/Events/ListEvent";
+import StudentReport from "./Component/Reports/StudentReport";
+import TeacherReport from "./Component/Reports/TeacherReport";
 import CartEvent from "./Pages/Events/CartEvent";
 import Chekout from "./Pages/Events/Chekout";
 
@@ -31,6 +33,12 @@ const router = createBrowserRouter([
     path: "/EventList",
     element: <ListEvent/>,
   },
+  {path: "/StudentReport",
+  element: <StudentReport/>,
+},
+{path: "/TeacherReport",
+  element: <TeacherReport/>,
+},
   {
     path: "/Cart",
     element: <CartEvent/>,
