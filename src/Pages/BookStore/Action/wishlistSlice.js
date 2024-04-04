@@ -4,8 +4,9 @@ import { toast } from "react-toastify";
 const initialState = {
   items: localStorage.getItem("wishlistItems")
     ? JSON.parse(localStorage.getItem("wishlistItems"))
-    : [],
+    : [], // Provide default value as an empty array if local storage is empty or undefined
 };
+
 
 const wishlistSlice = createSlice({
   name: "wishlist",

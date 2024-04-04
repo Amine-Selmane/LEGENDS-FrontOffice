@@ -3,11 +3,11 @@ import cartReducer from './cartSliceBook';
 import wishlistReducer from './wishlistSlice';
 
 
-const storeBook = configureStore({
+const store = configureStore({
   reducer: {
     cart: cartReducer,
 wishlist:wishlistReducer,
   },
 });
 
-export default storeBook;
+export default store;
