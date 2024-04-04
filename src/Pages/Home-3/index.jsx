@@ -13,6 +13,7 @@ import Home3Teacher from "../../Component/Teachers/Home3Teacher";
 import CallAction from "../../Component/CallAction";
 import Home3Footer from "../../Component/Footer/Home3Footer";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function Home3() {
   const [isLoading, setIsLoading] = useState(true);

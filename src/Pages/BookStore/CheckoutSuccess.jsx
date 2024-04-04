@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, getTotals } from "./Action/cartSlice";
+import { clearCart, getTotal } from "./Action/cartSliceBook";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./style.css" ;
 
@@ -13,7 +13,7 @@ const CheckoutSuccess = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getTotals());
+    dispatch(getTotal());
   }, [cart, dispatch]);
 
   return (

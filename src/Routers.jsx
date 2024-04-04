@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React from 'react';
+
 import Home from "./Pages/Home";
 import Home2 from "./Pages/Home-2";
 import Home3 from "./Pages/Home-3";
@@ -25,6 +27,7 @@ import StudentReport from "./Component/Reports/StudentReport";
 import TeacherReport from "./Component/Reports/TeacherReport";
 import CartEvent from "./Pages/Events/CartEvent";
 import Chekout from "./Pages/Events/Chekout";
+import ListEvent from "./Pages/Events/ListEvent";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +62,7 @@ const router = createBrowserRouter([
     element: <BookList/>,
   },
   {
-    path: "/cart",
+    path: "/cartBook",
     element: <Cart/>,
   }, 
   {
@@ -74,6 +77,11 @@ const router = createBrowserRouter([
 },
 {path: "/TeacherReport",
   element: <TeacherReport/>,
+},
+
+{
+  path: "/EventList",
+  element: <ListEvent/>,
 },
   {
     path: "/Cart",

@@ -6,7 +6,7 @@ import bookImage from './bookImage.jpg';
 import './wishlist.css';
 
 const Wishlist = () => {
-  const wishlist = useSelector((state) => state.wishlist.items);
+const wishlist = useSelector((state) => state.wishlist.items);
   const dispatch = useDispatch();
 
   const handleRemoveFromWishlist = (bookId) => {

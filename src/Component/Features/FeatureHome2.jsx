@@ -1,4 +1,6 @@
 import { course } from "../../Data/course";
+import React from 'react';
+
 import FeatureCard2 from "../Cards/FeatureCard2";
 function FeatureHome2() {
   return (

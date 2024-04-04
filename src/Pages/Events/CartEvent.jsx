@@ -6,6 +6,8 @@ import Banner from "../../Component/Banner/Banner";
 import CallAction from "../../Component/CallAction";
 import GotoTop from "../../Component/GotoTop";
 import PaymentMethods from "./PaymentMethods";
+import React from 'react';
+
 function CartEvent() {
   const [isLoading, setIsLoading] = useState(true);
 

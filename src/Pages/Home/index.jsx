@@ -11,6 +11,7 @@ import Package from "../../Component/Package/Package";
 import Blogs from "../../Component/Blogs/Blogs";
 import Footer from "../../Component/Footer/Footer";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);

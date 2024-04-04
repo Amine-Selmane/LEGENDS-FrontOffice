@@ -10,6 +10,8 @@ import LatestCourseCard from "../../Component/Cards/LatestCourseCard";
 import FilterForm from "../../Component/Form/FilterForm";
 import GotoTop from "../../Component/GotoTop";
 import axios from "axios";
+import React from 'react';
+
 function Course3() {
   /////////////////////////////////////////////////
   const [query, setQuery] = useState("");

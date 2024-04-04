@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, decreaseCart, getTotals, removeFromCart ,addToCart } from "./Action/cartSlice";
+import { clearCart, decreaseCart, getTotal, removeFromCart ,addToCart } from "./Action/cartSliceBook";
 import PayButton from "../BookStore/PayButton";
 import { Link } from "react-router-dom";
 import "./style.css" ;
-import bookImage from './bookImage.jpg';
+import bookImage from "./bookImage.jpg";
+import React from 'react';
 
 
 const Cart = () => {
@@ -12,7 +13,7 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTotals());
+    dispatch(getTotal());
   }, [cart, dispatch]);
 
   const handleDecreaseCart = (_id) => {

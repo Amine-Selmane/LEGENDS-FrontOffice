@@ -1,4 +1,6 @@
 import ProtoTypes from "prop-types";
+import React from 'react';
+
 import { Link } from "react-router-dom";
 const bgCourse = "../../assets/images/course/l2.jpg"
 const bgTeacher = "../../assets/images/course/1.jpg"

@@ -1,4 +1,6 @@
-function Home3Register() {
+import React from 'react';
+
+ function Home3Register() {
   return (
     <section
       className="register-section"

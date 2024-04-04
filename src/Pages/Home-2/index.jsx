@@ -11,6 +11,7 @@ import Pricing from "../../Component/Pricing/Pricing";
 import Customer from "../../Component/Customer/Customer";
 import FooterHome2 from "../../Component/Footer/FooterHome2";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function Home2() {
   const [isLoading, setIsLoading] = useState(true);

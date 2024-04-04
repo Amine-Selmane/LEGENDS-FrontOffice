@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Typography, Button, Pagination, Modal, Rate } from 'antd';
 import { ShoppingCartOutlined, HeartFilled, EyeOutlined, AudioOutlined, AudioMutedOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux'; 
-import { addToCart } from "./Action/cartSlice";
+import { addToCart } from "./Action/cartSliceBook";
 import { addToWishlist } from "./Action/wishlistSlice";
 import axios from 'axios';
 import { Link } from 'react-router-dom'; 

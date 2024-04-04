@@ -2,6 +2,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { course } from "../../Data/course";
 import CourseListView from "../Cards/CourseListView";
+import React from 'react';
+
 function CourseHome3() {
   const pagination = {
     clickable: true,

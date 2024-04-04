@@ -23,26 +23,26 @@ const store = configureStore({
 
 store.dispatch(getTotals());
 
-import { configureStore } from "@reduxjs/toolkit";
-import { Provider } from "react-redux";
-import cartReducer, { getTotals } from "./Pages/BookStore/Action/cartSlice.js";
+import cartBookReducer, { getTotal } from "./Pages/BookStore/Action/cartSliceBook.js";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import wishlistReducer from "./Pages/BookStore/Action/wishlistSlice.js";
 
-const store = configureStore({
+const storeBook = configureStore({
   reducer: {
-    cart: cartReducer,
+    cart: cartBookReducer,
     wishlist: wishlistReducer,
 
     
   },
 });
 
-store.dispatch(getTotals());
+storeBook.dispatch(getTotal());
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+   
+    <Provider store={storeBook}>
       <App />
       <ToastContainer />
       

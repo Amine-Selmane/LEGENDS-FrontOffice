@@ -2,6 +2,7 @@ import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
 const bgCourse = "../../assets/images/course/l2.jpg"
 const bgTeacher = "../../assets/images/course/1.jpg"
+import React from 'react';
 
 function FeatureCourseCard({ course, className, swiper }) {
   const {

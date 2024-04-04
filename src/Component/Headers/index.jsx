@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useWindowPosition from "../../Hooks/useWindowPosition";
 import {  FaHeart } from 'react-icons/fa'; // Import the heart and cart icons from Font Awesome
 import { useSelector } from 'react-redux'; // Import useSelector hook to retrieve data from Redux store
-import { selectCartItems } from '../../Pages/BookStore/Action/cartSlice'; // Import the selector function for cart items
+import { selectCartItems } from '../../Pages/BookStore/Action/cartSliceBook'; // Import the selector function for cart items
 
 function Header({ className, logo, joinBtn, search }) {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
@@ -333,7 +333,7 @@ function Header({ className, logo, joinBtn, search }) {
                 </form>
               )}
                     {/* Basket Icon */}
-              <Link to="/cart" className="basket-icon">
+              <Link to="/cartBook" className="basket-icon">
                 <i className="fas fa-shopping-cart" style={{ color: 'white', fontSize: '24px', marginRight: '10px' }}>
                   {cartItems.length > 0 && <span className="badge">{cartItems.length}</span>} {/* Display the number of items in the cart */}
                 </i>

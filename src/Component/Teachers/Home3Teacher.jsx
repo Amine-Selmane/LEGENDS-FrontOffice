@@ -1,6 +1,7 @@
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Home3TeacherCard from "../Cards/Home3TeacherCard";
+import React from 'react';
 
 function Home3Teacher({ className, btnClass }) {
   return (

@@ -1,7 +1,7 @@
 import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART } from './cartActionTypes';
 
 // Action creators for adding an item to the cart
-export const addToCart = (item) => {
+export const addToCartBook = (item) => {
   return {
     type: ADD_TO_CART,
     payload: item
