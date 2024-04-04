@@ -189,6 +189,9 @@ function Home3Header() {
                       </li>
                     </ul>
                   </li>
+                  <li>
+                        <Link to="/TeacherReport">Reports</Link>
+                      </li>
                   <li
                     className="menu-item-has-children"
                     name="pages"
