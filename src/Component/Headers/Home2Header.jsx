@@ -150,7 +150,7 @@ function Home2Header() {
                         <Link to="/EventList">List Of Events</Link>
                       </li>
                       <li>
-                        <Link to="/Card">My Card</Link>
+                        <Link to="/Cart">My Card</Link>
                       </li>
                     </ul>
                   </li>
@@ -307,7 +307,7 @@ function Home2Header() {
       <DropdownToggle color="transparent" className="nav-link dropdown-toggle d-flex align-items-center">
         {/* Image de profil à gauche du bouton dropdown */}
         <div className="rounded-circle overflow-hidden mr-2" style={{ width: '30px', height: '30px' }}>
-          <img src={userData.profile || user1} alt="profile" className="w-100 h-100 object-fit-cover" />
+          <img src={userData.profile } alt="profile" className="w-100 h-100 object-fit-cover" />
         </div>
         <div>
           <p className="mb-0 font-weight-bold" style={{ fontSize: '1.2em' }}>{userData.firstName} {userData.lastName}</p>
