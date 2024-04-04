@@ -17,11 +17,17 @@ import Contact from "./Pages/Contact";
 import ListEvent from "./Pages/Events/ListEvent";
 import StudentReport from "./Component/Reports/StudentReport";
 import TeacherReport from "./Component/Reports/TeacherReport";
+import CartEvent from "./Pages/Events/CartEvent";
+import Chekout from "./Pages/Events/Chekout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/checkout-success",
+    element: <Chekout/>,
   },
   {
     path: "/EventList",
@@ -33,7 +39,10 @@ const router = createBrowserRouter([
 {path: "/TeacherReport",
   element: <TeacherReport/>,
 },
-
+  {
+    path: "/Cart",
+    element: <CartEvent/>,
+  },
   {
     path: "/home-2",
     element: <Home2 />,

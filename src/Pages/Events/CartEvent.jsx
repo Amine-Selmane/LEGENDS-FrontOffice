@@ -5,9 +5,8 @@ import Footer from "../../Component/Footer/Footer";
 import Banner from "../../Component/Banner/Banner";
 import CallAction from "../../Component/CallAction";
 import GotoTop from "../../Component/GotoTop";
-import Events from "./Events"; // Import the Event component
-
-function EventList() {
+import PaymentMethods from "./PaymentMethods";
+function CartEvent() {
   const [isLoading, setIsLoading] = useState(true);
 
   let content = undefined;
@@ -21,13 +20,13 @@ function EventList() {
     content = (
       <>
         <Header logo="assets/images/kindy.png" joinBtn={true} />
-        <Banner title="Events" background="assets/images/banner3.jpg" />
+        <Banner title="Booking Cart" background="assets/images/banner3.jpg" />
         <section className="coursepage-section">
           <div className="container">
             <div className="row">
               <div className="col-md-12">
                 {/* Use the Event component here */}
-                <Events />
+                <PaymentMethods />
               </div>
             </div>
           </div>
@@ -41,7 +40,7 @@ function EventList() {
   return content;
 }
 
-export default EventList;
+export default CartEvent;
 
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
