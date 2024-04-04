@@ -21,11 +21,19 @@ import ShowBook from "./Pages/BookStore/ShowBook";
 import CheckoutSuccess from "./Pages/BookStore/CheckoutSuccess";
 import Wishlist from "./Pages/BookStore/wishlist";
 import OrderHistory from "./Pages/BookStore/OrderHistory";
+import StudentReport from "./Component/Reports/StudentReport";
+import TeacherReport from "./Component/Reports/TeacherReport";
+import CartEvent from "./Pages/Events/CartEvent";
+import Chekout from "./Pages/Events/Chekout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/checkout-success",
+    element: <Chekout/>,
   },
   {
     path: "/wishlist",
@@ -61,7 +69,16 @@ const router = createBrowserRouter([
  
  
  
-
+  {path: "/StudentReport",
+  element: <StudentReport/>,
+},
+{path: "/TeacherReport",
+  element: <TeacherReport/>,
+},
+  {
+    path: "/Cart",
+    element: <CartEvent/>,
+  },
   {
     path: "/home-2",
     element: <Home2 />,
