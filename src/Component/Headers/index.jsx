@@ -9,9 +9,8 @@ function Header({ className, logo, joinBtn, search }) {
   const windowPosition = useWindowPosition();
   return (
     <header
-      className={`${className ? className : "header-01"} sticky ${
-        windowPosition > 0 && "fix-header animated fadeInDown"
-      } `}
+      className={`${className ? className : "header-01"} sticky ${windowPosition > 0 && "fix-header animated fadeInDown"
+        } `}
     >
       <div className="container">
         <div className="row">
@@ -55,11 +54,10 @@ function Header({ className, logo, joinBtn, search }) {
                     <a>Home</a>
                     <span className="submenu-toggler">
                       <i
-                        className={`fal ${
-                          activeMobileSubMenu === "home"
+                        className={`fal ${activeMobileSubMenu === "home"
                             ? "fa-minus"
                             : "fa-plus"
-                        }`}
+                          }`}
                       ></i>
                     </span>
                     <ul
@@ -80,7 +78,7 @@ function Header({ className, logo, joinBtn, search }) {
                     </ul>
                   </li>
 
-            {/* Events */}
+                  {/* Events */}
                   <li
                     className="menu-item-has-children"
                     onClick={() =>
@@ -92,11 +90,10 @@ function Header({ className, logo, joinBtn, search }) {
                     <a>Events</a>
                     <span className="submenu-toggler">
                       <i
-                        className={`fal ${
-                          activeMobileSubMenu === "Events"
+                        className={`fal ${activeMobileSubMenu === "Events"
                             ? "fa-minus"
                             : "fa-plus"
-                        }`}
+                          }`}
                       ></i>
                     </span>
                     <ul
@@ -109,7 +106,7 @@ function Header({ className, logo, joinBtn, search }) {
                         <Link to="/EventList">List Of Events</Link>
                       </li>
                       <li>
-                        <Link to="/Card">My Card</Link>
+                        <Link to="/Cart">My Card</Link>
                       </li>
                     </ul>
                   </li>
@@ -125,11 +122,10 @@ function Header({ className, logo, joinBtn, search }) {
                     <a>Courses</a>
                     <span className="submenu-toggler">
                       <i
-                        className={`fal ${
-                          activeMobileSubMenu === "course"
+                        className={`fal ${activeMobileSubMenu === "course"
                             ? "fa-minus"
                             : "fa-plus"
-                        }`}
+                          }`}
                       ></i>
                     </span>
                     <ul
@@ -139,18 +135,14 @@ function Header({ className, logo, joinBtn, search }) {
                       }}
                     >
                       <li>
-                        <Link to="/course-1">Course 01</Link>
-                      </li>
-                      <li>
-                        <Link to="/course-2">Course 02</Link>
-                      </li>
-                      <li>
-                        <Link to="/course-3">Course 03</Link>
-                      </li>
-                      <li>
-                        <Link to="/single-course">Course Details</Link>
+                        <Link to="/course-3">Courses Catalog</Link>
                       </li>
                     </ul>
+                  </li>
+                  {/* Reports */}
+
+                  <li>
+                    <Link to="/StudentReport">Reports</Link>
                   </li>
                   <li
                     className="menu-item-has-children"
@@ -162,19 +154,18 @@ function Header({ className, logo, joinBtn, search }) {
                             ? "pages"
                             : e.target.name
                           : activeMobileSubMenu === "pages"
-                          ? false
-                          : "pages"
+                            ? false
+                            : "pages"
                       );
                     }}
                   >
                     <a>Pages</a>
                     <span className="submenu-toggler">
                       <i
-                        className={`fal ${
-                          activeMobileSubMenu === "pages"
+                        className={`fal ${activeMobileSubMenu === "pages"
                             ? "fa-minus"
                             : "fa-plus"
-                        }`}
+                          }`}
                       ></i>
                     </span>
                     <ul
@@ -189,11 +180,10 @@ function Header({ className, logo, joinBtn, search }) {
                         <a name="aboutPages">About Pages</a>
                         <span className="submenu-toggler" name="aboutPages">
                           <i
-                            className={`fal ${
-                              activeMobileSubMenu === "aboutPages"
+                            className={`fal ${activeMobileSubMenu === "aboutPages"
                                 ? "fa-minus"
                                 : "fa-plus"
-                            }`}
+                              }`}
                             name="aboutPages"
                           ></i>
                         </span>
@@ -234,11 +224,10 @@ function Header({ className, logo, joinBtn, search }) {
                     <a>Blog</a>
                     <span className="submenu-toggler">
                       <i
-                        className={`fal ${
-                          activeMobileSubMenu === "blog"
+                        className={`fal ${activeMobileSubMenu === "blog"
                             ? "fa-minus"
                             : "fa-plus"
-                        }`}
+                          }`}
                       ></i>
                     </span>
                     <ul

@@ -15,6 +15,10 @@ import Blogs from "./Pages/Blogs";
 import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
 import ListEvent from "./Pages/Events/ListEvent";
+import StudentReport from "./Component/Reports/StudentReport";
+import TeacherReport from "./Component/Reports/TeacherReport";
+import CartEvent from "./Pages/Events/CartEvent";
+import Chekout from "./Pages/Events/Chekout";
 import RegisterFormik from "./Component/auth/RegisterFormik";
 import LoginFormik from "./Component/auth/LoginFormik";
 import RecoverPassword from "./Component/auth/RecoverPassword";
@@ -25,13 +29,30 @@ import StudentProfile from "./Pages/StudentProfile";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginFormik />,
+    element: <LoginFormik />, 
+  },
+  {
+    path: "/checkout-success",
+    element: <Chekout/>,
+  },
+  {
+    path: "/checkout-success",
+    element: <Chekout/>,
   },
   {
     path: "/EventList",
     element: <ListEvent/>,
   },
+  {path: "/StudentReport",
+  element: <StudentReport/>,
+},
+{path: "/TeacherReport",
+  element: <TeacherReport/>,
+},
   {
+    path: "/Cart",
+    element: <CartEvent/>,
+  },  {
     path: "/home",
     element: <Home />,
   },
