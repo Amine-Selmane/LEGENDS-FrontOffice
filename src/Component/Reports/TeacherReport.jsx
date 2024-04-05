@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Header from '../../Component/Headers';
+import Home3Header from "../../Component/Headers/Home3Header";
+import Home2Header from "../../Component/Headers/Home2Header";
 import Footer from '../../Component/Footer/Footer';
 import Banner from '../../Component/Banner/Banner';
 import CallAction from '../../Component/CallAction';
@@ -16,6 +18,7 @@ const TeacherReport = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(true); // Déclaration de la variable isFormVisible
     const [userFullName, setUserFullName] = useState('');
+    const [userData, setUserData] = useState(null);
     const loginFormRef = useRef(null);
 
     const handleLogin = async () => {
@@ -72,11 +75,36 @@ const TeacherReport = () => {
         const totalMark = teacherReports.reduce((accumulator, report) => accumulator + report.mark, 0);
         return (totalMark / teacherReports.length).toFixed(2);
     };
+    useEffect(() => {
+        const fetchUserData = async () => {
+          try {
+            const token = localStorage.getItem("token");
+            if (token) {
+              const response = await axios.get("http://localhost:5000/api/userToken", {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              setUserData(response.data);
+            }
+          } catch (error) {
+            console.error("Error fetching user data:", error.message);
+          }
+        };
     
+        fetchUserData();
+        setIsLoading(false);
+      }, []);
+
+      useEffect(() => {
+        setIsLoading(false);
+      }, [isLoading]);
 
     return (
         <div className="student-report">
-            <Header logo="assets/images/logo4.png" joinBtn={true} />
+            {userData?.role === "student" && <Home2Header />}
+            {userData?.role === "teacher" && <Home3Header />}
+            {!userData && <Header logo="assets/images/kindy.png" joinBtn={true} />}
             <Banner title="Teacher Home" background="assets/images/banner.jpg" />
 
             <section className="coursepage-section">
