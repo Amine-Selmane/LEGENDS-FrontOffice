@@ -13,7 +13,6 @@ import InstructorProfile from "../../Pages/InstructorProfile";
 import { Envelope, Person, PersonFill } from 'react-bootstrap-icons'; // Import des icônes nécessaires
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { Link } from "react-router-dom";
 import React from 'react';
 
 function Home3Header() {
