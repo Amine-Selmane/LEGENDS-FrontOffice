@@ -87,41 +87,15 @@ function Home2Header() {
                 style={{ display: activeMobileMenu && "block" }}
               >
                 <ul className="navbar-nav">
-                  <li
-                    className="menu-item-has-children"
-                    onClick={() =>
-                      setActiveSubMobileMenu(
-                        activeMobileSubMenu === "home" ? false : "home"
-                      )
-                    }
-                  >
-                    <a>Home</a>
-                    <span className="submenu-toggler">
-                      <i
-                        className={`fal ${
-                          activeMobileSubMenu === "home"
-                            ? "fa-minus"
-                            : "fa-plus"
-                        }`}
-                      ></i>
-                    </span>
-                    <ul
-                      className="sub-menu"
-                      style={{
-                        display: activeMobileSubMenu === "home" && "block",
-                      }}
-                    >
+                 
+                    
+                    
+                     
                       <li>
-                        <Link to="/">Home One</Link>
+                        <Link to="/home-2">Home</Link>
                       </li>
-                      <li>
-                        <Link to="/home-2">Home Two</Link>
-                      </li>
-                      <li>
-                        <Link to="/home-3">Home Three</Link>
-                      </li>
-                    </ul>
-                  </li>
+                     
+                  
                   <li
                     className="menu-item-has-children"
                     onClick={() =>
@@ -154,7 +128,8 @@ function Home2Header() {
                       </li>
                     </ul>
                   </li>
-                  <li
+                 
+                   <li
                     className="menu-item-has-children"
                     onClick={() =>
                       setActiveSubMobileMenu(
@@ -165,11 +140,10 @@ function Home2Header() {
                     <a>Courses</a>
                     <span className="submenu-toggler">
                       <i
-                        className={`fal ${
-                          activeMobileSubMenu === "course"
+                        className={`fal ${activeMobileSubMenu === "course"
                             ? "fa-minus"
                             : "fa-plus"
-                        }`}
+                          }`}
                       ></i>
                     </span>
                     <ul
@@ -179,125 +153,13 @@ function Home2Header() {
                       }}
                     >
                       <li>
-                        <Link to="/course-1">Course 01</Link>
-                      </li>
-                      <li>
-                        <Link to="/course-2">Course 02</Link>
-                      </li>
-                      <li>
-                        <Link to="/course-3">Course 03</Link>
-                      </li>
-                      <li>
-                        <Link to="/single-course">Course Details</Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li
-                    className="menu-item-has-children"
-                    name="pages"
-                    onClick={(e) => {
-                      setActiveSubMobileMenu(
-                        e.target.name
-                          ? e.target.name === activeMobileSubMenu
-                            ? "pages"
-                            : e.target.name
-                          : activeMobileSubMenu === "pages"
-                          ? false
-                          : "pages"
-                      );
-                    }}
-                  >
-                    <a>Pages</a>
-                    <span className="submenu-toggler">
-                      <i
-                        className={`fal ${
-                          activeMobileSubMenu === "pages"
-                            ? "fa-minus"
-                            : "fa-plus"
-                        }`}
-                      ></i>
-                    </span>
-                    <ul
-                      className="sub-menu"
-                      style={{
-                        display:
-                          (activeMobileSubMenu === "pages" && "block") ||
-                          (activeMobileSubMenu === "aboutPages" && "block"),
-                      }}
-                    >
-                      <li className="menu-item-has-children">
-                        <a name="aboutPages">About Pages</a>
-                        <span className="submenu-toggler" name="aboutPages">
-                          <i
-                            className={`fal ${
-                              activeMobileSubMenu === "aboutPages"
-                                ? "fa-minus"
-                                : "fa-plus"
-                            }`}
-                            name="aboutPages"
-                          ></i>
-                        </span>
-                        <ul
-                          className="sub-menu"
-                          style={{
-                            display:
-                              activeMobileSubMenu === "aboutPages" && "block",
-                          }}
-                        >
-                          <li>
-                            <Link to="/about-1">About 01</Link>
-                          </li>
-                          <li>
-                            <Link to="/about-2">About 02</Link>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <Link to="/instructor">Instructor Page</Link>
-                      </li>
-                      <li>
-                        <Link to="/profilestudent">Profile</Link>
-                      </li>
-                      <li>
-                        <Link to="/404">404 Page</Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li
-                    className="menu-item-has-children"
-                    onClick={() =>
-                      setActiveSubMobileMenu(
-                        activeMobileSubMenu === "blog" ? false : "blog"
-                      )
-                    }
-                  >
-                    <a>Blog</a>
-                    <span className="submenu-toggler">
-                      <i
-                        className={`fal ${
-                          activeMobileSubMenu === "blog"
-                            ? "fa-minus"
-                            : "fa-plus"
-                        }`}
-                      ></i>
-                    </span>
-                    <ul
-                      className="sub-menu"
-                      style={{
-                        display: activeMobileSubMenu === "blog" && "block",
-                      }}
-                    >
-                      <li>
-                        <Link to="/blog">Blog Page</Link>
-                      </li>
-                      <li>
-                        <Link to="/single-post">Blog Details</Link>
+                        <Link to="/course-3">Courses Catalog</Link>
                       </li>
                     </ul>
                   </li>
                   <li>
-                    <Link to="/contact">Contact</Link>
-                  </li>
+                        <Link to="/StudentReport">Reports</Link>
+                      </li>
                 </ul>
               </div>
               {/* Nav Menu End  */}
