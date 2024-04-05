@@ -1,3 +1,5 @@
+import React from 'react';
+
 function About() {
   return (
     <section className="abpage-section-1">

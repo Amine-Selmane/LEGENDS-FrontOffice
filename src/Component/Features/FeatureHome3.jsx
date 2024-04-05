@@ -1,3 +1,5 @@
+import React from 'react';
+
 function FeatureHome3() {
   return (
     <section className="feature-section">

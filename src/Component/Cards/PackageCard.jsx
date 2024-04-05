@@ -1,5 +1,7 @@
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
+import React from 'react';
+
 const offSlide = {
   opacity: "0",
   transform: "matrix(0.9, 0, 0, 0.9, 0, -120)",

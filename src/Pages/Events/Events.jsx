@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { addToCart } from "./Action/cartSlice";
+import React from 'react';
 
 function Event() {
   const [events, setEvents] = useState([]);

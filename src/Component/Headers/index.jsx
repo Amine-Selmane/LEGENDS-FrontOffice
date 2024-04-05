@@ -1,12 +1,19 @@
 import ProtoTypes from "prop-types";
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import useWindowPosition from "../../Hooks/useWindowPosition";
+import {  FaHeart } from 'react-icons/fa'; // Import the heart and cart icons from Font Awesome
+import { useSelector } from 'react-redux'; // Import useSelector hook to retrieve data from Redux store
+import { selectCartItems } from '../../Pages/BookStore/Action/cartSliceBook'; // Import the selector function for cart items
 
 function Header({ className, logo, joinBtn, search }) {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);
   const windowPosition = useWindowPosition();
+  const cartItems = useSelector(selectCartItems); // Retrieve cart items from Redux store
+
+
+
   return (
     <header
       className={`${className ? className : "header-01"} sticky ${windowPosition > 0 && "fix-header animated fadeInDown"
@@ -87,6 +94,8 @@ function Header({ className, logo, joinBtn, search }) {
                     </ul>
                   </li>
 
+                 
+                  
                   <li
                     className="menu-item-has-children"
                     onClick={() =>
@@ -115,7 +124,42 @@ function Header({ className, logo, joinBtn, search }) {
                       </li>
                     </ul>
                   </li>
-       
+                              {/* Books */}
+
+                  <li
+                    className="menu-item-has-children"
+                    onClick={() =>
+                      setActiveSubMobileMenu(
+                        activeMobileSubMenu === "Books" ? false : "Books"
+                      )
+                    }
+                  >
+                    <a>Book Store</a>
+                    <span className="submenu-toggler">
+                      <i
+                        className={`fal ${
+                          activeMobileSubMenu === "Books"
+                            ? "fa-minus"
+                            : "fa-plus"
+                        }`}
+                      ></i>
+                    </span>
+                    <ul
+                      className="sub-menu"
+                      style={{
+                        display: activeMobileSubMenu === "Books" && "block",
+                      }}
+                    >
+                      <li>
+                        <Link to="/books">Books</Link>
+                      </li>
+                     
+                    
+
+                    </ul>
+                    </li>
+
+                  {/* Reports */}
 
                   
                  
@@ -138,7 +182,16 @@ function Header({ className, logo, joinBtn, search }) {
                   Join Us! 
                 </a>
               )}
+                {/* Nav Menu Start  */}
+                <div
+                className="collapse navbar-collapse"
+                style={{ display: activeMobileMenu && "block" }}
+              >
+                {/* Your navigation menu */}
+              </div>
+              {/* Nav Menu End  */}
 
+             
               {/* Join Btn   */}
               {search && (
                 <form className="search-box" method="post" action="#">
@@ -152,6 +205,17 @@ function Header({ className, logo, joinBtn, search }) {
                   </button>
                 </form>
               )}
+                    {/* Basket Icon */}
+              <Link to="/cartBook" className="basket-icon">
+                <i className="fas fa-shopping-cart" style={{ color: 'white', fontSize: '24px', marginRight: '10px' }}>
+                  {cartItems.length > 0 && <span className="badge">{cartItems.length}</span>} {/* Display the number of items in the cart */}
+                </i>
+              </Link>
+              
+              {/* Heart Icon for Wishlist */}
+              <Link to="/wishlist" className="wishlist-icon">
+                <FaHeart style={{ color: 'white', fontSize: '24px', marginLeft: '10px' }} />
+              </Link>
             </nav>
           </div>
         </div>

@@ -1,4 +1,6 @@
 import ProtoTypes from "prop-types";
+import React from 'react';
+
 function TestimonialCard({ img, name, position, comment }) {
   return (
     <div className="testimonial-item">

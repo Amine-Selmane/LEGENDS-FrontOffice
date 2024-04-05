@@ -11,6 +11,8 @@ import CallAction from "../../Component/CallAction";
 import GotoTop from "../../Component/GotoTop";
 import PaymentMethods from "./PaymentMethods";
 
+import React from 'react';
+
 function CartEvent() {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);

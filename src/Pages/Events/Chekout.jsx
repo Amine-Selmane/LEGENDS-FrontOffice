@@ -6,6 +6,8 @@ import Banner from "../../Component/Banner/Banner";
 import CallAction from "../../Component/CallAction";
 import GotoTop from "../../Component/GotoTop";
 import CheckoutSuccess from "./CheckoutSuccess";
+import React from 'react';
+
 
 function Chekout() {
   const [isLoading, setIsLoading] = useState(true);

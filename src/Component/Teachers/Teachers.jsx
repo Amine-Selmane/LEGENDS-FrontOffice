@@ -1,6 +1,7 @@
 import TeacherCard from "../Cards/TeacherCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import React from 'react';
 
 function Teachers() {
   const pagination = {

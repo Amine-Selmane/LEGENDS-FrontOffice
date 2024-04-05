@@ -13,6 +13,8 @@ import InstructorProfile from "../../Pages/InstructorProfile";
 import { Envelope, Person, PersonFill } from 'react-bootstrap-icons'; // Import des icônes nécessaires
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+
 function Home3Header() {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);

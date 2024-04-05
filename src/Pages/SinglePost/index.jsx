@@ -7,6 +7,7 @@ import DetailsSideBar from "../../Component/Blogs/DetailsSideBar";
 import CommentForm from "../../Component/Form/CommentForm";
 import Comment from "../../Component/Comment/Comment";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function SinglePost() {
   const [isLoading, setIsLoading] = useState(true);

@@ -8,6 +8,7 @@ import CourseListView from "../../Component/Cards/CourseListView";
 import FeatureCourseCard from "../../Component/Cards/FeatureCourseCard";
 import { Link } from "react-router-dom";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function Course2() {
   const [isLoading, setIsLoading] = useState(true);

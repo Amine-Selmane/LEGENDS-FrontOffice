@@ -5,6 +5,7 @@ import Footer from "../../Component/Footer/Footer";
 import Banner from "../../Component/Banner/Banner";
 import TeacherCard from "../../Component/Cards/TeacherCard";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function Instructor() {
   const [isLoading, setIsLoading] = useState(true);

@@ -11,6 +11,7 @@ import { Pagination } from "swiper/modules";
 import LatestCourseCard from "../../Component/Cards/LatestCourseCard";
 import ReviewForm from "../../Component/Form/ReviewForm";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function CourseSingle() {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,5 +1,6 @@
 import { blogs } from "../../Data/blog";
 import BlogCard from "../Cards/BlogCard";
+import React from 'react';
 
 function Blogs() {
   return (

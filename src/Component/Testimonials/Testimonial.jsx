@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import TestimonialCard from "../Cards/TestimonialCard";
 import { Autoplay } from "swiper/modules";
+import React from 'react';
 
 function Testimonial() {
   return (

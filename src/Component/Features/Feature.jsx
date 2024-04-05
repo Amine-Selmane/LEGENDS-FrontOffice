@@ -1,4 +1,6 @@
 import { useState } from "react";
+import React from 'react';
+
 import { course } from "../../Data/course";
 import FeatureCard from "../Cards/FeatureCard";
 function Feature() {

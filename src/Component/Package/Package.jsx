@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PackageCard from "../Cards/PackageCard";
+import React from 'react';
 
 function Package() {
   const [carusole, setCarusole] = useState({

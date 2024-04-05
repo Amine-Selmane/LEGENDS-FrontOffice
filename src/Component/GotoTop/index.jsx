@@ -1,5 +1,7 @@
 import useWindowPosition from "../../Hooks/useWindowPosition";
 
+import React from 'react';
+
 function GotoTop() {
   const scrollPosition = useWindowPosition();
   const scrollToTop = () => {

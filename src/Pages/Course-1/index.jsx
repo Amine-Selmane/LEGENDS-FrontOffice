@@ -8,6 +8,7 @@ import FeatureCard from "../../Component/Cards/FeatureCard";
 import CourseListView from "../../Component/Cards/CourseListView";
 import CallAction from "../../Component/CallAction";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function Course1() {
   const [isLoading, setIsLoading] = useState(true);

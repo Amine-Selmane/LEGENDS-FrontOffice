@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React from 'react';
+
 import Home from "./Pages/Home";
 import Home2 from "./Pages/Home-2";
 import Home3 from "./Pages/Home-3";
@@ -14,7 +16,13 @@ import Error from "./Pages/Error";
 import Blogs from "./Pages/Blogs";
 import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
-import ListEvent from "./Pages/Events/ListEvent";
+import BookList from "./Pages/BookStore/BookList";
+import Cart from "./Pages/BookStore/Cart";
+import ChatComponent from "./Pages/BookStore/ChatComponent";
+import ShowBook from "./Pages/BookStore/ShowBook";
+import CheckoutSuccess from "./Pages/BookStore/CheckoutSuccess";
+import Wishlist from "./Pages/BookStore/wishlist";
+import OrderHistory from "./Pages/BookStore/OrderHistory";
 import StudentReport from "./Component/Reports/StudentReport";
 import TeacherReport from "./Component/Reports/TeacherReport";
 import CartEvent from "./Pages/Events/CartEvent";
@@ -25,6 +33,7 @@ import RecoverPassword from "./Component/auth/RecoverPassword";
 import Maintanance from "./Component/auth/Maintanance";
 import LockScreen from "./Component/auth/LockScreen";
 import StudentProfile from "./Pages/StudentProfile";
+import ListEvent from "./Pages/Events/ListEvent";
 
 const router = createBrowserRouter([
   {
@@ -35,19 +44,51 @@ const router = createBrowserRouter([
     path: "/checkout-success",
     element: <Chekout/>,
   },
+  
   {
-    path: "/checkout-success",
-    element: <Chekout/>,
+    path: "/wishlist",
+    element: < Wishlist/>,
+  },
+  
+  {
+    path: "/books/details/:id",
+    element: <ShowBook/>,
+  },
+   
+  {
+    path: "/book/checkout-success",
+    element: <CheckoutSuccess/>,
   },
   {
-    path: "/EventList",
-    element: <ListEvent/>,
+    path: "/History",
+    element: <OrderHistory/>,
   },
+  
+ {
+    path: "/books",
+    element: <BookList/>, 
+  },
+  {
+    path: "/cartBook",
+    element: <Cart/>,
+  }, 
+  {
+    path: "/chat",
+    element: <ChatComponent/>,
+  }, 
+ 
+ 
+ 
   {path: "/StudentReport",
   element: <StudentReport/>,
 },
 {path: "/TeacherReport",
   element: <TeacherReport/>,
+},
+
+{
+  path: "/EventList",
+  element: <ListEvent/>,
 },
   {
     path: "/Cart",
