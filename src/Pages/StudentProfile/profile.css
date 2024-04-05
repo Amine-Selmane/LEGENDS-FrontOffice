@@ -1,0 +1,68 @@
+/* Profile Section
+
+  
+  /* .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .teacher-profile {
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 0.3s ease;
+    width: 300px;
+    left: -50px ;
+  }
+  
+  .teacher-profile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .teacher-thumb img {
+    display: block;
+    width: 100%;
+    border-radius: 50%;
+  }
+  
+  .teacher-meta {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .teacher-meta h5 {
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .teacher-meta p {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .teacher-meta .card-subtitle {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 5px;
+  }
+  
+  .teacher-meta .card-title {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .teacher-meta .border-top {
+    border-top: 1px solid #e5e5e5;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+  
+  .teacher-meta .card-title:last-child {
+    margin-bottom: 0;
+  }
+   */

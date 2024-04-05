@@ -28,7 +28,7 @@ function Header({ className, logo, joinBtn, search }) {
                 <img src={logo} alt="" />
                 <img
                   className="sticky-logo"
-                  src="assets/images/logo4.png"
+                  src="assets/images/logo.png"
                   alt=""
                 />
               </Link>
@@ -297,7 +297,7 @@ function Header({ className, logo, joinBtn, search }) {
 
               {/*  User Btn  */}
               {className !== "header-02" && (
-                <a href="#" className="user-btn">
+                <a href="/login" className="user-btn">
                   <i className="ti-user"></i>
                 </a>
               )}
@@ -305,8 +305,8 @@ function Header({ className, logo, joinBtn, search }) {
 
               {/* Join Btn  */}
               {joinBtn && (
-                <a href="#" className="join-btn">
-                  Join for Free
+                <a href="/register" className="join-btn">
+                  Join Us! 
                 </a>
               )}
                 {/* Nav Menu Start  */}

@@ -3,7 +3,7 @@ import Preloader from "../../Component/Preloader";
 import Header from "../../Component/Headers";
 import Footer from "../../Component/Footer/Footer";
 import Banner from "../../Component/Banner/Banner";
-import Home3Header from "../../Component/Headers/Home3Header";
+import Home2Header from "../../Component/Headers/Home2Header";
 import axios from 'axios'; // Import Axios for making HTTP requests
 import { format } from 'date-fns';
 import converToBase64 from '../../Component/helper/convert';
@@ -29,7 +29,9 @@ import { course } from "../../Data/course";
 import FeatureCourseCard from "../../Component/Cards/FeatureCourseCard";
 import { Link } from "react-router-dom";
 import GotoTop from "../../Component/GotoTop";
-import React from 'react';
+//import './profile.css';
+
+
 
 const Courses = [
   {
@@ -274,7 +276,7 @@ function StudentProfile() {
     content = (
       <>
 
-        <Home3Header />
+        <Home2Header />
        
         <section className="profile-section">
         {userData && (

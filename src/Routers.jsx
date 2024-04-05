@@ -27,12 +27,26 @@ import StudentReport from "./Component/Reports/StudentReport";
 import TeacherReport from "./Component/Reports/TeacherReport";
 import CartEvent from "./Pages/Events/CartEvent";
 import Chekout from "./Pages/Events/Chekout";
+import RegisterFormik from "./Component/auth/RegisterFormik";
+import LoginFormik from "./Component/auth/LoginFormik";
+import RecoverPassword from "./Component/auth/RecoverPassword";
+import Maintanance from "./Component/auth/Maintanance";
+import LockScreen from "./Component/auth/LockScreen";
+import StudentProfile from "./Pages/StudentProfile";
 import ListEvent from "./Pages/Events/ListEvent";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Home />, 
+  },
+  {
+    path: "/checkout-success",
+    element: <Chekout/>,
+  },
+  {
+    path: "/checkout-success",
+    element: <Chekout/>,
   },
   {
     path: "/checkout-success",
@@ -59,7 +73,7 @@ const router = createBrowserRouter([
   
  {
     path: "/books",
-    element: <BookList/>,
+    element: <BookList/>, 
   },
   {
     path: "/cartBook",
@@ -86,6 +100,9 @@ const router = createBrowserRouter([
   {
     path: "/Cart",
     element: <CartEvent/>,
+  },  {
+    path: "/login",
+    element: <LoginFormik />,
   },
   {
     path: "/home-2",
@@ -108,6 +125,23 @@ const router = createBrowserRouter([
     element: <Course3 />,
   },
   {
+    path: "/register",
+    element: <RegisterFormik />,
+  },
+
+  {
+    path: "/recovery",
+    element: <RecoverPassword />,
+  },
+  {
+    path: "/otp",
+    element: <Maintanance />,
+  },
+  {
+    path: "/reset",
+    element: <LockScreen />,
+  },
+  {
     path: "/single-course",
     element: <CourseSingle />,
   },
@@ -126,6 +160,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <InstructorProfile />,
+  },
+  {
+    path: "/profilestudent",
+    element: <StudentProfile />,
   },
   {
     path: "/blog",

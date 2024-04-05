@@ -6,19 +6,7 @@ function Footer({ getStart }) {
   return (
     <footer className={`footer-1 ${!getStart && "pd-top-90"}`}>
       <div className="container">
-        {getStart && (
-          <div className="row">
-            <div className="col-md-12">
-              <div className="cta-wrapper">
-                <img src="assets/images/home/2.png" alt="" />
-                <h3>You can be your own Guiding star with our help!</h3>
-                <Link to="/course-3" className="bisylms-btn">
-                  Get Started Now
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
+        
         <div className="row">
           <div className="col-lg-4 col-md-3">
             <aside className="widget">
