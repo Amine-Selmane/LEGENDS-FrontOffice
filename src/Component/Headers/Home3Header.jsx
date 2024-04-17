@@ -146,6 +146,41 @@ function Home3Header() {
                   <li>
                         <Link to="/TeacherReport">Reports</Link>
                       </li>
+
+                      {/* Books */}
+
+                  <li
+                    className="menu-item-has-children"
+                    onClick={() =>
+                      setActiveSubMobileMenu(
+                        activeMobileSubMenu === "Books" ? false : "Books"
+                      )
+                    }
+                  >
+                    <a>Book Store</a>
+                    <span className="submenu-toggler">
+                      <i
+                        className={`fal ${
+                          activeMobileSubMenu === "Books"
+                            ? "fa-minus"
+                            : "fa-plus"
+                        }`}
+                      ></i>
+                    </span>
+                    <ul
+                      className="sub-menu"
+                      style={{
+                        display: activeMobileSubMenu === "Books" && "block",
+                      }}
+                    >
+                      <li>
+                        <Link to="/books">Books</Link>
+                      </li>
+                     
+                    
+
+                    </ul>
+                    </li>
                 </ul>
               </div>
               {/* Nav Menu End  */}

@@ -1,7 +1,7 @@
-import { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react"; // Make sure to import React
 import useWindowPosition from "../../Hooks/useWindowPosition";
-import { Link , useNavigate } from "react-router-dom";
-import axios from 'axios'; // Import Axios for making HTTP requests
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 import {
   UncontrolledDropdown,
   DropdownToggle,
@@ -9,23 +9,18 @@ import {
   DropdownMenu,
   Button,
 } from 'reactstrap';
-import InstructorProfile from "../../Pages/InstructorProfile";
-import { Envelope, Person, PersonFill } from 'react-bootstrap-icons'; // Import des icônes nécessaires
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
 function Home2Header() {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);
-  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [windowPosition, setWindowPosition] = useState(0);
   const [filter, setActiveFilter] = useState("Explore");
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -51,25 +46,34 @@ function Home2Header() {
     navigate('/');
     window.location.reload();
   };
-  const windowPosition = useWindowPosition();
 
-  const handleFilter = (e) => {
-    setActiveFilter(e.target.innerText);
+  useEffect(() => {
+    const handleScroll = () => {
+      setWindowPosition(window.pageYOffset);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
   };
-  
+
   return (
     <header className={`header-03 sticky ${windowPosition > 0 && "fix-header animated fadeInDown"}`}>
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-lg-12">
-          <nav className="navbar navbar-expand-lg">
-            {/* Logo */}
-            <Link className="navbar-brand" to="/">
-              <img src="assets/images/logo.png" alt="" />
-            </Link>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-lg-12">
+            <nav className="navbar navbar-expand-lg">
+              {/* Logo */}
+              <Link className="navbar-brand" to="/">
+                <img src="assets/images/logo.png" alt="" />
+              </Link>
               {/* logo End */}
-
-
 
               {/* Moblie Btn Start */}
               <button
@@ -80,7 +84,6 @@ function Home2Header() {
                 <i className="fal fa-bars"></i>
               </button>
               {/* Moblie Btn End */}
-
               {/* Nav Menu Start */}
               <div
                 className="collapse navbar-collapse"
@@ -124,7 +127,7 @@ function Home2Header() {
                         <Link to="/EventList">List Of Events</Link>
                       </li>
                       <li>
-                        <Link to="/Cart">My Card</Link>
+                        <Link to="/Cart">My Cart</Link>
                       </li>
                     </ul>
                   </li>
@@ -159,52 +162,77 @@ function Home2Header() {
                   </li>
                   <li>
                         <Link to="/StudentReport">Reports</Link>
+                   </li>
+                   {/* Books */}
+
+                  <li
+                    className="menu-item-has-children"
+                    onClick={() =>
+                      setActiveSubMobileMenu(
+                        activeMobileSubMenu === "Books" ? false : "Books"
+                      )
+                    }
+                  >
+                    <a>Book Store</a>
+                    <span className="submenu-toggler">
+                      <i
+                        className={`fal ${
+                          activeMobileSubMenu === "Books"
+                            ? "fa-minus"
+                            : "fa-plus"
+                        }`}
+                      ></i>
+                    </span>
+                    <ul
+                      className="sub-menu"
+                      style={{
+                        display: activeMobileSubMenu === "Books" && "block",
+                      }}
+                    >
+                      <li>
+                        <Link to="/books">Books</Link>
                       </li>
+                     
+                    
+
+                    </ul>
+                    </li>
                 </ul>
               </div>
               {/* Nav Menu End  */}
+
               <div className="dropdown ml-auto">
-  {userData && (
-    <UncontrolledDropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-      <DropdownToggle color="transparent" className="nav-link dropdown-toggle d-flex align-items-center">
-        {/* Image de profil à gauche du bouton dropdown */}
-        <div className="rounded-circle overflow-hidden mr-2" style={{ width: '30px', height: '30px' }}>
-          <img src={userData.profile } alt="profile" className="w-100 h-100 object-fit-cover" />
-        </div>
-        <div>
-          <p className="mb-0 font-weight-bold" style={{ fontSize: '1.2em' }}>{userData.firstName} {userData.lastName}</p>
-          <p className="mb-0" style={{ fontSize: '0.9em', fontWeight: 'normal' }}>{userData.email}</p>
-        </div>
-      </DropdownToggle>
-      <DropdownMenu className="dropdown-menu-left custom-dropdown-menu text-left" style={{ minWidth: '250px'}}>
-       
-     
-      <DropdownItem>
-  <Link to="/profilestudent" className="text-dark text-decoration-none">
-    <FontAwesomeIcon icon={faUser} className="me-2 text-primary" /> {/* Ajoutez la classe text-primary pour définir la couleur de l'icône */}
-    My Profile
-  </Link>
-</DropdownItem>
-<DropdownItem>
-  <Link to="#" className="text-dark text-decoration-none">
-    <FontAwesomeIcon icon={faEnvelope} className="me-2 text-info" /> {/* Utilisez une autre classe de couleur, par exemple text-info */}
-    Inbox
-  </Link>
-</DropdownItem>
-<DropdownItem onClick={userLogout} className="text-center"> {/* Ajoutez la classe text-center pour centrer le contenu */}
-  <Button color="primary" size="sm">Logout</Button>
-</DropdownItem>
-
-      </DropdownMenu>
-    </UncontrolledDropdown>
-  )}
-</div>
-
-
-
-
-
-     
+                {userData && (
+                  <UncontrolledDropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+                    <DropdownToggle color="transparent" className="nav-link dropdown-toggle d-flex align-items-center">
+                      <div className="rounded-circle overflow-hidden mr-2" style={{ width: '30px', height: '30px' }}>
+                        <img src={userData.profile} alt="profile" className="w-100 h-100 object-fit-cover" />
+                      </div>
+                      <div>
+                        <p className="mb-0 font-weight-bold" style={{ fontSize: '1.2em' }}>{userData.firstName} {userData.lastName}</p>
+                        <p className="mb-0" style={{ fontSize: '0.9em', fontWeight: 'normal' }}>{userData.email}</p>
+                      </div>
+                    </DropdownToggle>
+                    <DropdownMenu className="dropdown-menu-left custom-dropdown-menu text-left" style={{ minWidth: '250px'}}>
+                      <DropdownItem>
+                        <Link to="/profilestudent" className="text-dark text-decoration-none">
+                          <FontAwesomeIcon icon={faUser} className="me-2 text-primary" />
+                          My Profile
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Link to="#" className="text-dark text-decoration-none">
+                          <FontAwesomeIcon icon={faEnvelope} className="me-2 text-info" />
+                          Inbox
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem onClick={userLogout} className="text-center">
+                        <Button color="primary" size="sm">Logout</Button>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                )}
+              </div>
             </nav>
           </div>
         </div>

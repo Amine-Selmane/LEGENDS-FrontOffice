@@ -29,7 +29,7 @@ import { course } from "../../Data/course";
 import FeatureCourseCard from "../../Component/Cards/FeatureCourseCard";
 import { Link } from "react-router-dom";
 import GotoTop from "../../Component/GotoTop";
-//import './profile.css';
+import React from 'react';
 
 
 

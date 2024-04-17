@@ -628,7 +628,6 @@ function StudentProfile() {
                               {}
                               <tr>
                                 <th className="course" style={{whiteSpace: 'nowrap'}}>Course</th>
-                                <th className="teacher" style={{whiteSpace: 'nowrap'}}>Teacher</th>
                                 <th className="classroom" style={{whiteSpace: 'nowrap'}}>Classroom</th>
                                 <th className="duration" style={{whiteSpace: 'nowrap'}}>Duration</th>
                                 <th className="quizz" style={{whiteSpace: 'nowrap'}}>Number Quizz</th>
@@ -640,9 +639,6 @@ function StudentProfile() {
                                 <tr key={data.id}>
                                   <td className="course">
                                         {data.name}
-                                  </td>
-                                  <td className="teacher">
-                                    {data.teacher_name}
                                   </td>
                                   <td className="classroom">{data.classroom}</td>
                                   <td className="duration">{data.duration}min</td>

@@ -138,66 +138,86 @@ const [profileObj, setProfileObj] = useState(null);
 
   const handleSubmit = async (fields) => {
     try {
-      const {
-        firstName,
-        lastName,
-        userName,
-        email,
-        password,
-        dateNaiss,
-        role,
-        sexe,
-        address,
-        mobile,
-        acceptTerms,
-      } = fields;
-  
-      // Format the date before sending
-      const formattedDateNaiss = dateNaiss.toISOString().split('T')[0]; // Format 'yyyy-MM-dd'
-  
-      /// Assurez-vous que les données de disponibilité sont correctement formatées
-      const formattedAvailability = selectedSlots.map((slot) => ({
-        jour: slot.jour,
-        heureDebut: slot.heureDebut,
-        heureFin: slot.heureFin,
-      }));
-  
-      // Construire l'objet d'utilisateur à envoyer au backend
-      const userObject = {
-        username: userName,
-        password,
-        firstName,
-        lastName,
- 
-        profile: uploadedFile || profileUrl,
-        email,
-        dateNaiss: formattedDateNaiss,
-        address,
-        mobile,
-        sexe,
-        role,
-        courses: selectedCourses,
-        availability: formattedAvailability,
-      };
-  
-      // Envoyer la requête POST au backend
-      const response = await axios.post('http://localhost:5000/api/register', userObject);
-  
-      // Vérifier la réponse du backend
-      if (response.status === 201) {
-        // L'enregistrement a réussi
-        alert('Registration successful!');
-        navigate('/');
-      } else {
-        // L'enregistrement a échoué pour une raison quelconque
-        throw new Error('Registration failed. Please try again.');
-      }
+        const {
+            firstName,
+            lastName,
+            userName,
+            email,
+            password,
+            dateNaiss,
+            role,
+            sexe,
+            address,
+            mobile,
+            acceptTerms,
+        } = fields;
+
+        // Format the date before sending
+        const formattedDateNaiss = dateNaiss.toISOString().split('T')[0]; // Format 'yyyy-MM-dd'
+
+        /// Assurez-vous que les données de disponibilité sont correctement formatées
+        const formattedAvailability = selectedSlots.map((slot) => ({
+            jour: slot.jour,
+            heureDebut: slot.heureDebut,
+            heureFin: slot.heureFin,
+        }));
+
+        // Construire l'objet d'utilisateur à envoyer au backend
+        const userObject = {
+            username: userName,
+            password,
+            firstName,
+            lastName,
+
+            profile: uploadedFile || profileUrl,
+            email,
+            dateNaiss: formattedDateNaiss,
+            address,
+            mobile,
+            sexe,
+            role,
+            courses: selectedCourses,
+            availability: formattedAvailability,
+        };
+
+        // Envoyer la requête POST au backend
+        const response = await axios.post('http://localhost:5000/api/register', userObject);
+
+        // Vérifier la réponse du backend
+        if (response.status === 201) {
+            // L'enregistrement a réussi
+            alert('Registration successful!');
+            // Récupérer l'ID de l'utilisateur depuis la réponse du backend
+            const userId = response.data.id;
+
+            // Afficher l'ID dans la console pour le débogage
+            console.log('User ID:', userId);
+
+            // Vérifier si l'ID est récupéré correctement
+            if (userId) {
+                // Naviguer en fonction du rôle de l'utilisateur
+                if (role === 'student') {
+                    navigate(`/paiementInscri/${userId}`);
+                } else if (role === 'teacher') {
+                    navigate(`/login`);
+                } else {
+                    throw new Error('Invalid user role.');
+                }
+            } else {
+                // Si l'ID n'est pas récupéré correctement
+                throw new Error('Failed to retrieve user ID.');
+            }
+        } else {
+            // L'enregistrement a échoué pour une raison quelconque
+            throw new Error('Registration failed. Please try again.');
+        }
     } catch (error) {
-      // Gérer les erreurs
-      console.error('Registration failed:', error);
-      alert(error.message || 'Registration failed. Please try again.');
+        // Gérer les erreurs
+        console.error('Registration failed:', error);
+        alert(error.message || 'Registration failed. Please try again.');
     }
-  };
+};
+
 
   
   const convertToBase64 = (file) => {

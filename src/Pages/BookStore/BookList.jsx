@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import Preloader from "../../Component/Preloader";
 import Header from "../../Component/Headers";
+import Home2Header from "../../Component/Headers/Home2Header";
+import Home3Header from "../../Component/Headers/Home3Header";
 import Footer from "../../Component/Footer/Footer";
 import Banner from "../../Component/Banner/Banner";
+import axios from "axios";
 import CallAction from "../../Component/CallAction";
 import GotoTop from "../../Component/GotoTop";
 import BooksContainer from "./BooksContainer";
@@ -11,6 +14,7 @@ import React from 'react';
 
 function BookList() {
   const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     // Simulate loading delay for demonstration
@@ -22,13 +26,41 @@ function BookList() {
     return () => clearTimeout(timer);
   }, []);
 
-  let content = null;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const response = await axios.get("http://localhost:5000/api/userToken", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
+      }
+    };
+
+    fetchUserData();
+    setIsLoading(false);
+
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [isLoading]);
+
+  let content = undefined;
   if (isLoading) {
     content = <Preloader />;
   } else {
     content = (
       <>
-        <Header logo="assets/images/logo.png" joinBtn={true} />
+        {userData?.role === "student" && <Home2Header />}
+        {userData?.role === "teacher" && <Home3Header />}
+        {!userData && <Header logo="assets/images/kindy.png" joinBtn={true} />}
         <Banner title="Books" background="assets/images/banner3.jpg" />
         <section className="coursepage-section">
           <div className="container">
@@ -66,13 +98,12 @@ function BookList() {
 
   return (
     <>
-     <div>
-  {content}
-</div>
-<div style={{ textAlign: 'center', marginTop: '20px' }}>
-  <Pagination {...paginationConfig} total={100} defaultPageSize={10} />
-</div>
-
+      <div>
+        {content}
+      </div>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Pagination {...paginationConfig} total={100} defaultPageSize={10} />
+      </div>
     </>
   );
 }
