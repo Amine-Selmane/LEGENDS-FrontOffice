@@ -1,15 +1,21 @@
 import React from "react";
 import axios from "axios";
 
-const PriceCard2 = ({ title, price, storage, users, sendUp }) => {
+const PriceCard2 = ({ title, price, storage, users, sendUp ,userEmail,userId}) => {
 
-    
+   
 
     const handleCheckout = () => {
-        axios.post(`http://localhost:5000/inscri/create-payment`, {
-            amount: price,
-            annual : title,
-          })
+        axios.post(`http://localhost:5000/inscri/create-checkout-session`, {
+            cartItems: [
+                {
+                  montant: price,
+                  annual: title,
+                },
+              ],
+              userEmail,
+              userId,
+            })
           .then((response) => {
             if (response.data.url) {
               window.location.href = response.data.url;
@@ -21,7 +27,7 @@ const PriceCard2 = ({ title, price, storage, users, sendUp }) => {
         <div className="PricingCard">
             <header>
                 <p className="card-title">{title}</p>
-                <h1 className="card-price">{price}</h1>
+                <h1 className="card-price">{price} $</h1>
             </header>
             {/* Features here */}
             <div className="card-features">

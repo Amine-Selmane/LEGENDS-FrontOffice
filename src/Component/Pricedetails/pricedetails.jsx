@@ -13,6 +13,7 @@ function PriceDetails() {
   const [selectMonthly, setSelectMonthly] = useState(true);
   const [halfYearlyPriceTotal, setHalfYearlyPriceTotal] = useState(0);
   const [yearlyPriceTotal, setYearlyPriceTotal] = useState(0);
+  const [userEmail, setUser] = useState([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -26,6 +27,20 @@ function PriceDetails() {
     };
 
     fetchCourses();
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchEmail = async () => {
+        console.log(userId);
+      try {
+        const response = await axios.get(`http://localhost:5000/api/user/ById/${userId}`);
+        setUser(response.data.email);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    fetchEmail();
   }, [userId]);
 
   useEffect(() => {
@@ -61,6 +76,7 @@ function PriceDetails() {
             storage="Instantaneous Transactions"
             users="No Fees or Interest"
             sendUp="Universal Acceptance"
+
           />
           <PriceCard2
             title="Annual"
@@ -68,6 +84,8 @@ function PriceDetails() {
             storage="Maximum Savings"
             users="Streamlined Finances"
             sendUp="Uninterrupted Service"
+            userEmail={userEmail}
+            userId={userId}
           />
           <PriceCard3
             title="Semi-Annual"
@@ -75,6 +93,8 @@ function PriceDetails() {
             storage="Reduced Financial Stress"
             users="Enhanced Commitment"
             sendUp="Reduced Administrative Hassle"
+            userEmail={userEmail}
+            userId={userId}
           />
         </div>
       </div>
