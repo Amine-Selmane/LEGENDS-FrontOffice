@@ -12,7 +12,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 
 import cartReducer, { getTotals } from "./Pages/Events/Action/cartSlice.js";
-import cartBookReducer, { getTotal } from "./Pages/BookStore/Action/cartSliceBook.js";
+import cartBookReducer, { getTotalBook } from "./Pages/BookStore/Action/cartSliceBook.js";
 import wishlistReducer from "./Pages/BookStore/Action/wishlistSlice.js";
 
 import { ToastContainer } from 'react-toastify';
@@ -32,7 +32,7 @@ const store = configureStore({
 
 // Dispatch initial actions
 store.dispatch(getTotals());
-store.dispatch(getTotal());
+store.dispatch(getTotalBook());
 
 ReactDOM.render(
   <React.StrictMode>

@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromWishlist, clearWishlist } from './Action/wishlistSlice';
 import { Link } from 'react-router-dom';
-import bookImage from './bookImage.jpg';
 import './wishlist.css';
 
 const Wishlist = () => {
@@ -48,7 +47,7 @@ const wishlist = useSelector((state) => state.wishlist.items);
             {wishlist.map((item, index) => (
               <div className="wishlist-item" key={item._id}>
                 <div className="wishlist-details">
-                  <img src={bookImage} alt={item.title} />
+                  <img src={item.image} alt={item.title} />
                   <div className="book-info">
                     <h3>{item.title}</h3>
                     <p>Price: ${item.price}</p>

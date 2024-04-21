@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, getTotal } from "./Action/cartSliceBook";
+import {  clearCartBook, getTotalBook } from "./Action/cartSliceBook";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./style.css" ;
 
@@ -9,11 +9,11 @@ const CheckoutSuccess = () => {
   const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
-    dispatch(clearCart());
+    dispatch(clearCartBook());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getTotal());
+    dispatch(getTotalBook());
   }, [cart, dispatch]);
 
   return (

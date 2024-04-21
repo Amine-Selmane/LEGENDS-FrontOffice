@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import useWindowPosition from "../../Hooks/useWindowPosition";
 import {  FaHeart } from 'react-icons/fa'; // Import the heart and cart icons from Font Awesome
 import { useSelector } from 'react-redux'; // Import useSelector hook to retrieve data from Redux store
-import { selectCartItems } from '../../Pages/BookStore/Action/cartSliceBook'; // Import the selector function for cart items
+import { selectCartBookItems } from '../../Pages/BookStore/Action/cartSliceBook'; // Import the selector function for cart items
 
 function Header({ className, logo, joinBtn, search }) {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);
   const windowPosition = useWindowPosition();
-  const cartItems = useSelector(selectCartItems); // Retrieve cart items from Redux store
+  const bookItems = useSelector(selectCartBookItems); // Retrieve cart items from Redux store
 
 
 
@@ -208,7 +208,7 @@ function Header({ className, logo, joinBtn, search }) {
                     {/* Basket Icon */}
               <Link to="/cartBook" className="basket-icon">
                 <i className="fas fa-shopping-cart" style={{ color: 'white', fontSize: '24px', marginRight: '10px' }}>
-                  {cartItems.length > 0 && <span className="badge">{cartItems.length}</span>} {/* Display the number of items in the cart */}
+                  {bookItems.length > 0 && <span className="badge">{bookItems.length}</span>} {/* Display the number of items in the cart */}
                 </i>
               </Link>
               

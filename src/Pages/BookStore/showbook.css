@@ -1,73 +1,240 @@
-/* ShowBook.css */
-.show-book-container {
-    padding: 20px;
-  }
-  
-  .book-details {
-    display: flex;
-    align-items: center;
-  }
-  
-  .book-image {
-    margin-right: 20px;
-  }
-  
-  .book-info {
-    flex: 1;
-  }
-  
-  .review-section {
-    margin-top: 20px;
-  }
-  
-  .comment-input {
-    width: 100%;
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .rating-input {
-    margin-top: 10px;
-  }
-  /* ShowBook.css */
-.submit-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff; /* Blue color */
-  color: #fff; /* White text */
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+.single-product-main-content {
+  margin: 200px auto;
+  max-width: 1200px;
+  padding: 40px;
 }
 
-.submit-button:hover {
-  background-color: #0056b3; /* Darker blue color on hover */
-}
-.review-box {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-}
-
-.review-header {
+.layout {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  gap: 20px;
+  align-items: flex-start;
 }
 
-.review-content {
+.left {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+.book-image {
+  width: 80%;
+  height: auto;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px; /* Add margin to the top */
+}
+
+.details {
+  width: 100%;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 20px;
+}
+
+.desc {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.cart-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.quantity-buttons button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+}
+
+.add-to-cart-button {
+  padding: 10px 20px;
+  background-color: #8e2de2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-bottom: 3px solid #6516aa;
+}
+
+.info-item {
   display: flex;
   flex-direction: column;
 }
 
-.rating-stars {
-  display: flex;
+.info-item > * {
+  margin-bottom: 10px;
 }
 
-.rating-stars svg {
-  margin-right: 4px;
+.text-bold {
+  font-weight: bold;
+}
+
+.Social-icons {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Align items vertically centered */
+}
+
+.Social-icons svg {
+  margin-right: 10px; /* Add margin between icons */
+}
+
+.Social-icons svg:hover {
+  transform: scale(1.2);
+}
+.review-section {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.review-box {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-name {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.review-content {
+  margin-top: 10px;
+}
+
+.review-comment {
+  font-weight: bold;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  resize: vertical;
+  margin-bottom: 20px;
+}
+
+.rating-input {
+  margin-top: 20px;
+}
+
+.submit-button {
+  padding: 12px 24px;
+  background-color: #8e2de2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #6c1d9b;
+}
+
+.continue-shopping {
+  margin-top: 20px;
+}
+
+.continue-shopping a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+}
+
+.continue-shopping a svg {
+  color: #000;
+  font-size: 20px;
+}
+
+.continue-shopping a:hover {
+  color: #6c1d9b;
+}
+
+
+.user-name {
+  font-weight: bold;
+}
+
+.review-content {
+  margin-top: 10px;
+}
+
+.review-comment {
+  font-weight: bold;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.rating-input {
+  margin-top: 10px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #8e2de2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-bottom: 3px solid #6516aa;
+}
+
+.submit-button:hover {
+  background-color: #6c1d9b;
+}
+
+.continue-shopping {
+  margin-top: 20px;
+}
+
+.continue-shopping a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+}
+
+.continue-shopping a svg {
+  color: #000;
+  font-size: 20px;
+}
+
+.continue-shopping a:hover {
+  color: #6c1d9b;
 }

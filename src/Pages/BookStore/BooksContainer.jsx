@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Typography, Button, Pagination, Modal, Rate } from 'antd';
 import { ShoppingCartOutlined, HeartFilled, EyeOutlined, AudioOutlined, AudioMutedOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux'; 
-import { addToCart } from "./Action/cartSliceBook";
+import { useDispatch } from 'react-redux';
+import { addToCartBook } from "./Action/cartSliceBook"; // Updated import
 import { addToWishlist } from "./Action/wishlistSlice";
 import axios from 'axios';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import bookImage from './bookImage.jpg';
 
 const { Meta } = Card;
 const { Title } = Typography;
 
 const BooksContainer = () => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage] = useState(4);
+  const [booksPerPage] = useState(2);
   const [selectedBook, setSelectedBook] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -73,7 +72,7 @@ const BooksContainer = () => {
   };
 
   const handleAddToCart = (book) => {
-    dispatch(addToCart(book));
+    dispatch(addToCartBook(book)); // Updated action creator
   };
 
   const handleAddToWishlist = (book) => {
@@ -96,32 +95,34 @@ const BooksContainer = () => {
   const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px' }}>
-        {currentBooks.map(book => (
-          <div key={book._id} style={{ width: '200px', height: '300px', position: 'relative' }}>
-            <Link to={`/books/details/${book._id}`}>
-              <img
-                alt={book.title}
-                src={bookImage}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px', cursor: 'pointer' }}
-              />
-            </Link>
-            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', background: 'rgba(255, 255, 255, 0.9)', padding: '5px', borderRadius: '5px', textAlign: 'center' }}>
-              <Title level={5} style={{ margin: 0 }}>{book.title}</Title>
-              <Rate value={book.averageRating} disabled allowHalf />
-              <div style={{ marginTop: '5px' }}>
+    <section className="event-section">
+      <div className="container">
+        <div className="row">
+          {currentBooks.map(book => (
+            <div className="col-md-6" key={book._id}>
+              <div className="event-item-1">
+                <div className="e-date">New</div>
+                <div className="ci-thumb" style={{ width: "100%" }}>
+                  <Link to={`/books/details/${book._id}`}>
+                    <img
+                      alt={book.title}
+                      src={book.image}
+                      style={{ maxWidth: "100%", height: "auto" }}
+                    />
+                  </Link>
+                </div>
+                <h4>{book.title}</h4>
+                <p>Price: ${book.price}</p>
                 <Button type="link" onClick={() => handleViewDetails(book)} icon={<EyeOutlined />} />
-                <Button type="link"  onClick={() => handleAddToWishlist(book)}icon={<HeartFilled />} />
+                <Button type="link" onClick={() => handleAddToWishlist(book)} icon={<HeartFilled />} />
                 <Button type="link" onClick={() => handleAddToCart(book)} icon={<ShoppingCartOutlined />} />
                 <Button type="link" onClick={() => speakDescription(book.description)} icon={<AudioOutlined />} />
-
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-  
+
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
         <Pagination
           current={currentPage}
@@ -131,7 +132,7 @@ const BooksContainer = () => {
           showSizeChanger={false}
         />
       </div>
-  
+
       <Modal
         title="Book Details"
         visible={modalVisible}
@@ -141,7 +142,7 @@ const BooksContainer = () => {
         {selectedBook && (
           <div>
             <img
-              src={bookImage}
+              src={selectedBook.image}
               style={{ width: '30%', height: '50%', objectFit: 'cover', borderRadius: '10px', cursor: 'pointer' }}
             />
             <p>Title: {selectedBook.title}</p>
@@ -150,7 +151,7 @@ const BooksContainer = () => {
           </div>
         )}
       </Modal>
-    </div>
+    </section>
   );
 };
 

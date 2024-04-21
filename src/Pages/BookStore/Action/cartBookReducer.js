@@ -1,25 +1,25 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART } from './cartActionTypes';
+import { ADD_TO_CART_BOOK, REMOVE_FROM_CART_BOOK, CLEAR_CART_BOOK } from './cartActionTypes';
 
 const initialState = {
-  items: []
+  bookItems: []
 };
 
 const cartBookReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TO_CART:
+    case ADD_TO_CART_BOOK:
       return {
         ...state,
-        items: [...state.items, action.payload]
+        bookItems: [...state.bookItems, action.payload]
       };
-    case REMOVE_FROM_CART:
+    case REMOVE_FROM_CART_BOOK:
       return {
         ...state,
-        items: state.items.filter(item => item.id !== action.payload)
+        bookItems: state.bookItems.filter(bookItem => bookItem.id !== action.payload)
       };
-    case CLEAR_CART:
+    case CLEAR_CART_BOOK:
       return {
         ...state,
-        items: []
+        bookItems: []
       };
     default:
       return state;
