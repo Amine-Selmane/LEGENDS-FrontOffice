@@ -18,7 +18,6 @@ import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
 import BookList from "./Pages/BookStore/BookList";
 import Cart from "./Pages/BookStore/Cart";
-import ChatComponent from "./Pages/BookStore/ChatComponent";
 import ShowBook from "./Pages/BookStore/ShowBook";
 import CheckoutSuccess from "./Pages/BookStore/CheckoutSuccess";
 import Wishlist from "./Pages/BookStore/wishlist";
@@ -34,8 +33,8 @@ import Maintanance from "./Component/auth/Maintanance";
 import LockScreen from "./Component/auth/LockScreen";
 import StudentProfile from "./Pages/StudentProfile";
 import ListEvent from "./Pages/Events/ListEvent";
-import PriceCard from "./Component/price-card/price-card.component";
 import PriceDetails from "./Component/Pricedetails/pricedetails";
+import PopularBooks from "./Component/Book/PopularBook";
 
 const router = createBrowserRouter([
   {
@@ -74,11 +73,11 @@ const router = createBrowserRouter([
     path: "/cartBook",
     element: <Cart/>,
   }, 
-  {
-    path: "/chat",
-    element: <ChatComponent/>,
-  }, 
  
+  {
+    path: "/popular",
+    element: <PopularBooks/>,
+  },
  
  
   {path: "/StudentReport",

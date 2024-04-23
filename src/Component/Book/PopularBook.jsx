@@ -1,31 +1,42 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import BookItemCard from "../Cards/BookItemCard"; // Assuming you have a BookItemCard component for displaying book items
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import CourseItemCard from '../Cards/CourseItemCard'; // Assuming CourseItemCard component is imported from the correct path
 
-function PopularBooks({ heading }) {
-  const [books, setBooks] = useState([]);
+const baseURL = 'http://localhost:5000';
+
+const PopularBooks = ({ heading }) => {
+  const [popularBooks, setPopularBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Fetch books from the backend API when the component mounts
-    fetchBooks();
+    fetchPopularBooks();
   }, []);
 
-  const fetchBooks = async () => {
+  const fetchPopularBooks = async () => {
     try {
-      // Fetch books from your backend API
-      const response = await fetch("http://localhost:5000/books"); // Replace "/api/books" with your actual API endpoint
-      if (!response.ok) {
-        throw new Error("Failed to fetch books");
+      const response = await axios.get(`${baseURL}/ratings/popular`);
+      
+      // Check if response.data is an array
+      if (!Array.isArray(response.data)) {
+        throw new Error('Response data is not an array');
       }
-      const data = await response.json();
-      setBooks(data); // Update component state with fetched books
+  
+      // Filter the data only if it's an array
+      const filteredBooks = response.data.filter(book => calculateAverageRating(book) > 4);
+      setPopularBooks(filteredBooks);
     } catch (error) {
-      console.error("Error fetching books:", error);
+      console.error('Error fetching popular books:', error);
     }
+  };
+  
+  const calculateAverageRating = (book) => {
+    if (book.ratings.length === 0) return 0;
+    const totalRating = book.ratings.reduce((acc, rating) => acc + rating, 0);
+    return totalRating / book.ratings.length;
   };
 
   return (
-    <section className="popular-books-section">
+    <section className="popular-course-section">
       <div className="container">
         {heading && (
           <div className="row">
@@ -36,38 +47,52 @@ function PopularBooks({ heading }) {
             </div>
             <div className="col-md-4">
               <a className="read-more" href="#">
-                Browse Online Books <i className="arrow_right"></i>
+                Browse Online Books<i className="arrow_right"></i>
               </a>
             </div>
           </div>
         )}
         <div className="row">
           <div className="col-lg-12">
-            <div className="d-flex flex-wrap justify-content-between">
-              {/* Render fetched books */}
-              {Array.isArray(books) && books.length > 0 ? (
-                books.map((book) => (
-                  <BookItemCard
-                    key={book.id} // Assuming each book has a unique ID
-                    book={book}
-                  > <img src={bookImage} alt={book.title}  />
-                  <p>Price: ${book.price}</p>
-                    {/* You can place the book image or other content here */}
-                  </BookItemCard>
-                ))
+            <div className="course-wrapper">
+              {loading ? (
+                <p>Loading...</p>
               ) : (
-                <p>No books available</p>
+                popularBooks.map(book => (
+                  <CourseItemCard key={book.id} title={book.title} link="single-course">
+                    <img src={book.image} alt={book.title} />
+                  </CourseItemCard>
+                ))
               )}
+            </div>
+          </div>
+        </div>
+        <div className="row mt-120">
+          <div className="col-lg-7 col-md-6">
+            <div className="ab-thumb">
+              <img src="assets/images/home/1.png" alt="" />
+            </div>
+          </div>
+          <div className="col-lg-5 col-md-6">
+            <div className="ab-content">
+              <h3>I will stay with you until you pass your exam.</h3>
+              <p className="mid-item">
+                Who else do you know who'll do that for you?
+              </p>
+              <p>
+                So I said codswallop car boot cheers mufty I don't want no agro
+                are you taking the piss cheeky my lady gutted mate excuse my
+                french, gormless have it cras.
+              </p>
+              <a className="bisylms-btn" href="#">
+                Know More
+              </a>
             </div>
           </div>
         </div>
       </div>
     </section>
   );
-}
-
-PopularBooks.propTypes = {
-  heading: PropTypes.bool,
 };
 
 export default PopularBooks;

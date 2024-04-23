@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Typography, Button, Pagination, Modal, Rate } from 'antd';
+import { Card, Typography, Button, Pagination, Modal, Rate, Avatar } from 'antd';
 import { ShoppingCartOutlined, HeartFilled, EyeOutlined, AudioOutlined, AudioMutedOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
-import { addToCartBook } from "./Action/cartSliceBook"; // Updated import
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartBook } from "./Action/cartSliceBook";
 import { addToWishlist } from "./Action/wishlistSlice";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -14,6 +14,7 @@ const { Title } = Typography;
 
 const BooksContainer = () => {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user); // Assuming the user state is stored in Redux
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,7 +73,7 @@ const BooksContainer = () => {
   };
 
   const handleAddToCart = (book) => {
-    dispatch(addToCartBook(book)); // Updated action creator
+    dispatch(addToCartBook(book));
   };
 
   const handleAddToWishlist = (book) => {
@@ -97,26 +98,33 @@ const BooksContainer = () => {
   return (
     <section className="event-section">
       <div className="container">
+        <Title level={2} style={{ textAlign: 'center', marginBottom: '30px' }}>Our Books</Title>
         <div className="row">
           {currentBooks.map(book => (
             <div className="col-md-6" key={book._id}>
               <div className="event-item-1">
-                <div className="e-date">New</div>
-                <div className="ci-thumb" style={{ width: "100%" }}>
+                <div className="ci-thumb" style={{ width: "90%" }}>
                   <Link to={`/books/details/${book._id}`}>
                     <img
                       alt={book.title}
                       src={book.image}
-                      style={{ maxWidth: "100%", height: "auto" }}
+                      style={{ maxWidth: "200%", height: "auto" }}
                     />
                   </Link>
                 </div>
                 <h4>{book.title}</h4>
+                <Rate value={book.averageRating} disabled />
                 <p>Price: ${book.price}</p>
                 <Button type="link" onClick={() => handleViewDetails(book)} icon={<EyeOutlined />} />
                 <Button type="link" onClick={() => handleAddToWishlist(book)} icon={<HeartFilled />} />
                 <Button type="link" onClick={() => handleAddToCart(book)} icon={<ShoppingCartOutlined />} />
                 <Button type="link" onClick={() => speakDescription(book.description)} icon={<AudioOutlined />} />
+                {user && (
+                  <div>
+                    <Avatar src={user.profilePicture} />
+                    <span>{user.username}</span>
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -148,6 +156,13 @@ const BooksContainer = () => {
             <p>Title: {selectedBook.title}</p>
             <p>Description: {showFullDescription ? selectedBook.description : `${selectedBook.description.slice(0, 100)}...`} <Button type="link" onClick={toggleDescription}>{showFullDescription ? 'See Less' : 'See More'}</Button></p>
             <p>Price: {selectedBook.price}</p>
+            <Rate value={selectedBook.averageRating} disabled />
+            {user && (
+              <div>
+                <Avatar src={user.profile} />
+                <span>{user.username}</span>
+              </div>
+            )}
           </div>
         )}
       </Modal>
