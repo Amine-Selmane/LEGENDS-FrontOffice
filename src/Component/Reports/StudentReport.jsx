@@ -158,7 +158,7 @@ const StudentReport = () => {
       {userData?.role === "teacher" && <Home3Header />}
       {!userData && <Header logo="assets/images/kindy.png" joinBtn={true} />}
 
-            <Banner title="Student Home" background="assets/images/banner.jpg" />
+            <Banner title="Student Home" background="assets/images/banner3.jpg" />
 
             <section className="coursepage-section">
                 <div className="container">

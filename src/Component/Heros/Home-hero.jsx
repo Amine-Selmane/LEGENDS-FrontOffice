@@ -27,13 +27,13 @@ function HomeHero() {
         <div className="row">
           <div className="col-lg-5 col-md-5">
             <div className="hero-content">
-              <h2>Your Course To Success</h2>
+              <h2>ART IS IN YOU!</h2>
               <p>
-                Loo you mug lurgy baking cakes boot cracking goal morish up the
-                duff haggle hotpot faff about no biggie burke, is bleeder
-                bamboozled bite your.
+              We support kindies in essential teaching for acquiring the basics and pursuing qualitative and demanding learning.
+              We welcome all age groups as well as all nationalities.
+              Whether you are a child or adult, student or integrated into the world of work, you are welcome in our conservatory
               </p>
-              <Link to="/course-1" className="bisylms-btn">
+              <Link to="/register" className="bisylms-btn">
                 Ready to Get Started?
               </Link>
             </div>

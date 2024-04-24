@@ -28,7 +28,8 @@ function Header({ className, logo, joinBtn, search }) {
                 <img src={logo} alt="" />
                 <img
                   className="sticky-logo"
-                  src="assets/images/logo.png"
+                 
+                  src="assets/images/home/logo.png"
                   alt=""
                 />
               </Link>
@@ -47,7 +48,7 @@ function Header({ className, logo, joinBtn, search }) {
               {/* Nav Menu Start  */}
               <div
                 className="collapse navbar-collapse"
-                style={{ display: activeMobileMenu && "block" }}
+                style={{ display: activeMobileMenu && "block", marginLeft: "350px" }}
               >
                 <ul className="navbar-nav">
                   

@@ -33,6 +33,7 @@ import RecoverPassword from "./Component/auth/RecoverPassword";
 import Maintanance from "./Component/auth/Maintanance";
 import LockScreen from "./Component/auth/LockScreen";
 import StudentProfile from "./Pages/StudentProfile";
+
 import ListEvent from "./Pages/Events/ListEvent";
 import PriceCard from "./Component/price-card/price-card.component";
 import PriceDetails from "./Component/Pricedetails/pricedetails";
@@ -165,6 +166,7 @@ const router = createBrowserRouter([
     path: "/profilestudent",
     element: <StudentProfile />,
   },
+
   {
     path: "/blog",
     element: <Blogs />,

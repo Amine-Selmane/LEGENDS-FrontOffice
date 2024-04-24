@@ -27,12 +27,8 @@ const nextSlide = {
 function PackageCard({ packageInfo, id, status }) {
   const {
     img,
-    statusImg,
-    price,
-    offerPrice,
+
     memberShipStatus,
-    lessons,
-    classes,
     link,
     description,
   } = packageInfo;
@@ -51,27 +47,14 @@ function PackageCard({ packageInfo, id, status }) {
     >
       <div className="pack-thumb">
         <img src={img} alt="" />
-        <div className="pack-middle">
-          <img src={statusImg} alt="" />
-        </div>
+        
       </div>
       <div className="pack-details">
-        <div className="pack-price">
-          <span>${price}</span> ${offerPrice} / 2 Year(s)
-        </div>
+       
         <h3>{memberShipStatus}</h3>
-        <div className="pack-meta">
-          <span>
-            <i className="icon_book_alt"></i>
-            {lessons} Lessons
-          </span>
-          <span>
-            <i className="icon_toolbox_alt"></i>
-            {classes} Classes
-          </span>
-        </div>
+       
         <p>{description}</p>
-        <Link to={link} className="bisylms-btn">
+        <Link to="/register" className="bisylms-btn">
           Apply Now
         </Link>
       </div>

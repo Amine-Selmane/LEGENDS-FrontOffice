@@ -15,7 +15,7 @@ function Video() {
           <iframe
             width="681"
             height="427"
-            src="//www.youtube.com/embed/FzcfZyEhOoI?autoplay=1&amp;cc_load_policy=1&amp;color=null&amp;controls=1&amp;disablekb=0&amp;enablejsapi=0&amp;end=null&amp;fs=1&amp;h1=null&amp;iv_load_policy=1&amp;loop=0&amp;modestbranding=null&amp;mute=0&amp;origin=null&amp;playsinline=null&amp;rel=0&amp;showinfo=1&amp;start=0&amp;wmode=transparent&amp;theme=dark&amp;nocookie=false"
+            src="//www.youtube.com/embed/8HMUQungv8k?autoplay=1&amp;cc_load_policy=1&amp;color=null&amp;controls=1&amp;disablekb=0&amp;enablejsapi=0&amp;end=null&amp;fs=1&amp;h1=null&amp;iv_load_policy=1&amp;loop=0&amp;modestbranding=null&amp;mute=0&amp;origin=null&amp;playsinline=null&amp;rel=0&amp;showinfo=1&amp;start=0&amp;wmode=transparent&amp;theme=dark&amp;nocookie=false"
             frameBorder="0"
             allowFullScreen={true}
             tabIndex="-1"
@@ -47,7 +47,7 @@ function Video() {
               <div
                 className="video-banner"
                 style={{
-                  backgroundImage: "url(assets/images/home/video-bg.jpg)",
+                  backgroundImage: "url(assets/images/home/fete.png)",
                 }}
               >
                 <a className="popup-video" onClick={() => setPlayVideo(true)}>

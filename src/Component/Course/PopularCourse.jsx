@@ -46,7 +46,7 @@ const PopularBooks = ({ heading }) => {
               </h2>
             </div>
             <div className="col-md-4">
-              <a className="read-more" href="#">
+              <a className="read-more" href="/books">
                 Browse Online Books<i className="arrow_right"></i>
               </a>
             </div>
@@ -75,18 +75,18 @@ const PopularBooks = ({ heading }) => {
           </div>
           <div className="col-lg-5 col-md-6">
             <div className="ab-content">
-              <h3>I will stay with you until you pass your exam.</h3>
+              <h3>WHO ARE WE?</h3>
               <p className="mid-item">
-                Who else do you know who'll do that for you?
+                Who else do you know who'll have this history?
               </p>
               <p>
-                So I said codswallop car boot cheers mufty I don't want no agro
-                are you taking the piss cheeky my lady gutted mate excuse my
-                french, gormless have it cras.
+              Since 1999, Conservatoire El Kindy has supported generations of musical artists thanks to rich and demanding teaching
+               and the rigor of a team of specialists and experienced teachers who continue to supervise and guide the seeds of 
+               artists over the years. Students from the conservatory have excelled during national competitions: the amateur soloists
+              of Megrine, the Néapolis days, etc. Their apprenticeship course is often crowned by obtaining the Arabic music diploma 
+              recognized by the Tunisian Ministry of Culture.
               </p>
-              <a className="bisylms-btn" href="#">
-                Know More
-              </a>
+              
             </div>
           </div>
         </div>

@@ -1,7 +1,8 @@
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
 import React from 'react';
-
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 function Footer({ getStart }) {
   return (
     <footer className={`footer-1 ${!getStart && "pd-top-90"}`}>
@@ -15,22 +16,20 @@ function Footer({ getStart }) {
                   <img src="assets/images/logo.png" alt="" />
                 </Link>
                 <p>
-                  Lost the plot Richard you mug cup of tea knackered boot
-                  bender.
+                Our conservatory offers complete, adapted and tailor-made
+                musical training for all ages!
                 </p>
                 <div className="ab-social">
-                  <a className="fac" href="#">
+                  <a className="fac" href="https://www.facebook.com/elkindy.conservatoire">
                     <i className="social_facebook"></i>
                   </a>
-                  <a className="twi" href="#">
-                    <i className="social_twitter"></i>
+                  <a className="inst" href="https://www.instagram.com/conservatoire_el_kindy/">
+                    <i className="social_instagram"></i>
                   </a>
-                  <a className="you" href="#">
+                  <a className="you" href="https://www.youtube.com/user/conservatoireelkindy">
                     <i className="social_youtube"></i>
                   </a>
-                  <a className="lin" href="#">
-                    <i className="social_linkedin"></i>
-                  </a>
+                
                 </div>
               </div>
             </aside>
@@ -40,74 +39,45 @@ function Footer({ getStart }) {
               <h3 className="widget-title">Explore</h3>
               <ul>
                 <li>
-                  <Link to="/about-1">About Us</Link>
+                  <Link to="/">About Us</Link>
                 </li>
                 <li>
-                  <Link to="#">Success Story</Link>
+                  <Link to="/course-3">Courses</Link>
                 </li>
                 <li>
-                  <Link to="#">Careers</Link>
+                  <Link to="/EventList">Events</Link>
                 </li>
                 <li>
-                  <Link to="#">Resource Center</Link>
+                  <Link to="/books">Books</Link>
                 </li>
-                <li>
-                  <Link to="/course-1">Courses</Link>
-                </li>
-                <li>
-                  <Link to="/contact">Contact Us</Link>
-                </li>
+                
               </ul>
             </aside>
           </div>
           <div className="col-lg-3 col-md-3">
             <aside className="widget">
-              <h3 className="widget-title">Catecories</h3>
-              <ul>
-                <li>
-                  <Link to="/course-1">All Courses</Link>
-                </li>
-                <li>
-                  <Link to="#">Storytelling & Voice Over</Link>
-                </li>
-                <li>
-                  <Link to="#">Digital Marketing</Link>
-                </li>
-                <li>
-                  <Link to="#">Design & Branding</Link>
-                </li>
-                <li>
-                  <Link to="#">Nanodegree Plus</Link>
-                </li>
-                <li>
-                  <Link to="#">Veterans</Link>
-                </li>
-              </ul>
+              <h3 className="widget-title">Address</h3>
+              <p>
+              <AddLocationIcon/>
+              24, Rue Manzel Mabrouk
+              Cité Olympique, Tunis
+              </p>
             </aside>
           </div>
           <div className="col-lg-2 col-md-3">
             <aside className="widget">
-              <h3 className="widget-title">Support</h3>
-              <ul>
-                <li>
-                  <Link to="#">Help Center</Link>
-                </li>
-                <li>
-                  <Link to="#">System Requirements</Link>
-                </li>
-                <li>
-                  <Link to="#">Register Activation Key</Link>
-                </li>
-                <li>
-                  <Link to="#">Site Feedback</Link>
-                </li>
-                <li>
-                  <Link to="#">Documentation</Link>
-                </li>
-                <li>
-                  <Link to="#">Forums</Link>
-                </li>
-              </ul>
+              <h3 className="widget-title">Hours of operation</h3>
+              
+                <p>
+
+                <AccessTimeIcon/>  
+                Monday - Friday: 14:00 - 20:00 
+                </p>
+                
+                <p>
+                <AccessTimeIcon/>
+                Saturday - Sunday: 10:00 - 20:00
+                </p>
             </aside>
           </div>
         </div>

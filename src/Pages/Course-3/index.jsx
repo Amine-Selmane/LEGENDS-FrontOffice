@@ -101,7 +101,7 @@ function Course3() {
       {userData?.role === "teacher" && <Home3Header />}
       {!userData && <Header logo="assets/images/kindy.png" joinBtn={true} />}
 
-        <Banner title="Courses Grid" background="assets/images/banner4.jpg" />
+        <Banner title="Courses Grid" background="assets/images/banner3.jpg" />
         <section className="coursepage-section-2">
           <div className="container">
             <div className="row">
