@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { Rate, message, Button, Input } from 'antd';
-import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch and useSelector
-import { addToCartBook } from './Action/cartSliceBook'; // Import addToCartBook action creator
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartBook } from './Action/cartSliceBook';
 import Header from '../../Component/Headers';
 import Footer from '../../Component/Footer/Footer';
 import './ShowBook.css';
@@ -26,7 +26,7 @@ const ShowBook = () => {
   const [ratings, setRatings] = useState([]);
   const [userReview, setUserReview] = useState(null);
   const { id } = useParams();
-  const dispatch = useDispatch(); // Get the dispatch function
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
@@ -60,7 +60,7 @@ const ShowBook = () => {
   };
 
   const handleAddToCart = (book) => {
-    dispatch(addToCartBook(book)); // Dispatch the addToCartBook action with the book data
+    dispatch(addToCartBook(book));
   };
 
   const handleCommentChange = (e) => {
@@ -87,7 +87,7 @@ const ShowBook = () => {
       message.success('Rating submitted successfully');
       setComment('');
       setRating(0);
-      setUserReview(true); // Set userReview to true after successful submission
+      setUserReview(true);
     } catch (error) {
       console.error('Error submitting rating:', error);
       message.error('Failed to submit rating');
@@ -98,7 +98,6 @@ const ShowBook = () => {
     );
     setRatings(updatedRatings.data);
   };
-  
 
   return (
     <>
@@ -119,12 +118,17 @@ const ShowBook = () => {
               </div>
               <div className="cart-buttons">
                 <div className="quantity-buttons">
-                  <button>-</button>
-                  <span>5</span>
-                  <button>+</button>
+                  {book.quantity > 0 ? (
+                    <span>In Stock</span>
+                  ) : (
+                    <span>Out of Stock</span>
+                  )}
                 </div>
-                {/* Attach onClick event handler to call handleAddToCart */}
-                <button className="add-to-cart-button" onClick={() => handleAddToCart(book)}>
+                <button
+                  className="add-to-cart-button"
+                  onClick={() => handleAddToCart(book)}
+                  disabled={book.quantity === 0} // Disable button if quantity is 0
+                >
                   ADD TO CART
                 </button>
               </div>

@@ -2,98 +2,103 @@
 
 /* Container style */
 .books-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
-  /* Book card style */
-  .book-card {
-    width: 200px;
-    height: 300px;
-    position: relative;
-  }
-  
-  /* Book image style */
-  .book-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  /* Book details overlay style */
-  .book-details-overlay {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 5px;
-    border-radius: 5px;
-    text-align: center;
-  }
-  
-  /* Book title style */
-  .book-title {
-    margin: 0;
-  }
-  
-  /* Pagination container style */
-  .pagination-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  /* Book details modal style */
-  .book-details-modal {
-    width: 50%;
-    height: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Book details modal image style */
-  .book-details-modal-image {
-    width: 30%;
-    height: 50%;
-    object-fit: cover;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  /* Book details modal title style */
-  .book-details-modal-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  /* Book details modal description style */
-  .book-details-modal-description {
-    margin-bottom: 10px;
-  }
-  
-  /* Book details modal buttons container style */
-  .book-details-modal-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-  
-  /* Book details modal see more/see less button style */
-  .book-details-modal-toggle-button {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  /* Book details modal close button style */
-  .book-details-modal-close-button {
-    margin-top: 10px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Book card style */
+.book-card {
+  width: 200px;
+  height: 300px;
+  position: relative;
+}
+
+/* Book image style */
+.book-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: filter 0.3s ease; /* Smooth transition for the filter */
+}
+
+/* Book image style when out of stock */
+.book-image.out-of-stock {
+  filter: blur(3px); /* Apply blur effect when out of stock */
+}
+
+/* Book details overlay style */
+.book-details-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Book title style */
+.book-title {
+  margin: 0;
+}
+
+/* Pagination container style */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Book details modal style */
+.book-details-modal {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Book details modal image style */
+.book-details-modal-image {
+  width: 30%;
+  height: 50%;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Book details modal title style */
+.book-details-modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Book details modal description style */
+.book-details-modal-description {
+  margin-bottom: 10px;
+}
+
+/* Book details modal buttons container style */
+.book-details-modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Book details modal see more/see less button style */
+.book-details-modal-toggle-button {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Book details modal close button style */
+.book-details-modal-close-button {
+  margin-top: 10px;
+}

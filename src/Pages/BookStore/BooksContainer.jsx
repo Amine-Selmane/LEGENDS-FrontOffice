@@ -102,7 +102,7 @@ const BooksContainer = () => {
         <div className="row">
           {currentBooks.map(book => (
             <div className="col-md-6" key={book._id}>
-              <div className="event-item-1">
+<div className={`event-item-1 ${book.quantity === 0 ? 'out-of-stock' : ''}`}>
                 <div className="ci-thumb" style={{ width: "90%" }}>
                   <Link to={`/books/details/${book._id}`}>
                     <img
