@@ -35,6 +35,7 @@ import StudentProfile from "./Pages/StudentProfile";
 import ListEvent from "./Pages/Events/ListEvent";
 import PriceDetails from "./Component/Pricedetails/pricedetails";
 import PopularBooks from "./Component/Book/PopularBook";
+import Forum from "./Pages/BookStore/Forum/Forum";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
   {
     path: "/popular",
     element: <PopularBooks/>,
+  },
+  {
+    path: "/Forum",
+    element: <Forum/>,
   },
  
  
