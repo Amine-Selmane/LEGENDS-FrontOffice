@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
-  cartItems: localStorage.getItem("cartItems")
-    ? JSON.parse(localStorage.getItem("cartItems"))
+  bookItems: localStorage.getItem("bookItems")
+    ? JSON.parse(localStorage.getItem("bookItems"))
     : [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
@@ -13,10 +13,9 @@ const cartSliceBook = createSlice({
   name: "cart",
   initialState,
   reducers: {
-   
-    addToCart(state, action) {
-      const { _id } = action.payload; // Accessing eventId from payload
-      const existingItem = state.cartItems.find(item => item._id === _id);
+    addToCartBook(state, action) { // Updated action name
+      const { _id } = action.payload;
+      const existingItem = state.bookItems.find(bookItem => bookItem._id === _id);
 
       if (existingItem) {
         existingItem.quantity += 1;
@@ -24,54 +23,52 @@ const cartSliceBook = createSlice({
           position: "bottom-left",
         });
       } else {
-        const newCartItem = { ...action.payload, quantity: 1 };
-        state.cartItems.push(newCartItem);
+        const newBookItem = { ...action.payload, quantity: 1 }; // Updated variable name
+        state.bookItems.push(newBookItem); // Updated variable name
         toast.success("Book added to cart", {
           position: "bottom-left",
         });
       }
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(state.bookItems));
     },
 
-
-
-    decreaseCart(state, action) {
+    decreaseCartBook(state, action) { // Updated action name
       const { _id } = action.payload;
-      const existingItemIndex = state.cartItems.findIndex(item => item._id === _id);
+      const existingItemIndex = state.bookItems.findIndex(bookItem => bookItem._id === _id);
 
       if (existingItemIndex === -1) return;
 
-      const existingItem = state.cartItems[existingItemIndex];
-      
+      const existingItem = state.bookItems[existingItemIndex];
+
       if (existingItem.quantity > 1) {
         existingItem.quantity -= 1;
         toast.info("Decreased book quantity", {
           position: "bottom-left",
         });
       } else {
-        state.cartItems.splice(existingItemIndex, 1);
+        state.bookItems.splice(existingItemIndex, 1);
         toast.error("Book removed from cart", {
           position: "bottom-left",
         });
       }
 
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(state.bookItems));
     },
 
-    removeFromCart(state, action) {
+    removeFromCartBook(state, action) { // Updated action name
       const { _id } = action.payload;
-      const updatedCartItems = state.cartItems.filter(item => item._id !== _id);
-      state.cartItems = updatedCartItems;
+      const updatedCartItems = state.bookItems.filter(bookItem => bookItem._id !== _id);
+      state.bookItems = updatedCartItems;
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
       toast.error("Book removed from cart", {
         position: "bottom-left",
       });
     },
 
-    getTotal(state, action) {
-      const { total, quantity } = state.cartItems.reduce(
-        (cartTotal, cartItem) => {
-          const { price, quantity } = cartItem;
+    getTotalBook(state, action) { // Updated action name
+      const { total, quantity } = state.bookItems.reduce(
+        (cartTotal, bookItem) => {
+          const { price, quantity } = bookItem;
           const itemTotal = price * quantity;
 
           cartTotal.total += itemTotal;
@@ -88,8 +85,8 @@ const cartSliceBook = createSlice({
       state.cartTotalAmount = parseFloat(total.toFixed(2));
     },
 
-    clearCart(state, action) {
-      state.cartItems = [];
+    clearCartBook(state, action) { // Updated action name
+      state.bookItems = [];
       localStorage.removeItem("cartItems");
       state.cartTotalQuantity = 0;
       state.cartTotalAmount = 0;
@@ -98,8 +95,13 @@ const cartSliceBook = createSlice({
   },
 });
 
-export const { addToCart, decreaseCart, removeFromCart, getTotal, clearCart } =
-cartSliceBook.actions;
-  export const selectCartItems = state => state.cart.cartItems; // Selector function to retrieve cartItems from state
+export const {
+  addToCartBook,
+  decreaseCartBook,
+  removeFromCartBook,
+  getTotalBook,
+  clearCartBook
+} = cartSliceBook.actions; // Updated action names
+export const selectCartBookItems = state => state.cartBook.bookItems;
 
 export default cartSliceBook.reducer;

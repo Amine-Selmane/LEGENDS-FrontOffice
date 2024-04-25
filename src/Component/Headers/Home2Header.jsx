@@ -11,6 +11,10 @@ import {
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import {  FaHeart } from 'react-icons/fa'; // Import the heart and cart icons from Font Awesome
+import { useSelector } from 'react-redux'; // Import useSelector hook to retrieve data from Redux store
+import { selectCartBookItems } from '../../Pages/BookStore/Action/cartSliceBook'; // Import the selector function for cart items
+
 
 function Home2Header() {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
@@ -20,6 +24,8 @@ function Home2Header() {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const bookItems = useSelector(selectCartBookItems); // Retrieve cart items from Redux store
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -199,6 +205,17 @@ function Home2Header() {
                     </li>
                 </ul>
               </div>
+                      {/* Basket Icon */}
+                      <Link to="/cartBook" className="basket-icon">
+                <i className="fas fa-shopping-cart" style={{ color: 'black', fontSize: '24px', marginRight: '10px' }}>
+                  {bookItems.length > 0 && <span className="badge">{bookItems.length}</span>} {/* Display the number of items in the cart */}
+                </i>
+              </Link>
+              
+              {/* Heart Icon for Wishlist */}
+              <Link to="/wishlist" className="wishlist-icon">
+                <FaHeart style={{ color: 'black', fontSize: '24px', marginLeft: '10px' }} />
+              </Link>
               {/* Nav Menu End  */}
 
               <div className="dropdown ml-auto">

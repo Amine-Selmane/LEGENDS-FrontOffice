@@ -10,11 +10,11 @@ import "swiper/css/navigation";
 
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import { createRoot } from 'react-dom';
 
 import cartReducer, { getTotals } from "./Pages/Events/Action/cartSlice.js";
-import cartBookReducer, { getTotal } from "./Pages/BookStore/Action/cartSliceBook.js";
+import cartBookReducer, { getTotalBook } from "./Pages/BookStore/Action/cartSliceBook.js";
 import wishlistReducer from "./Pages/BookStore/Action/wishlistSlice.js";
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -32,14 +32,14 @@ const store = configureStore({
 
 // Dispatch initial actions
 store.dispatch(getTotals());
-store.dispatch(getTotal());
+store.dispatch(getTotalBook());
 
-
-
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-    <App />
+      <App />
+      <ToastContainer />
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );

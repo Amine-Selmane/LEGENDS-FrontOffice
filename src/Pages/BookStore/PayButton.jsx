@@ -3,10 +3,10 @@ import { MDBBtn } from "mdb-react-ui-kit";
 import { url } from "./Action/api";
 import React from 'react';
 
-const PayButton = ({ cartItems }) => {
+const PayButton = ({ bookItems }) => {
   const handleCheckout = () => {
     axios.post(`${url}/stripe/create-checkout-session`, {
-      cartItems,
+      bookItems,
     })
 
       .then((response) => {

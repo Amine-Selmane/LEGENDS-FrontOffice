@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import { Rate, message } from 'antd';
-import bookImage from './bookImage.jpg';
-import './ShowBook.css'; // Import the CSS file
+import { Rate, message, Button, Input } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartBook } from './Action/cartSliceBook';
+import Header from '../../Component/Headers';
+import Footer from '../../Component/Footer/Footer';
+import './ShowBook.css';
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+  FaPinterest,
+  FaCartPlus,
+} from 'react-icons/fa';
+
+const { TextArea } = Input;
 
 const ShowBook = () => {
   const [book, setBook] = useState({});
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
-  const [ratings, setRatings] = useState([]); // State to store ratings
-  const [userReview, setUserReview] = useState(null); // State to store user's review for the current book
+  const [ratings, setRatings] = useState([]);
+  const [userReview, setUserReview] = useState(null);
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
@@ -20,81 +34,14 @@ const ShowBook = () => {
       .get(`http://localhost:5000/books/getbookbyid/${id}`)
       .then((response) => {
         setBook(response.data);
-        setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-
-    // Fetch ratings for the book
-    axios
-      .get(`http://localhost:5000/ratings/getratingsforbook/${id}`)
-      .then((response) => {
-        console.log('Ratings:', response.data); // Log ratings data
-        setRatings(response.data); // Update ratings state
-        setLoading(false);
+        console.error('Error fetching book:', error);
       })
-      .catch((error) => {
-        console.log(error);
+      .finally(() => {
         setLoading(false);
       });
 
-    // Fetch user's review for the book
-    axios
-      .get(`http://localhost:5000/ratings/getuserreviewforbook/${id}`)
-      .then((response) => {
-        console.log('User Review:', response.data); // Log user's review data
-        setUserReview(response.data); // Update user's review state
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, []);
-
-  // Function to handle rating change
-  const handleRatingChange = (value) => {
-    setRating(value);
-  };
-
-  // Function to handle comment change
-  const handleCommentChange = (e) => {
-    setComment(e.target.value);
-  };
-
-  // Function to handle rating submission
-  const handleRatingSubmit = async () => {
-    try {
-      // Check if the user has already submitted a review for the current book
-      if (userReview) {
-        message.error('You have already submitted a review for this book');
-        return;
-      }
-
-      // Check if the rating value is within the valid range (1 to 5)
-      if (rating < 1 || rating > 5) {
-        console.error('Rating value must be between 1 and 5');
-        return;
-      }
-
-      // Submit the review if the rating value is valid
-      await axios.post('http://localhost:5000/ratings/addRate', {
-        bookId: id,
-        rating,
-        comment
-      });
-
-      message.success('Rating submitted successfully');
-      setComment('');
-      setRating(0); // Reset the rating after submission
-    } catch (error) {
-      console.error('Error submitting rating:', error);
-      message.error('Failed to submit rating');
-    }
-
-    // Refresh ratings after submitting a new one
     axios
       .get(`http://localhost:5000/ratings/getratingsforbook/${id}`)
       .then((response) => {
@@ -102,55 +49,129 @@ const ShowBook = () => {
       })
       .catch((error) => {
         console.error('Error fetching ratings:', error);
-      });
-
-    // Refresh user's review after submitting a new one
-    axios
-      .get(`http://localhost:5000/ratings/getuserreviewforbook/${id}`)
-      .then((response) => {
-        setUserReview(response.data);
       })
-      .catch((error) => {
-        console.error('Error fetching user review:', error);
+      .finally(() => {
+        setLoading(false);
       });
+  }, [id]);
+
+  const handleRatingChange = (value) => {
+    setRating(value);
+  };
+
+  const handleAddToCart = (book) => {
+    dispatch(addToCartBook(book));
+  };
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleRatingSubmit = async () => {
+    try {
+      if (userReview) {
+        message.error('You have already submitted a review for this book');
+        return;
+      }
+  
+      if (rating < 1 || rating > 5) {
+        throw new Error('Rating value must be between 1 and 5');
+      }
+  
+      await axios.post('http://localhost:5000/ratings/addRate', {
+        bookId: id,
+        rating,
+        comment,
+      });
+  
+      message.success('Rating submitted successfully');
+      setComment('');
+      setRating(0);
+      setUserReview(true);
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+      message.error('Failed to submit rating');
+    }
+  
+    const updatedRatings = await axios.get(
+      `http://localhost:5000/ratings/getratingsforbook/${id}`
+    );
+    setRatings(updatedRatings.data);
   };
 
   return (
-    <div className='show-book-container'>
-      <h1 className='text-3xl my-4'>Book Details</h1>
-      <div className='book-details'>
-        <div className='book-image'>
-          <img
-            alt={book.title}
-            src={bookImage}
-            style={{ width: '200px', height: '300px', objectFit: 'cover', borderRadius: '10px', cursor: 'pointer' }}
-          />
-        </div>
-        <div className='book-info'>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-600 font-semibold'>Title:</span>
-            <span className='text-lg'>{book.title}</span>
+    <>
+      <Header />
+      <div className="single-product-main-content">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="layout">
+            <div className="left">
+              <img alt={book.title} src={book.image} className="book-image" />
+            </div>
+            <div className="right">
+              <div className="details">
+                <h1 className="name">{book.title}</h1>
+                <p className="price">${book.price}</p>
+                <p className="desc">{book.description}</p>
+              </div>
+              <div className="cart-buttons">
+                <div className="quantity-buttons">
+                  {book.quantity > 0 ? (
+                    <span>In Stock</span>
+                  ) : (
+                    <span>Out of Stock</span>
+                  )}
+                </div>
+                <button
+                  className="add-to-cart-button"
+                  onClick={() => handleAddToCart(book)}
+                  disabled={book.quantity === 0} // Disable button if quantity is 0
+                >
+                  ADD TO CART
+                </button>
+              </div>
+              <div className="info-item">
+                <span className="text-bold">Category: Books</span>
+                <span className="text-bold">Share:</span>
+                <span className="Social-icons">
+                  <FaFacebookF size={16} />
+                  <FaTwitter size={16} />
+                  <FaInstagram size={16} />
+                  <FaLinkedinIn size={16} />
+                  <FaPinterest size={16} />
+                </span>
+              </div>
+              <div className="info-item">
+                <span className="text-bold">Delivery Time:</span>
+                <span className="normal-text">24-48 hours</span>
+              </div>
+              <div className="info-item">
+                <span className="text-bold">Delivery Area:</span>
+                <span className="normal-text">
+                  Nationwide delivery in Tunisia{' '}
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/1200px-Flag_of_Tunisia.svg.png"
+                    alt="Tunisia Flag"
+                    width="20"
+                  />
+                </span>
+              </div>
+            </div>
           </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-600 font-semibold'>Description:</span>
-            <span className='text-lg'>{book.description}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-600 font-semibold'>Price:</span>
-            <span className='text-lg'>${book.price}</span>
-          </div>
-        </div>
+        )}
       </div>
       <div className='review-section'>
         <h2 className='text-2xl font-semibold mb-4'>Reviews</h2>
         {ratings && ratings.length > 0 ? (
           <div>
             {ratings.map((rating) => (
-              <div key={rating._id} className="review-box">
-                <div className="review-header">
-                  <p className="user-name">User: {rating.user}</p> {/* Display the username */}
+              <div key={rating._id} className='review-box'>
+                <div className='review-header'>
+                  <p className='user-name'>User: {rating.user}</p>
                 </div>
-                <div className="review-content">
+                <div className='review-content'>
                   <Rate value={rating.rating} disabled />
                   <p><strong className='review-comment'>Comment: </strong>{rating.comment}</p>
                 </div>
@@ -161,9 +182,10 @@ const ShowBook = () => {
           <p>No reviews yet.</p>
         )}
       </div>
-      <h2 className='text-2xl font-semibold mb-4'>Your Review </h2>
+      <div className='review-section'>
 
-      <textarea
+      <h2 className='text-2xl font-semibold mb-4'>Your Review </h2>
+      <TextArea
         id='comment'
         name='comment'
         value={comment}
@@ -171,7 +193,7 @@ const ShowBook = () => {
         className='comment-input'
         rows='4'
         placeholder='Enter your comment...'
-      ></textarea>
+      />
       <div className='rating-input'>
         <label className='block text-lg font-semibold mb-2'>Rating:</label>
         <Rate onChange={handleRatingChange} value={rating} />
@@ -200,7 +222,10 @@ const ShowBook = () => {
           <span>Continue Shopping</span>
         </Link>
       </div>
-    </div>
+      </div>
+
+      <Footer />
+    </>
   );
 };
 

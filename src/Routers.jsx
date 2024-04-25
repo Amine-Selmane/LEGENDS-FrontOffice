@@ -18,7 +18,6 @@ import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
 import BookList from "./Pages/BookStore/BookList";
 import Cart from "./Pages/BookStore/Cart";
-import ChatComponent from "./Pages/BookStore/ChatComponent";
 import ShowBook from "./Pages/BookStore/ShowBook";
 import CheckoutSuccess from "./Pages/BookStore/CheckoutSuccess";
 import Wishlist from "./Pages/BookStore/wishlist";
@@ -74,10 +73,6 @@ const router = createBrowserRouter([
   {
     path: "/cartBook",
     element: <Cart/>,
-  }, 
-  {
-    path: "/chat",
-    element: <ChatComponent/>,
   }, 
  
  

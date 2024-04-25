@@ -1,38 +1,37 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, decreaseCart, getTotal, removeFromCart ,addToCart } from "./Action/cartSliceBook";
+import { clearCartBook, decreaseCartBook, getTotalBook, removeFromCartBook ,addToCartBook } from "./Action/cartSliceBook";
 import PayButton from "../BookStore/PayButton";
 import { Link } from "react-router-dom";
 import "./style.css" ;
-import bookImage from "./bookImage.jpg";
 import React from 'react';
 
 
-const Cart = () => {
-  const cart = useSelector((state) => state.cart);
+const CartBook = () => {
+  const cartBook = useSelector((state) => state.cartBook);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTotal());
-  }, [cart, dispatch]);
+    dispatch(getTotalBook());
+  }, [cartBook, dispatch]);
 
   const handleDecreaseCart = (_id) => {
-    dispatch(decreaseCart({ _id }));
+    dispatch(decreaseCartBook({ _id }));
   };
 
   const handleRemoveFromCart = (_id) => {
-    dispatch(removeFromCart({ _id }));
+    dispatch(removeFromCartBook({ _id }));
   };
 
   const handleClearCart = () => {
-    dispatch(clearCart());
+    dispatch(clearCartBook());
   };
 
   
   return (
     <div className="cart-container">
       <h2>Shopping Cart</h2>
-      {cart.cartItems.length === 0 ? (
+      {cartBook.bookItems.length === 0 ? (
         <div className="cart-empty">
           <p>Your cart is currently empty</p>
 
@@ -59,34 +58,29 @@ const Cart = () => {
         <div>
           <div className="titles">
             <h3 className="Book-title">Book</h3>
-         <h3 className="quantity">Quantity</h3>
-         <h3 className="quantity">Total</h3>
-
-
+            <h3 className="quantity">Quantity</h3>
+            <h3 className="quantity">Total</h3>
           </div>
           <div className="cart-items">
-            {cart.cartItems.map((cartItem) => (
-              <div className="cart-item" key={cartItem._id}>
+            {cartBook.bookItems.map((bookItem) => (
+              <div className="cart-item" key={bookItem._id}>
                 <div className="cart-event">
-                <h3>{cartItem.title}</h3>
-
-                  <img src={bookImage} alt={cartItem.title}  />
-                  <p>Price: ${cartItem.price}</p>
-
-                  <button className="remove-button" onClick={() => handleRemoveFromCart(cartItem._id)}>
-  <span className="cross-icon">X</span>
-</button>
+                  <h3>{bookItem.title}</h3>
+                  <img src={bookItem.image} alt={bookItem.title} />
+                  <p>Price: ${bookItem.price}</p>
+                  <button className="remove-button" onClick={() => handleRemoveFromCart(bookItem._id)}>
+                    <span className="cross-icon">X</span>
+                  </button>
                 </div>
                 <div className="cart-quantity">
-                  <button onClick={() => handleDecreaseCart(cartItem._id)}>
+                  <button onClick={() => handleDecreaseCart(bookItem._id)}>
                     -
                   </button>
-                  <div className="count">{cartItem.quantity}</div>
-                  <button onClick={() => dispatch(addToCart(cartItem))}>+</button>
+                  <div className="count">{bookItem.quantity}</div>
+                  <button onClick={() => dispatch(addToCartBook(bookItem))}>+</button>
                 </div>
-                
                 <div className="cart-total-price">
-                  ${cartItem.price * cartItem.quantity}
+                  ${bookItem.price * bookItem.quantity}
                 </div>
               </div>
             ))}
@@ -98,12 +92,11 @@ const Cart = () => {
             <div className="cart-checkout">
               <div className="subtotal">
                 <span>Subtotal</span>
-                <span className="amount">${cart.cartTotalAmount}</span>
+                <span className="amount">${cartBook.cartTotalAmount}</span>
               </div>
               <p>Taxes and shipping calculated at checkout</p>
               {/* Include PayButton component if implemented */}
-              <PayButton cartItems={cart.cartItems} />
-             
+              <PayButton bookItems={cartBook.bookItems} />
               <div className="continue-shopping">
                 <Link to="/books">
                   <svg
@@ -130,4 +123,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartBook;
