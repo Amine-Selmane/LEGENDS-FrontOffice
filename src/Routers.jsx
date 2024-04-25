@@ -25,6 +25,8 @@ import RecoverPassword from "./Component/auth/RecoverPassword";
 import Maintanance from "./Component/auth/Maintanance";
 import LockScreen from "./Component/auth/LockScreen";
 import StudentProfile from "./Pages/StudentProfile";
+import Chat from "./Component/chatSys/pages/Chat/Chat";
+import Auth from "./Component/chatSys/middlware/auth";
 
 const router = createBrowserRouter([
   {
@@ -129,10 +131,16 @@ const router = createBrowserRouter([
     path: "/contact",
     element: <Contact />,
   },
+
+  { path: '/msg', name: 'form-validation', exact: true, element:<Auth> <Chat /> </Auth>},
   {
     path: "*",
     element: <Error />,
-  },
+  }
+
+        
+
+ 
 ]);
 
 function Routers() {
