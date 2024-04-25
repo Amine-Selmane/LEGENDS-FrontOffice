@@ -36,6 +36,15 @@ import StudentProfile from "./Pages/StudentProfile";
 import ListEvent from "./Pages/Events/ListEvent";
 import PriceCard from "./Component/price-card/price-card.component";
 import PriceDetails from "./Component/Pricedetails/pricedetails";
+import QuizAssignment from "./Component/Quiz/QuizAssignment";
+import QuizList from "./Component/Quiz/QuizList";
+import QuizUpdate from "./Component/Quiz/QuizUpdate";
+import QuizCodeInput from "./Component/Quiz/QuizCodeInput";
+import QuizDisplay from "./Component/Quiz/QuizDisplay";
+import QuizDisplayParent from "./Component/Quiz/QuizDisplayParent";
+import QuestionForm from "./Component/Questions/QuestionForm";
+import QuestionList from "./Component/Questions/QuestionList";
+import UpdateQuestion from "./Component/Questions/UpdateQuestion";
 
 const router = createBrowserRouter([
   {
@@ -74,7 +83,36 @@ const router = createBrowserRouter([
     path: "/cartBook",
     element: <Cart/>,
   }, 
- 
+  {path: "/QuizAssignment",
+  element: <QuizAssignment/>,
+},
+{path: "/quiz",
+element: <QuizList/>,
+},
+{path: "/quiz/update/:id",
+element: <QuizUpdate/>,
+},
+
+{path: "/question/new",
+element: <QuestionForm/>,
+},
+{path: "/questions",
+element: <QuestionList/>,
+},
+{path: "/question/update/:id",
+element: <UpdateQuestion/>,
+},
+
+{
+  path: "/quiz-display", // Définissez une route pour afficher le composant QuizDisplayParent
+  element: <QuizDisplayParent />, // Utilisez QuizDisplayParent comme élément à afficher pour cette route
+},
+{path: "/QuizCodeInput",
+element: <QuizCodeInput/>,
+},
+{path: "/QuizDisplay/:code",
+element: <QuizDisplay/>,
+},
  
  
   {path: "/StudentReport",
