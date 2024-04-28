@@ -11,17 +11,18 @@ import { io } from "socket.io-client";
 
 const Chat = () => {
   const dispatch = useDispatch();
-  const socket = useRef(null); // Initialize socket as null
+  const socket = useRef(); // Initialize socket as null
   const [chats, setChats] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [sendMessage, setSendMessage] = useState(null);
-  const [receivedMessage, setReceivedMessage] = useState(null);
+  const [receiveMessage, setReceiveMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
 
+  const [messages, setMessages] = useState([]); // Add the 'messages' state variable
   
-
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -33,7 +34,7 @@ const Chat = () => {
             },
           });
           setUserData(response.data);
-  
+
           // Now you have the user data, you can proceed with other operations
           if (response.data) {
             getChats(response.data);
@@ -43,43 +44,46 @@ const Chat = () => {
         console.error("Error fetching user data:", error.message);
       }
     };
-  
+
     fetchUserData();
-  }, []);
+  }, [userData]);
+  
+  //sending message to socket server
+  useEffect(() => {
+    if (sendMessage!==null) {
+      socket.current.emit("send-message", sendMessage);
+    }
+  }, [sendMessage]);
   
 
   useEffect(() => {
-    const connectToSocketIO = () => {
-      console.log("datauser:",userData);
-
-      
+    
+      if (userData) {
         socket.current = io("ws://localhost:8800");
         socket.current.emit("new-user-add", userData._id);
         socket.current.on("get-users", (users) => {
           setOnlineUsers(users);
         });
-        socket.current.on("recieve-message", (data) => {
-          console.log("data:",data);
-          setReceivedMessage(data);
-        });
-      
-    };
 
-    if (userData) {
-      connectToSocketIO();
-    }
+        socket.current.on("recieve-message", (data) => {
+          console.log(data);
+          setReceiveMessage(data);
+        });
+      }
+   
   }, [userData]);
 
-  
+
+
   const getChats = async (userData) => {
     try {
       const { data } = await userChats(userData._id);
       setChats(data);
-      connectToSocketIO(userData);
     } catch (error) {
       console.log(error);
     }
   };
+
 
  // Assuming you have fetched _id from Redux once and stored it in a state variable named userId
 
@@ -136,7 +140,7 @@ const checkOnlineStatus = (chat) => {
             chat={currentChat}
             currentUser={userData._id}
             setSendMessage={setSendMessage}
-            receivedMessage={receivedMessage}
+            receiveMessage={receiveMessage}
           />
         )}
       </div>

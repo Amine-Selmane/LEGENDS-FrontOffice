@@ -30,7 +30,7 @@
     background-color: red;
   
     /* Create the gradient. */
-    background-image: var(--buttonBg);
+    background-image: linear-gradient(98.63deg, #f9a225 0%, #f95f35 100%);
     
     /* Set the background size and repeat properties. */
     background-size: 100%;
@@ -54,7 +54,7 @@
 
 
 .authForm{
-    background-color: var(--cardColor);
+    background-color: rgba(255, 255, 255, 0.64);;
     border-radius: 1rem;
     padding: 1rem;
 }
