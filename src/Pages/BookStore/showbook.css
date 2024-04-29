@@ -1,12 +1,18 @@
 .single-product-main-content {
-  margin: 200px auto 100px; /* Adjust the top margin to create space */
+  margin: 100px 100px 50px; /* Adjust the top margin to create space, reduce bottom margin */
   max-width: 1200px;
   padding: 100px;
 }
 
-/* If you want to add space between the header and the single book content */
-/* You can increase the top margin of .single-product-main-content */
-/* You can also adjust the padding or margin of the Header component if needed */
+.review-container {
+  margin-top: 50px; /* Adjust the top margin to create space */
+  margin-bottom: 50px; /* Adjust the bottom margin to create space */
+  display: flex;
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+  width: 100%;
+
+}
 
 
 .layout {
@@ -105,6 +111,8 @@
 
 
 .review-box {
+  margin-top: 20px; /* Adjust the top margin to create space */
+
   border: 1px solid #e0e0e0;
   padding: 20px;
   margin-bottom: 20px;
@@ -115,15 +123,6 @@
 
 
 
-.review-container {
-  margin-top: 20px; /* Adjust the top margin to create space */
-  margin-bottom: 100px; /* Adjust the bottom margin to create space */
-  display: flex;
-  justify-content: center; /* Horizontally center the content */
-  align-items: center; /* Vertically center the content */
-  width: 100%;
-  height: 200vh; /* Set height to full viewport height */
-}
 
 
 .review-section {
@@ -190,4 +189,23 @@
   color: #6c1d9b;
 }
 
+.emoji-picker-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.emoji-picker-button:focus {
+  outline: none;
+}
+
+.emoji-icon {
+  font-size: 20px;
+  color: #888;
+}
+
+.emoji-icon:hover {
+  color: #555;
+}
 

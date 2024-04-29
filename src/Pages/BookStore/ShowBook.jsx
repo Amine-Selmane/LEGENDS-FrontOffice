@@ -4,6 +4,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Rate, message, Button, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCartBook } from './Action/cartSliceBook';
+import Banner from "../../Component/Banner/Banner";
+
 import Header from '../../Component/Headers';
 import Footer from '../../Component/Footer/Footer';
 import './ShowBook.css';
@@ -113,6 +115,8 @@ const ShowBook = () => {
   return (
     <>
       <Header />
+      <Banner title="Book Details" background="assets/images/banner3.jpg" />
+
       <div className="single-product-main-content">
         {loading ? (
           <p>Loading...</p>
