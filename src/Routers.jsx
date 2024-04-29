@@ -21,7 +21,6 @@ import Cart from "./Pages/BookStore/Cart";
 import ShowBook from "./Pages/BookStore/ShowBook";
 import CheckoutSuccess from "./Pages/BookStore/CheckoutSuccess";
 import Wishlist from "./Pages/BookStore/wishlist";
-import OrderHistory from "./Pages/BookStore/OrderHistory";
 import StudentReport from "./Component/Reports/StudentReport";
 import TeacherReport from "./Component/Reports/TeacherReport";
 import CartEvent from "./Pages/Events/CartEvent";
@@ -35,7 +34,6 @@ import StudentProfile from "./Pages/StudentProfile";
 import ListEvent from "./Pages/Events/ListEvent";
 import PriceDetails from "./Component/Pricedetails/pricedetails";
 import PopularBooks from "./Component/Book/PopularBook";
-import Forum from "./Pages/BookStore/Forum/Forum";
 
 const router = createBrowserRouter([
   {
@@ -61,10 +59,7 @@ const router = createBrowserRouter([
     path: "/book/checkout-success",
     element: <CheckoutSuccess/>,
   },
-  {
-    path: "/History",
-    element: <OrderHistory/>,
-  },
+ 
   
  {
     path: "/books",
@@ -79,10 +74,7 @@ const router = createBrowserRouter([
     path: "/popular",
     element: <PopularBooks/>,
   },
-  {
-    path: "/Forum",
-    element: <Forum/>,
-  },
+  
  
  
   {path: "/StudentReport",
