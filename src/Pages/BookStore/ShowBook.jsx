@@ -15,6 +15,8 @@ import {
   FaPinterest,
   FaCartPlus,
 } from 'react-icons/fa';
+import EmojiPicker from 'emoji-picker-react';
+
 
 const { TextArea } = Input;
 
@@ -25,6 +27,7 @@ const ShowBook = () => {
   const [comment, setComment] = useState('');
   const [ratings, setRatings] = useState([]);
   const [userReview, setUserReview] = useState(null);
+  
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -66,6 +69,14 @@ const ShowBook = () => {
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
+
+  const handleEmojiClick = (emojiObject) => {
+    // Update the comment state with the selected emoji
+    setComment(prevComment => prevComment + emojiObject.emoji);
+  };
+  
+  
+  
 
   const handleRatingSubmit = async () => {
     try {
@@ -162,6 +173,10 @@ const ShowBook = () => {
           </div>
         )}
       </div>
+
+
+      <div className="review-container">
+
       <div className='review-section'>
         <h2 className='text-2xl font-semibold mb-4'>Reviews</h2>
         {ratings && ratings.length > 0 ? (
@@ -181,8 +196,7 @@ const ShowBook = () => {
         ) : (
           <p>No reviews yet.</p>
         )}
-      </div>
-      <div className='review-section'>
+    
 
       <h2 className='text-2xl font-semibold mb-4'>Your Review </h2>
       <TextArea
@@ -194,6 +208,8 @@ const ShowBook = () => {
         rows='4'
         placeholder='Enter your comment...'
       />
+<EmojiPicker onEmojiClick={handleEmojiClick} />
+
       <div className='rating-input'>
         <label className='block text-lg font-semibold mb-2'>Rating:</label>
         <Rate onChange={handleRatingChange} value={rating} />
@@ -221,7 +237,9 @@ const ShowBook = () => {
           </svg>
           <span>Continue Shopping</span>
         </Link>
-      </div>
+
+        </div>
+        </div>
       </div>
 
       <Footer />

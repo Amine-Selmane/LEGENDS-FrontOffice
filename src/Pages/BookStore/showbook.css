@@ -1,8 +1,13 @@
 .single-product-main-content {
-  margin: 200px auto;
+  margin: 200px auto 100px; /* Adjust the top margin to create space */
   max-width: 1200px;
-  padding: 40px;
+  padding: 100px;
 }
+
+/* If you want to add space between the header and the single book content */
+/* You can increase the top margin of .single-product-main-content */
+/* You can also adjust the padding or margin of the Header component if needed */
+
 
 .layout {
   display: flex;
@@ -98,15 +103,6 @@
 }
 
 
-.review-section {
-  margin-top: 40px;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  margin-left: 20px; /* Add margin from the left */
-  margin-right: 20px; /* Add margin from the right */
-}
 
 .review-box {
   border: 1px solid #e0e0e0;
@@ -116,6 +112,32 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+
+
+.review-container {
+  margin-top: 20px; /* Adjust the top margin to create space */
+  margin-bottom: 100px; /* Adjust the bottom margin to create space */
+  display: flex;
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+  width: 100%;
+  height: 200vh; /* Set height to full viewport height */
+}
+
+
+.review-section {
+  width: 100%;
+  max-width: 600px; /* Set a maximum width for the review section */
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
 
 .user-name {
   font-weight: bold;
