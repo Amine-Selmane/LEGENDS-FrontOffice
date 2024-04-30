@@ -40,6 +40,7 @@
     "match-sorter": "^6.3.1",
     "mdb-react-ui-kit": "^7.2.0",
     "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^4.2.67",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
