@@ -49,6 +49,7 @@ const router = createBrowserRouter([
     path: "/wishlist",
     element: < Wishlist/>,
   },
+
   
   {
     path: "/books/details/:id",
