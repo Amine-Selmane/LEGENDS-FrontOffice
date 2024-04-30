@@ -4,6 +4,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Rate, message, Modal,Input } from 'antd';
 import { useDispatch } from 'react-redux';
 import Header from '../../Component/Headers';
+import Banner from "../../Component/Banner/Banner";
+
 import Footer from '../../Component/Footer/Footer';
 import HTMLFlipBook from 'react-pageflip';
 import {
@@ -134,6 +136,8 @@ const { TextArea } = Input;
     return (
       <>
         <Header />
+        <Banner title="Book Details" background="assets/images/banner3.jpg" />
+
         <div className="single-product-main-content">
           {loading ? (
             <p>Loading...</p>
