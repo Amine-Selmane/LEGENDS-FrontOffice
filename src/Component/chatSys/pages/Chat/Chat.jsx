@@ -1,5 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
+import Header from "../../../../Component/Headers";
+import Home2Header from "../../../../Component/Headers/Home2Header";
+import Home3Header from "../../../../Component/Headers/Home3Header";
 import ChatBox from "../../ChatBox/ChatBox";
 import Conversation from "../../Coversation/Conversation";
 import LogoSearch from "../../LogoSearch/LogoSearch";
@@ -102,7 +105,14 @@ const checkOnlineStatus = (chat) => {
 
 
   return (
+    
+   <div>
+      {userData?.role === "student" && <Home2Header/>}
+    {userData?.role === "teacher" && <Home3Header/>}
+  <br/><br/><br/><br/><br/><br/>
+  
     <div className="Chat">
+    
       {/* Left Side */}
       <div className="Left-side-chat">
         <LogoSearch />
@@ -131,9 +141,7 @@ const checkOnlineStatus = (chat) => {
 
      {/* Right Side */}
       <div className="Right-side-chat">
-        <div style={{ width: "20rem", alignSelf: "flex-end" }}>
-          <NavIcons />
-        </div>
+
         {/* Ensure user is defined before passing user._id */}
         {userData && (
           <ChatBox
@@ -145,6 +153,7 @@ const checkOnlineStatus = (chat) => {
         )}
       </div>
 
+    </div>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUser } from "../api/UserRequests";
 import img1 from "../../../bg/user4.jpg";
+import "../FollowersCard/FollowersCard.css"
 const Conversation = ({ data, currentUser, online }) => {
 
   const [userData, setUserData] = useState(null)

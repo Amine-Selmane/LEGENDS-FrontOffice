@@ -93,3 +93,112 @@
   }
   
   
+  .send-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    background: linear-gradient(98.63deg, #f9a225 0%, #f95f35 100%);
+    transition: all 100ms ease-out;
+    /* Ajoutez ces lignes pour modifier les dimensions */
+    width: 100px; /* Remplacez la valeur par celle souhaitée */
+    height: 70px; /* Remplacez la valeur par celle souhaitée */
+}
+
+.send-button:hover {
+    color: #fca61f;
+    border: 2px solid #fca61f;
+    cursor: pointer;
+    background: transparent;
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .tooltip:hover::after {
+    opacity: 1;
+  }
+  
+  /* Voice Recording Container */
+  .relative {
+    position: relative;
+  }
+  
+  .absolute {
+    position: absolute;
+  }
+  
+  .bg-primary {
+    background-color: #5b5d8d;
+  }
+  
+  .rounded-md {
+    border-radius: 0.375rem; /* You can adjust this value */
+  }
+  
+  .p-3 {
+    padding: 0.75rem; /* You can adjust this value */
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .justify-between {
+    justify-content: space-between;
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  /* Adjust tooltip icon size */
+  .active\:scale-150 {
+    transform: scale(1.5);
+  }
+  
+  /* Voice Recording Button */
+  .text-primary {
+    color: #5b5d8d;
+  }
+  
+  /* Send Message Button */
+  .mr-5 {
+    margin-right: 1.25rem; /* You can adjust this value */
+  }
+  
+  /* Mobile Styles */
+  .mobile\:text-lg {
+    font-size: 1.125rem; /* You can adjust this value */
+  }
+  
+  .mobile\:mr-4 {
+    margin-right: 1rem; /* You can adjust this value */
+  }
+  
+
