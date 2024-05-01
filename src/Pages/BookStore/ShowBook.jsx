@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { Rate, message, Modal, Input } from 'antd';
@@ -15,8 +17,13 @@ import {
   FaInstagram,
   FaLinkedinIn,
   FaPinterest,
+  FaThumbsUp,
+  FaMicrophone, FaStop, FaTrash,
+  FaThumbsDown,
+  FaHeart, FaAngry,
   FaSmile,
 } from 'react-icons/fa';
+
 import './ShowBook.css';
 import EmojiPicker from 'emoji-picker-react';
 import { addToCartBook } from './Action/cartSliceBook';
@@ -37,6 +44,7 @@ const ShowBook = () => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [voice, setVoice] = useState(false);
   const [recordBlobLink, setRecordBlobLink] = useState(null);
+  const [reactions, setReactions] = useState({}); // State to store reactions for each review
 
   const audioRef = useRef(null); // Add useRef
 
@@ -187,6 +195,80 @@ const handleRatingChange = (value) => {
     setShowEmojiPicker(!showEmojiPicker);
   };
 
+  const handleReaction = (reviewId, reaction) => {
+    // Check if the opposite reaction has already been selected
+    const oppositeReaction = reaction === 'like' ? 'dislike' : 'like';
+    if (reactions[reviewId]?.[oppositeReaction] > 0) {
+      // If the opposite reaction is selected, decrement its count
+      setReactions(prevReactions => ({
+        ...prevReactions,
+        [reviewId]: {
+          ...prevReactions[reviewId],
+          [oppositeReaction]: prevReactions[reviewId][oppositeReaction] - 1
+        }
+      }));
+    }
+  
+    // Toggle the selected reaction
+    setReactions(prevReactions => ({
+      ...prevReactions,
+      [reviewId]: {
+        ...prevReactions[reviewId],
+        [reaction]: (prevReactions[reviewId]?.[reaction] || 0) + 1
+      }
+    }));
+  
+    // Show toast notification for the specific reaction
+    switch (reaction) {
+      case 'like':
+        toast.success('You liked this review!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        break;
+      case 'dislike':
+        toast.error('You disliked this review!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        break;
+      case 'love':
+        toast.info('You loved this review!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        break;
+      case 'angry':
+        toast.warn('You are angry!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        break;
+      default:
+        break;
+    }
+  };
+  
   return (
     <>
       <Header />
@@ -289,6 +371,7 @@ const handleRatingChange = (value) => {
                 <div className="review-content">
                   <Rate value={rating.rating} disabled />
                   <p><strong className="review-comment">Comment: </strong>{rating.comment}</p>
+               
                   {rating.recordedAudio && (
                     <div className="audio-player" onClick={() => handleAudioPlayback(rating.recordedAudio)}>
                       <audio ref={audioRef} controls>
@@ -297,6 +380,27 @@ const handleRatingChange = (value) => {
                       </audio>
                     </div>
                   )}
+                     {/* Reaction buttons */}
+                     <div>
+                  <div className="reaction-buttons">
+  <div className="reaction-button" onClick={() => handleReaction(rating._id, 'like')}>
+    <FaThumbsUp className="like-button" />
+  </div>
+  <div className="reaction-button" onClick={() => handleReaction(rating._id, 'dislike')}>
+    <FaThumbsDown className="dislike-button" />
+  </div>
+  <div className="reaction-button" onClick={() => handleReaction(rating._id, 'love')}>
+    <FaHeart className="reaction-icon love" />
+  </div>
+  <div className="reaction-button" onClick={() => handleReaction(rating._id, 'angry')}>
+    <FaAngry className="reaction-icon angry" />
+  </div>
+  {/* Add more reaction buttons as needed */}
+</div>
+
+  
+
+                  </div>
                 </div>
               </div>
             ))
@@ -324,31 +428,25 @@ const handleRatingChange = (value) => {
           </div>
           <div>
             <div className="max-w-sm border py-4 px-6 mx-auto bg-black">
-              <h2 className="text-[22px] font-semibold">Audio Recorder</h2>
               <AudioTimer isRunning={isRunning} elapsedTime={elapsedTime} setElapsedTime={setElapsedTime} />
               <ReactMic
                 record={voice}
                 className="sound-wave w-full"
                 onStop={onStop}
-                strokeColor="#000000"
               />
               <div className="audio-recorder-container">
-                <div className="audio-controls">
-                  {!voice ? (
-                    <button onClick={startHandle} className="record-button">
-                      Start Recording
-                    </button>
-                  ) : (
-                    <button onClick={stopHandle} className="stop-button">
-                      Stop Recording
-                    </button>
-                  )}
-                  {recordBlobLink && (
-                    <button onClick={clearHandle} className="clear-button">
-                      Clear Recording
-                    </button>
-                  )}
-                </div>
+              
+              <div className="audio-controls">
+  {!voice ? (
+    <FaMicrophone onClick={startHandle} className="icon" />
+  ) : (
+    <FaStop onClick={stopHandle} className="icon-stop" />
+  )}
+  {recordBlobLink && (
+    <FaTrash onClick={clearHandle} className="icon" />
+  )}
+</div>
+
                 {recordBlobLink && (
                   <div className="audio-player">
                     <audio controls src={recordBlobLink}></audio>

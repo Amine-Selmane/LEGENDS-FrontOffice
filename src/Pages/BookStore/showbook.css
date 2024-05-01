@@ -176,7 +176,7 @@
 }
 .sound-wave {
   width: 100%;
-  height: 100px; /* Adjust the height as needed */
+  height: 20px; /* Adjust the height as needed */
   background-color: #ccc; /* Add a background color */
   border-radius: 4px; /* Add some border radius for styling */
   margin-bottom: 20px; /* Add margin bottom for spacing */
@@ -187,20 +187,9 @@
   display: block; /* Ensure it's a block element */
 }
 
-.record-button {
-  background-color: #5cb85c;
-  color: #fff;
-}
 
-.stop-button {
-  background-color: #d9534f;
-  color: #fff;
-}
 
-.clear-button {
-  background-color: #f0ad4e;
-  color: #fff;
-}
+
 
 .audio-controls button:disabled {
   cursor: not-allowed;
@@ -265,10 +254,55 @@
 
 .emoji-icon {
   font-size: 20px;
-  color: #888;
+  color: #c8d719;
+
 }
 
 .emoji-icon:hover {
-  color: #555;
+  color: #c8d719;
 }
 
+/* Thumbs up icon */
+.like-button {
+  font-size: 20px;
+
+  color: #28a745; /* Green color */
+}
+.reaction-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.reaction-button {
+  margin-right: 10px; /* Adjust spacing between icons as needed */
+}
+
+.reaction-icon {
+  font-size: 24px; /* Adjust icon size as needed */
+}
+
+/* Thumbs down icon */
+.dislike-button {
+  font-size: 20px;
+
+  color: #dc3545; /* Red color */
+}
+.love {
+  font-size: 20px;
+
+  color: pink; /* Example color for love icon */
+}
+
+.angry {
+  font-size: 20px;
+
+  color: orange; /* Example color for angry icon */
+}
+.icon{
+  color: black; /* Example color for angry icon */
+
+}
+.icon-stop{
+  color: black; /* Example color for angry icon */
+
+}
