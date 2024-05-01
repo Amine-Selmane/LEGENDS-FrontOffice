@@ -228,7 +228,7 @@ function Home2Header() {
                         </Link>
                       </DropdownItem>
                       <DropdownItem>
-                        <Link to="#" className="text-dark text-decoration-none">
+                        <Link to="/msg" className="text-dark text-decoration-none">
                           <FontAwesomeIcon icon={faEnvelope} className="me-2 text-info" />
                           Inbox
                         </Link>

@@ -11,6 +11,8 @@ import "./Chat.css";
 import { userChats } from "../../api/ChatRequests";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
+import audioFile from '../../../../bg/notification.mp3'
+
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,7 @@ const Chat = () => {
   const [receiveMessage, setReceiveMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
+  const [notifications, setNotifications] = useState([]);
 
   const [messages, setMessages] = useState([]); // Add the 'messages' state variable
   
@@ -71,7 +74,10 @@ const Chat = () => {
         socket.current.on("recieve-message", (data) => {
           console.log(data);
           setReceiveMessage(data);
+          const audio = new Audio(audioFile);
+          audio.play();
         });
+        
       }
    
   }, [userData]);
@@ -109,13 +115,16 @@ const checkOnlineStatus = (chat) => {
    <div>
       {userData?.role === "student" && <Home2Header/>}
     {userData?.role === "teacher" && <Home3Header/>}
-  <br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/>
   
-    <div className="Chat">
-    
+   <div className="Chat" >
       {/* Left Side */}
       <div className="Left-side-chat">
-        <LogoSearch />
+      {userData && (
+        <LogoSearch 
+        currentUser={userData._id}
+        />
+      )}
         <div className="Chat-container">
           <h2>Chats</h2>
           <div className="Chat-list">

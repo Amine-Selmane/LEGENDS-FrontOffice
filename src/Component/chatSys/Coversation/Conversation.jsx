@@ -1,49 +1,53 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUser } from "../api/UserRequests";
 import img1 from "../../../bg/user4.jpg";
-import "../FollowersCard/FollowersCard.css"
+import "../FollowersCard/FollowersCard.css";
+
 const Conversation = ({ data, currentUser, online }) => {
+  const [userData, setUserData] = useState(null);
+  const dispatch = useDispatch();
 
-  const [userData, setUserData] = useState(null)
-  const dispatch = useDispatch()
+  useEffect(() => {
+    const otherUserId = data.members.find(id => id !== currentUser);
+    const userIdToDisplay = otherUserId !== currentUser ? otherUserId : data.members.find(id => id === currentUser);
 
-  useEffect(()=> {
-
-    const userId = data.members.find((id)=>id!==currentUser)
-    const getUserData = async ()=> {
-      try
-      {
-          const {data} =await getUser(userId)
-         setUserData(data)
-         dispatch({type:"SAVE_USER", data:data})
+    const getUserData = async () => {
+      try {
+        const { data } = await getUser(userIdToDisplay);
+        setUserData(data);
+        dispatch({ type: "SAVE_USER", data: data });
+      } catch (error) {
+        console.log(error);
       }
-      catch(error)
-      {
-        console.log(error)
-      }
-    }
+    };
 
     getUserData();
-  }, [])
+  }, [data, currentUser, dispatch]);
+
   return (
     <>
-      <div className="follower conversation">
-        <div>
-          {online && <div className="online-dot"></div>}
-          <img
-            src={userData?.profile || img1}
-            alt="Profile"
-            className="followerImage"
-            style={{ width: "50px", height: "50px" }}
-          />
-          <div className="name" style={{fontSize: '0.8rem'}}>
-            <span>{userData?.firstName} {userData?.lastName}</span>
-            <span style={{color: online?"#51e200":""}}>{online? "Online" : "Offline"}</span>
+      {userData && userData._id !== currentUser && (
+        <div className="follower conversation">
+          <div>
+            {online && <div className="online-dot"></div>}
+            <img
+              src={userData.profile || img1}
+              alt="Profile"
+              className="followerImage"
+              style={{ width: "50px", height: "50px" }}
+            />
+            <div className="name" style={{ fontSize: "0.8rem" }}>
+              <span>
+                {userData.firstName} {userData.lastName}
+              </span>
+              <span style={{ color: online ? "#51e200" : "" }}>
+                {online ? "Online" : "Offline"}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <hr style={{ width: "85%", border: "0.1px solid #ececec" }} />
     </>
   );

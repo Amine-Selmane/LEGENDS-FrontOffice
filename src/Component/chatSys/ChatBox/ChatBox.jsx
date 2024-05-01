@@ -7,11 +7,26 @@ import { format } from "timeago.js";
 import ChatImageModal from './ChatImageModal';
 import InputEmoji from 'react-input-emoji';
 import img1 from "../../../bg/user4.jpg";
+import Robot from "../../../bg/robot.gif";
 import { AiFillAudio } from "react-icons/ai";
 import { FiSend } from 'react-icons/fi';
 import { Display } from "react-bootstrap-icons";
 import { FiPlay, FiPause } from 'react-icons/fi';
-import voice from "../../../bg/voice.png";
+import styled from "styled-components";
+import ProgressBar from 'react-bootstrap/ProgressBar'; // Importer ProgressBar depuis react-bootstrap
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import SendIcon from '@mui/icons-material/Send';
+import SettingsVoiceIcon from '@mui/icons-material/SettingsVoice';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import CollectionsIcon from '@mui/icons-material/Collections';
+import {
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+ 
+} from 'reactstrap';
+
+
 const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage,imageUrl }) => {
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -23,9 +38,18 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage,imageUrl })
   const [imagePreview, setImagePreview] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
 
+  const [showTimer, setShowTimer] = useState(false);
 
   const scrollRef = useRef(); // Utilisez useRef pour la référence de défilement
   const inputRef = useRef(null);
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  //const bookItems = useSelector(selectCartBookItems); // Retrieve cart items from Redux store
+
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
   const handleOpenModal = (imageUrl) => {
     setSelectedImageUrl(imageUrl);
@@ -80,6 +104,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage,imageUrl })
       try {
         const { data } = await getMessages(chat._id);
         setMessages(data);
+        
       } catch (error) {
         console.log(error);
       }
@@ -131,6 +156,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage,imageUrl })
       setNewMessage("");
       setSelectedFile(null); // Réinitialiser le fichier sélectionné après l'envoi
       setImagePreview(null); // Réinitialiser l'aperçu de l'image
+      
 
     } catch (error) {
       console.log("Error:", error);
@@ -159,10 +185,13 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage,imageUrl })
   const [time, setTime] = useState(0);
 
   const cancelRecording = () => {
-    setTime(0);
-    timer.current.classList.add("opacity-0");
-    clearInterval(interval.current);
-  };
+    
+   
+      setTime(0); // Réinitialiser le temps à 0
+      clearInterval(intervalRef.current); // Arrêter l'intervalle
+      timerRef.current.classList.add("opacity-0"); // Masquer l'élément
+    
+ }
   const startRecording = async () => {
     intervalRef.current = setInterval(() => {
       setTime((prev) => prev + 1);
@@ -177,9 +206,11 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage,imageUrl })
 
     recorderRef.current.addEventListener("dataavailable", handleSendRecord);
     recorderRef.current.start();
+   
   };
 
   const stopRecording = async () => {
+    // Assuming recorderRef and intervalRef are defined elsewhere
     recorderRef.current.stop();
     clearInterval(intervalRef.current);
     setTime(0);
@@ -225,6 +256,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage,imageUrl })
   
   const handleRecord = () => {
     startRecording();
+    setShowTimer(true);
   };
   
 
@@ -303,7 +335,12 @@ useEffect(() => {
   
   return (
     <>
-      <div className="ChatBox-container">
+      <div className="ChatBox-container" style={{ 
+  backgroundImage: "url('src/bg/chatbg3.jpg')",
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center"
+}} >
         {chat ? (
           <>
             {/* chat-header */}
@@ -351,16 +388,18 @@ useEffect(() => {
               {modalOpen && (
                 <ChatImageModal imageUrl={selectedImageUrl} onClose={handleCloseModal} />
               )}
-              <div ref={scrollRef} /> {/* Référence pour le défilement */}
+              <div ref={scrollRef} /> 
             </div>
+
                   {/* chat-sender */}
                   <div className="chat-sender">
-                    <div onClick={() => imageRef.current.click()}>+</div>
+                    <div onClick={() => imageRef.current.click()}><CollectionsIcon/></div>
                     {/* Affichez l'icône d'aperçu d'image dans le champ d'entrée */}
                     <div className="image-preview-wrapper">
                       {imagePreviewIcon}
                       {cancelSelectionButton}
                     </div>
+                    
                     <InputEmoji
                       value={newMessage}
                       onChange={handleChange}
@@ -377,39 +416,66 @@ useEffect(() => {
                       onKeyDown={handleKeyPress}
 
                     />
-                     <div onClick={handleRecord} data-tooltip="voice recording">
-                        <AiFillAudio cursor="pointer" color="#5b5d8d" style={{ color: 'green' }} />
+                     <UncontrolledDropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+                     <DropdownToggle color="transparent" className="nav-link dropdown-toggle d-flex align-items-center">
+                     <SettingsVoiceIcon/>
+                     </DropdownToggle>
+                     <DropdownMenu className="dropdown-menu-left custom-dropdown-menu text-left" >
+                     <div onClick={handleRecord} data-tooltip="voice recording" style={{ textAlign: 'center' }}>
+                  <RadioButtonCheckedIcon cursor="pointer" color="#5b5d8d" style={{ color: 'red' }} />
+                </div>
+                   <div className="relative">
+          
+                    <div ref={timer}  style={{ width: '350px'}}>
+                      <div className='flex justify-between my-3'>
+                        <RestartAltIcon onClick={cancelRecording} className='cursor-pointer'></RestartAltIcon>
+                        <SendIcon onClick={stopRecording} style={{ color: 'green' }} className='cursor-pointer'></SendIcon>
                       </div>
-                     
+                      <ProgressBar now={(time / 5) * 100} />
+                      <div className='text-center'>{time + "s"}</div>
+                    </div>
+                
+               
+              </div>
+              </DropdownMenu>
+              </UncontrolledDropdown>
 
-                    <div className="send-button " onClick={handleSend}>Send</div>
-                  </div>{" "}
+                    <div onClick={handleSend}> <SendIcon/></div>
+                  </div>
                 
                   
-                  <div className='relative'>
-
-                    <div ref={timer} >
-                        <div className='flex justify-between my-3'>
-                            <p onClick={cancelRecording} className='cursor-pointer'>Cancel</p>
-                            <p onClick={stopRecording} className='cursor-pointer'>Stop</p>
-                        </div>
-
-                        <div className='text-center'>{ time + "s" }</div>
-                    </div>
-
-
-                </div>
+                
                
                         
                  </>
         ) : (
-          <span className="chatbox-empty-message">
-            Tap on a chat to start conversation...
-          </span>
+         
+          <Container>
+             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <img src={Robot} alt="" />
+      <h1>
+        <span> Welcome Again!</span>
+      </h1>
+      <h3>Please select a chat to Start messaging.</h3>
+    </Container>
         )}
       </div>
     </>
   );
 };
 
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  flex-direction: column;
+  img {
+    height: 20rem;
+  }
+  span {
+    color: #4e0eff;
+  }
+`;
 export default ChatBox;
