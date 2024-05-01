@@ -9,10 +9,8 @@
   margin-bottom: 50px; /* Adjust the bottom margin to create space */
   display: flex;
   justify-content: center; /* Horizontally center the content */
-  align-items: center; /* Vertically center the content */
-  width:100%;
-
-
+  align-items: flex-start; /* Vertically align the content to the top */
+  width: 100%;
 }
 
 
@@ -152,6 +150,70 @@
   font-weight: bold;
 }
 
+.audio-recorder-container {
+  width: 100%; /* Set width to 100% to match review container */
+  max-width: 600px; /* Limit max-width to match review container's max-width */
+  margin: 0 10px; /* Adjust margin as needed */
+}
+
+.audio-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%; /* Set width to 100% to match review container */
+}
+.record-button,
+.stop-button,
+.clear-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.sound-wave {
+  width: 100%;
+  height: 100px; /* Adjust the height as needed */
+  background-color: #ccc; /* Add a background color */
+  border-radius: 4px; /* Add some border radius for styling */
+  margin-bottom: 20px; /* Add margin bottom for spacing */
+}
+
+/* Additional styling for ReactMic */
+.react-mic {
+  display: block; /* Ensure it's a block element */
+}
+
+.record-button {
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+.stop-button {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.clear-button {
+  background-color: #f0ad4e;
+  color: #fff;
+}
+
+.audio-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.audio-player {
+  margin-top: 20px;
+}
+
+.audio-player audio {
+  width: 100%;
+}
 
 .submit-button {
   padding: 12px 24px;

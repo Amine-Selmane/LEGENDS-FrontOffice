@@ -40,6 +40,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />, 
   },
+
   {
     path: "/checkout-success",
     element: <Chekout/>,
