@@ -46,6 +46,8 @@ import QuestionForm from "./Component/Questions/QuestionForm";
 import QuestionList from "./Component/Questions/QuestionList";
 import UpdateQuestion from "./Component/Questions/UpdateQuestion";
 import Recommendations from "./Pages/Events/Recommendations";
+import ChatbotComponent from "./Component/Chatbot/chatBott";
+import ClaimForm from "./Component/Claims/ClaimForm";
 
 const router = createBrowserRouter([
   {
@@ -64,12 +66,21 @@ const router = createBrowserRouter([
     path: "/wishlist",
     element: < Wishlist/>,
   },
+  {
+    path: "/ratings",
+    element: < Rat/>,
+  },
+  
   
   {
     path: "/books/details/:id",
     element: <ShowBook/>,
   },
-   
+  {
+    path: "/ChatbotComponent",
+    element: <ChatbotComponent />, 
+  },
+  
   {
     path: "/book/checkout-success",
     element: <CheckoutSuccess/>,
@@ -124,6 +135,14 @@ element: <QuizDisplay/>,
 },
 {path: "/TeacherReport",
   element: <TeacherReport/>,
+},
+
+{path: "/claimform",
+  element: <ClaimForm/>,
+},
+{
+  path: "/ChatbotComponent",
+  element: <ChatbotComponent />, 
 },
 
 {

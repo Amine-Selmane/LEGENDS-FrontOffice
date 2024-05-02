@@ -159,7 +159,9 @@ function Header({ className, logo, joinBtn, search }) {
 
                     </ul>
                     </li>
-
+                    <li>
+                        <Link to="/ChatbotComponent">Chatbot</Link>
+                      </li>
                   {/* Reports */}
 
                   

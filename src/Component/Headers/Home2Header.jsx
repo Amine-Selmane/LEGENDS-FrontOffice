@@ -203,6 +203,9 @@ function Home2Header() {
 
                     </ul>
                     </li>
+                    <li>
+                        <Link to="/ChatbotComponent">Chatbot</Link>
+                      </li>
                 </ul>
               </div>
                       {/* Basket Icon */}

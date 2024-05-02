@@ -11,6 +11,8 @@ import Preloader from '../Preloader';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { Table, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 
 const StudentReport = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -132,7 +134,7 @@ const StudentReport = () => {
             {userData?.role === "teacher" && <Home3Header />}
            
 
-            <Banner title="Student Home" background="assets/images/banner.jpg" />
+            <Banner title="Student Home" background="assets/images/banner3.jpg" />
 
             <section className="coursepage-section">
                 <div className="container">
@@ -182,6 +184,9 @@ const StudentReport = () => {
                                             <Button variant="success" onClick={handleExportPDF} style={{ marginLeft: '10px' }}>
                                                 Export PDF
                                             </Button>
+                                            <Button variant="primary">
+                                         <Link to="/claimform" style={{ color: 'white', textDecoration: 'none' }}>Claim</Link>
+                                          </Button>
                                         </div>
                                     </>
                                 ) : null}
