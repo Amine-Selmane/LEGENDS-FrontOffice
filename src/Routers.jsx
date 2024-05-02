@@ -45,6 +45,7 @@ import QuizDisplayParent from "./Component/Quiz/QuizDisplayParent";
 import QuestionForm from "./Component/Questions/QuestionForm";
 import QuestionList from "./Component/Questions/QuestionList";
 import UpdateQuestion from "./Component/Questions/UpdateQuestion";
+import Recommendations from "./Pages/Events/Recommendations";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +56,10 @@ const router = createBrowserRouter([
     path: "/checkout-success",
     element: <Chekout/>,
   },
-  
+  {
+    path: "/Recommendations",
+    element: <Recommendations/>,
+  },
   {
     path: "/wishlist",
     element: < Wishlist/>,
