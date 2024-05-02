@@ -45,6 +45,9 @@ import QuizDisplayParent from "./Component/Quiz/QuizDisplayParent";
 import QuestionForm from "./Component/Questions/QuestionForm";
 import QuestionList from "./Component/Questions/QuestionList";
 import UpdateQuestion from "./Component/Questions/UpdateQuestion";
+import ClaimForm from "./Component/Claims/ClaimForm";
+import ChatbotComponent from "./Component/Chatbot/chatBott";
+
 
 const router = createBrowserRouter([
   {
@@ -120,6 +123,13 @@ element: <QuizDisplay/>,
 },
 {path: "/TeacherReport",
   element: <TeacherReport/>,
+},
+{path: "/claimform",
+  element: <ClaimForm/>,
+},
+{
+  path: "/ChatbotComponent",
+  element: <ChatbotComponent />, 
 },
 
 {

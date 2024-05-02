@@ -93,13 +93,11 @@ const TeacherReport = () => {
     };
     // Fonction pour calculer la moyenne de la classe
     const calculateClassAverage = () => {
-        if (!teacherReports || teacherReports.length === 0) return 0;
+        if (!teacherReports || teacherReports.length === 0 || !userData) return 0;
     
         const totalMark = teacherReports.reduce((accumulator, report) => accumulator + report.mark, 0);
         return (totalMark / teacherReports.length).toFixed(2);
     };
-
-
     //   useEffect(() => {
     //     setIsLoading(false);
     //   }, [isLoading]);
@@ -110,7 +108,7 @@ const TeacherReport = () => {
             {userData?.role === "teacher" && <Home3Header />}
             {!userData && <Header logo="assets/images/kindy.png" joinBtn={true} />}
 
-            <Banner title="Teacher Home" background="assets/images/banner.jpg" />
+            <Banner title="Teacher Home" background="assets/images/banner3.jpg" />
 
             <section className="coursepage-section">
                 <div className="container">
