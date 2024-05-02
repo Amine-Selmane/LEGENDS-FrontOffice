@@ -46,6 +46,7 @@ const router = createBrowserRouter([
     element: <Chekout/>,
   },
   
+  
   {
     path: "/wishlist",
     element: < Wishlist/>,
