@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCartBook, decreaseCartBook, getTotalBook, removeFromCartBook ,addToCartBook } from "./Action/cartSliceBook";
+import Banner from "../../Component/Banner/Banner";
+
 import PayButton from "../BookStore/PayButton";
 import { Link } from "react-router-dom";
 import "./style.css" ;
@@ -29,6 +31,9 @@ const CartBook = () => {
 
   
   return (
+    <>
+          <Banner title="Shooping Cart " background="assets/images/banner3.jpg" />
+
     <div className="cart-container">
       <h2>Shopping Cart</h2>
       {cartBook.bookItems.length === 0 ? (
@@ -120,6 +125,7 @@ const CartBook = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

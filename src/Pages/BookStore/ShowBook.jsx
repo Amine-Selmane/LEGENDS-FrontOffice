@@ -270,9 +270,10 @@ const handleRatingChange = (value) => {
   };
   
   return (
+   
     <>
-      <Header />
-      <Banner title="Book Details" background="assets/images/banner3.jpg" />
+        <Header logo="assets/images/kindy.png" joinBtn={true} />
+        <Banner title="Events" background="assets/images/banner3.jpg" />
 
       <div className="single-product-main-content">
         {loading ? (
