@@ -808,7 +808,7 @@ function StudentProfile() {
                                           `${session.startDateTime} - ${session.endDateTime}` === slot.time && session.day === day.value
                                       ) ? (
                                         <td key={index} className="text-center bg-primary">
-                                          Course with {}
+                                          Course
                                         </td>
                                       ) : (
                                         <td key={index}></td>
