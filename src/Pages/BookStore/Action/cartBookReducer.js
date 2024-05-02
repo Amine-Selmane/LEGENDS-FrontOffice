@@ -26,4 +26,4 @@ const cartBookReducer = (state = initialState, action) => {
   }
 };
 
-export default cartBookReducer;   
+export default cartBookReducer;

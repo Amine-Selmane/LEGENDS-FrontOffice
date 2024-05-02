@@ -1,24 +1,24 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART } from './cartActionTypes';
+import { ADD_TO_CART_BOOK, REMOVE_FROM_CART_BOOK, CLEAR_CART_BOOK } from './cartActionTypes';
 
-// Action creators for adding an item to the cart
+// Action creator for adding an item to the book cart
 export const addToCartBook = (item) => {
   return {
-    type: ADD_TO_CART,
+    type: ADD_TO_CART_BOOK,
     payload: item
   };
 };
 
-// Action creators for removing an item from the cart
-export const removeFromCart = (itemId) => {
+// Action creator for removing an item from the book cart
+export const removeFromCartBook = (itemId) => {
   return {
-    type: REMOVE_FROM_CART,
+    type: REMOVE_FROM_CART_BOOK,
     payload: itemId
   };
 };
 
-// Action creators for clearing the cart
-export const clearCart = () => {
+// Action creator for clearing the book cart
+export const clearCartBook = () => {
   return {
-    type: CLEAR_CART
+    type: CLEAR_CART_BOOK
   };
 };
