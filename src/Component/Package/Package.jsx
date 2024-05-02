@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PackageCard from "../Cards/PackageCard";
+import React from 'react';
 
 function Package() {
   const [carusole, setCarusole] = useState({
@@ -30,7 +31,7 @@ function Package() {
         <div className="row">
           <div className="col-md-12 text-center">
             <h2 className="sec-title">
-              <span>Online Learning</span> Offers 3 Types of Membership Packages
+              <span>Learning path</span> We support kindies in essential teaching for acquiring the basics and pursuing qualitative and demanding learning.
             </h2>
           </div>
         </div>
@@ -40,15 +41,9 @@ function Package() {
               <PackageCard
                 packageInfo={{
                   img: "assets/images/home/p1.jpg",
-                  statusImg: "assets/images/home/gold.png",
-                  price: "750",
-                  offerPrice: "450",
-                  memberShipStatus: "Gold Membership",
-                  lessons: "12",
-                  classes: "3",
-                  link: "/single-course",
+                  memberShipStatus: "The Initiation Class",
                   description:
-                    "He nicked it I don't want no agro what a load of rubbishbleeding skive off tickety-boo hunky dory chancer.",
+                    "The introductory class is a year during which students begin to discover the basic notions of music and experiment with an instrument according to their preferences. Music theory lessons take place in groups to avoid weariness and routine. You will discover innovative teaching methods assisted by specialists in musical and artistic education to facilitate the student's integration into the world of art, facilitate their understanding, develop their creativity and enrich their knowledge.",
                 }}
                 id={1}
                 status={carusole}
@@ -56,15 +51,9 @@ function Package() {
               <PackageCard
                 packageInfo={{
                   img: "assets/images/home/p2.jpg",
-                  statusImg: "assets/images/home/silver.png",
-                  price: "750",
-                  offerPrice: "450",
-                  memberShipStatus: "Silver Membership",
-                  lessons: "12",
-                  classes: "3",
-                  link: "/single-course",
+                  memberShipStatus: "Over the next 5 years",
                   description:
-                    "He nicked it I don't want no agro what a load of rubbishbleeding skive off tickety-boo hunky dory chancer.",
+                    "Over the next 5 years, teaching will be more in-depth and more specialized. Always under the supervision of one or more teachers. The student will thus be able to concentrate and feel in a serious and professional framework to prepare him for his last year of teaching which will end with obtaining the Arabic music diploma.",
                 }}
                 id={2}
                 status={carusole}
@@ -72,15 +61,9 @@ function Package() {
               <PackageCard
                 packageInfo={{
                   img: "assets/images/home/p3.jpg",
-                  statusImg: "assets/images/home/bronze.png",
-                  price: "750",
-                  offerPrice: "450",
-                  memberShipStatus: "Bronze Membership",
-                  lessons: "12",
-                  classes: "3",
-                  link: "/single-course",
+                  memberShipStatus: "7th grade is a diploma class",
                   description:
-                    "He nicked it I don't want no agro what a load of rubbishbleeding skive off tickety-boo hunky dory chancer.",
+                    "The 7th year is a diploma class, at the end of which the student is invited to take a national exam to crown their 7 years of learning with a diploma recognized by the state. Before taking this test, the student is subject to evaluation tests to introduce them to the exam conditions.",
                 }}
                 id={3}
                 status={carusole}
@@ -88,15 +71,9 @@ function Package() {
               <PackageCard
                 packageInfo={{
                   img: "assets/images/home/p2.jpg",
-                  statusImg: "assets/images/home/silver.png",
-                  price: "750",
-                  offerPrice: "450",
-                  memberShipStatus: "Silver Membership",
-                  lessons: "12",
-                  classes: "3",
-                  link: "/single-course",
+                  memberShipStatus: "Over the next 5 years",
                   description:
-                    "He nicked it I don't want no agro what a load of rubbishbleeding skive off tickety-boo hunky dory chancer.",
+                    "Over the next 5 years, teaching will be more in-depth and more specialized. Always under the supervision of one or more teachers. The student will thus be able to concentrate and feel in a serious and professional framework to prepare him for his last year of teaching which will end with obtaining the Arabic music diploma.",
                 }}
                 id={4}
                 status={carusole}

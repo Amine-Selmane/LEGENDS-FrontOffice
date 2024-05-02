@@ -1,4 +1,6 @@
 import ProtoTypes from "prop-types";
+import React from 'react';
+
 function CallAction({ btnClass }) {
   return (
     <section

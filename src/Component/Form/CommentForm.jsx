@@ -1,4 +1,6 @@
-function CommentForm() {
+import React from 'react';
+
+ function CommentForm() {
   return (
     <form className="row" action="#" method="post">
       <div className="col-md-6">

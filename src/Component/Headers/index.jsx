@@ -1,12 +1,19 @@
 import ProtoTypes from "prop-types";
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import useWindowPosition from "../../Hooks/useWindowPosition";
+import {  FaHeart } from 'react-icons/fa'; // Import the heart and cart icons from Font Awesome
+import { useSelector } from 'react-redux'; // Import useSelector hook to retrieve data from Redux store
+import { selectCartBookItems } from '../../Pages/BookStore/Action/cartSliceBook'; // Import the selector function for cart items
 
 function Header({ className, logo, joinBtn, search }) {
   const [activeMobileMenu, setActiveMobileMenu] = useState(false);
   const [activeMobileSubMenu, setActiveSubMobileMenu] = useState(false);
   const windowPosition = useWindowPosition();
+  const bookItems = useSelector(selectCartBookItems); // Retrieve cart items from Redux store
+
+
+
   return (
     <header
       className={`${className ? className : "header-01"} sticky ${windowPosition > 0 && "fix-header animated fadeInDown"
@@ -21,7 +28,8 @@ function Header({ className, logo, joinBtn, search }) {
                 <img src={logo} alt="" />
                 <img
                   className="sticky-logo"
-                  src="assets/images/logo.png"
+                 
+                  src="assets/images/home/logo.png"
                   alt=""
                 />
               </Link>
@@ -40,43 +48,19 @@ function Header({ className, logo, joinBtn, search }) {
               {/* Nav Menu Start  */}
               <div
                 className="collapse navbar-collapse"
-                style={{ display: activeMobileMenu && "block" }}
+                style={{ display: activeMobileMenu && "block", marginLeft: "350px" }}
               >
                 <ul className="navbar-nav">
-                  <li
-                    className="menu-item-has-children"
-                    onClick={() =>
-                      setActiveSubMobileMenu(
-                        activeMobileSubMenu === "home" ? false : "home"
-                      )
-                    }
-                  >
-                    <a>Home</a>
-                    <span className="submenu-toggler">
-                      <i
-                        className={`fal ${activeMobileSubMenu === "home"
-                            ? "fa-minus"
-                            : "fa-plus"
-                          }`}
-                      ></i>
-                    </span>
-                    <ul
-                      className="sub-menu"
-                      style={{
-                        display: activeMobileSubMenu === "home" && "block",
-                      }}
-                    >
+                  
+                    
+                
+                   
                       <li>
-                        <Link to="/">Home One</Link>
+                        <Link to="/">Home</Link>
                       </li>
-                      <li>
-                        <Link to="/home-2">Home Two</Link>
-                      </li>
-                      <li>
-                        <Link to="/home-3">Home Three</Link>
-                      </li>
-                    </ul>
-                  </li>
+                     
+                    
+           
 
                   {/* Events */}
                   <li
@@ -111,6 +95,8 @@ function Header({ className, logo, joinBtn, search }) {
                     </ul>
                   </li>
 
+                 
+                  
                   <li
                     className="menu-item-has-children"
                     onClick={() =>
@@ -139,114 +125,48 @@ function Header({ className, logo, joinBtn, search }) {
                       </li>
                     </ul>
                   </li>
-                  {/* Reports */}
+                              {/* Books */}
 
-                  <li>
-                    <Link to="/StudentReport">Reports</Link>
-                  </li>
-                  <li
-                    className="menu-item-has-children"
-                    name="pages"
-                    onClick={(e) => {
-                      setActiveSubMobileMenu(
-                        e.target.name
-                          ? e.target.name === activeMobileSubMenu
-                            ? "pages"
-                            : e.target.name
-                          : activeMobileSubMenu === "pages"
-                            ? false
-                            : "pages"
-                      );
-                    }}
-                  >
-                    <a>Pages</a>
-                    <span className="submenu-toggler">
-                      <i
-                        className={`fal ${activeMobileSubMenu === "pages"
-                            ? "fa-minus"
-                            : "fa-plus"
-                          }`}
-                      ></i>
-                    </span>
-                    <ul
-                      className="sub-menu"
-                      style={{
-                        display:
-                          (activeMobileSubMenu === "pages" && "block") ||
-                          (activeMobileSubMenu === "aboutPages" && "block"),
-                      }}
-                    >
-                      <li className="menu-item-has-children">
-                        <a name="aboutPages">About Pages</a>
-                        <span className="submenu-toggler" name="aboutPages">
-                          <i
-                            className={`fal ${activeMobileSubMenu === "aboutPages"
-                                ? "fa-minus"
-                                : "fa-plus"
-                              }`}
-                            name="aboutPages"
-                          ></i>
-                        </span>
-                        <ul
-                          className="sub-menu"
-                          style={{
-                            display:
-                              activeMobileSubMenu === "aboutPages" && "block",
-                          }}
-                        >
-                          <li>
-                            <Link to="/about-1">About 01</Link>
-                          </li>
-                          <li>
-                            <Link to="/about-2">About 02</Link>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <Link to="/instructor">Instructor Page</Link>
-                      </li>
-                      <li>
-                        <Link to="/profile">Instructor Profile</Link>
-                      </li>
-                      <li>
-                        <Link to="/404">404 Page</Link>
-                      </li>
-                    </ul>
-                  </li>
                   <li
                     className="menu-item-has-children"
                     onClick={() =>
                       setActiveSubMobileMenu(
-                        activeMobileSubMenu === "blog" ? false : "blog"
+                        activeMobileSubMenu === "Books" ? false : "Books"
                       )
                     }
                   >
-                    <a>Blog</a>
+                    <a>Book Store</a>
                     <span className="submenu-toggler">
                       <i
-                        className={`fal ${activeMobileSubMenu === "blog"
+                        className={`fal ${
+                          activeMobileSubMenu === "Books"
                             ? "fa-minus"
                             : "fa-plus"
-                          }`}
+                        }`}
                       ></i>
                     </span>
                     <ul
                       className="sub-menu"
                       style={{
-                        display: activeMobileSubMenu === "blog" && "block",
+                        display: activeMobileSubMenu === "Books" && "block",
                       }}
                     >
                       <li>
-                        <Link to="/blog">Blog Page</Link>
+                        <Link to="/books">Books</Link>
                       </li>
-                      <li>
-                        <Link to="/single-post">Blog Details</Link>
-                      </li>
+                     
+                    
+
                     </ul>
-                  </li>
-                  <li>
-                    <Link to="/contact">Contact</Link>
-                  </li>
+                    </li>
+                    <li>
+                        <Link to="/ChatbotComponent">Chatbot</Link>
+                      </li>
+                  {/* Reports */}
+
+                  
+                 
+                  
                 </ul>
               </div>
               {/* Nav Menu End  */}
@@ -265,7 +185,16 @@ function Header({ className, logo, joinBtn, search }) {
                   Join Us! 
                 </a>
               )}
+                {/* Nav Menu Start  */}
+                <div
+                className="collapse navbar-collapse"
+                style={{ display: activeMobileMenu && "block" }}
+              >
+                {/* Your navigation menu */}
+              </div>
+              {/* Nav Menu End  */}
 
+             
               {/* Join Btn   */}
               {search && (
                 <form className="search-box" method="post" action="#">
@@ -279,6 +208,17 @@ function Header({ className, logo, joinBtn, search }) {
                   </button>
                 </form>
               )}
+                     {/* Basket Icon */}
+              <Link to="/cartBook" className="basket-icon">
+                <i className="fas fa-shopping-cart" style={{ color: 'white', fontSize: '24px', marginRight: '10px' }}>
+                  {bookItems.length > 0 && <span className="badge">{bookItems.length}</span>} {/* Display the number of items in the cart */}
+                </i>
+              </Link>
+              
+              {/* Heart Icon for Wishlist */}
+              <Link to="/wishlist" className="wishlist-icon">
+                <FaHeart style={{ color: 'white', fontSize: '24px', marginLeft: '10px' }} />
+              </Link>
             </nav>
           </div>
         </div>

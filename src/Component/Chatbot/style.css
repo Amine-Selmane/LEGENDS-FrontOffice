@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2; /* Gris clair */
+}
+
+h1 {
+    color: #6a0dad; /* Violet */
+    text-align: center;
+}
+
+#chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff; /* Blanc */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#chat-box {
+    height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #cccccc; /* Gris */
+    border-radius: 5px;
+}
+
+input[type="text"] {
+    width: calc(100% - 70px);
+    padding: 10px;
+    border: 1px solid #cccccc; /* Gris */
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #6a0dad; /* Violet */
+    color: #ffffff; /* Blanc */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #5b0892; /* Violet plus foncé */
+}
+
+p {
+    margin: 5px 0;
+}
+
+/* Style spécifique pour les messages de l'utilisateur */
+.user-message {
+    color: #bdb7b7; /* Noir */
+}
+
+/* Style spécifique pour les messages du bot */
+.bot-message {
+    color: #6a0dad; /* Violet */
+}
+.question {
+font-weight: bold;
+
+}

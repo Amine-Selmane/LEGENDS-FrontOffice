@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Preloader from "../../Component/Preloader";
 import Header from "../../Component/Headers";
+import Home3Header from "../../Component/Headers/Home3Header";
+import Home2Header from "../../Component/Headers/Home2Header";
 import Footer from "../../Component/Footer/Footer";
 import Banner from "../../Component/Banner/Banner";
 import FeatureCourseCard from "../../Component/Cards/FeatureCourseCard";
@@ -10,10 +12,14 @@ import LatestCourseCard from "../../Component/Cards/LatestCourseCard";
 import FilterForm from "../../Component/Form/FilterForm";
 import GotoTop from "../../Component/GotoTop";
 import axios from "axios";
+import React from 'react';
+
 function Course3() {
   /////////////////////////////////////////////////
   const [query, setQuery] = useState("");
   const [courses, setCourses] = useState([]);
+  const [userData, setUserData] = useState(null);
+
   const fetchPosts = async () => {
     const res = await axios.get('http://localhost:5000/courses/getCourse')
       .then(res => setCourses(res.data));
@@ -60,6 +66,27 @@ function Course3() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeView, setActiveView] = useState("grid");
   let content = undefined;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const response = await axios.get("http://localhost:5000/api/userToken", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setUserData(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
+      }
+    };
+
+    fetchUserData();
+    setIsLoading(false);
+  }, []);
+
 
   useEffect(() => {
     setIsLoading(false);
@@ -70,8 +97,11 @@ function Course3() {
   } else {
     content = (
       <>
-        <Header logo="assets/images/logo4.png" joinBtn={true} />
-        <Banner title="Courses Grid" background="assets/images/banner4.jpg" />
+         {userData?.role === "student" && <Home2Header />}
+      {userData?.role === "teacher" && <Home3Header />}
+      {!userData && <Header logo="assets/images/kindy.png" joinBtn={true} />}
+
+        <Banner title="Courses Grid" background="assets/images/banner3.jpg" />
         <section className="coursepage-section-2">
           <div className="container">
             <div className="row">

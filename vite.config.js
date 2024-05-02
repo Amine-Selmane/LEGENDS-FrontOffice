@@ -3,8 +3,10 @@ import react from '@vitejs/plugin-react-swc'
 import 'global';
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  build: {
+    sourcemap: false,
+  },
   define: {
 global: {}},
-})
+});
 

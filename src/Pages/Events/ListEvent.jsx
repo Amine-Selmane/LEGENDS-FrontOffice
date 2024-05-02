@@ -9,6 +9,7 @@ import Banner from "../../Component/Banner/Banner";
 import CallAction from "../../Component/CallAction";
 import GotoTop from "../../Component/GotoTop";
 import Events from "./Events"; // Import the Event component
+import React from 'react';
 
 function EventList() {
   const [isLoading, setIsLoading] = useState(true);

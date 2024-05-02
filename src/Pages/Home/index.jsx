@@ -8,9 +8,9 @@ import Cta from "../../Component/Cta/Cta";
 import Video from "../../Component/Video/Video";
 import Event from "../../Component/Event/Event";
 import Package from "../../Component/Package/Package";
-import Blogs from "../../Component/Blogs/Blogs";
 import Footer from "../../Component/Footer/Footer";
 import GotoTop from "../../Component/GotoTop";
+import React from 'react';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +32,6 @@ function Home() {
         <Video />
         <Event />
         <Package />
-        <Blogs />
         <Footer getStart={true} />
         <GotoTop />
       </>

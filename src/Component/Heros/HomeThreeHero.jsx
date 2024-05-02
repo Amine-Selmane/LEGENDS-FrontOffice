@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Navigation, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
+import React from 'react';
 
 function HomeThreeHero() {
   return (

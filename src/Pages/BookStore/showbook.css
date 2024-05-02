@@ -1,0 +1,308 @@
+.single-product-main-content {
+  margin: 100px 100px 50px; /* Adjust the top margin to create space, reduce bottom margin */
+  max-width: 1200px;
+  padding: 100px;
+}
+
+.review-container {
+  margin-top: 50px; /* Adjust the top margin to create space */
+  margin-bottom: 50px; /* Adjust the bottom margin to create space */
+  display: flex;
+  justify-content: center; /* Horizontally center the content */
+  align-items: flex-start; /* Vertically align the content to the top */
+  width: 100%;
+}
+
+
+.layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.left {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+.book-image {
+  width: 80%;
+  height: auto;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px; /* Add margin to the top */
+}
+
+.details {
+  width: 100%;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 20px;
+}
+
+.desc {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.cart-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.quantity-buttons button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+}
+
+.add-to-cart-button {
+  padding: 10px 20px;
+  background-color: #8e2de2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item > * {
+  margin-bottom: 10px;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.Social-icons {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Align items vertically centered */
+}
+
+.Social-icons svg {
+  margin-right: 10px; /* Add margin between icons */
+}
+
+.Social-icons svg:hover {
+  transform: scale(1.2);
+}
+
+
+
+.review-box {
+  margin-top: 20px; /* Adjust the top margin to create space */
+
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+.review-section {
+  width: 100%;
+  max-width: 600px; /* Set a maximum width for the review section */
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+.user-name {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.review-content {
+  margin-top: 10px;
+}
+
+.review-comment {
+  font-weight: bold;
+}
+
+.audio-recorder-container {
+  width: 100%; /* Set width to 100% to match review container */
+  max-width: 600px; /* Limit max-width to match review container's max-width */
+  margin: 0 10px; /* Adjust margin as needed */
+}
+
+.audio-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%; /* Set width to 100% to match review container */
+}
+.record-button,
+.stop-button,
+.clear-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.sound-wave {
+  width: 100%;
+  height: 20px; /* Adjust the height as needed */
+  background-color: #ccc; /* Add a background color */
+  border-radius: 4px; /* Add some border radius for styling */
+  margin-bottom: 20px; /* Add margin bottom for spacing */
+}
+
+/* Additional styling for ReactMic */
+.react-mic {
+  display: block; /* Ensure it's a block element */
+}
+
+
+
+
+
+.audio-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.audio-player {
+  margin-top: 20px;
+}
+
+.audio-player audio {
+  width: 100%;
+}
+
+.submit-button {
+  padding: 12px 24px;
+  background-color: #8e2de2;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #6c1d9b;
+}
+
+.continue-shopping {
+  margin-top: 20px;
+}
+
+.continue-shopping a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+}
+
+.continue-shopping a svg {
+  color: #000;
+  font-size: 20px;
+}
+
+.continue-shopping a:hover {
+  color: #6c1d9b;
+}
+
+.emoji-picker-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.emoji-picker-button:focus {
+  outline: none;
+}
+
+.emoji-icon {
+  font-size: 20px;
+  color: #c8d719;
+
+}
+
+.emoji-icon:hover {
+  color: #c8d719;
+}
+
+/* Thumbs up icon */
+.like-button {
+  font-size: 20px;
+
+  color: #28a745; /* Green color */
+}
+.reaction-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.reaction-button {
+  margin-right: 10px; /* Adjust spacing between icons as needed */
+}
+
+.reaction-icon {
+  font-size: 24px; /* Adjust icon size as needed */
+}
+
+/* Thumbs down icon */
+.dislike-button {
+  font-size: 20px;
+
+  color: #dc3545; /* Red color */
+}
+.love {
+  font-size: 20px;
+
+  color: pink; /* Example color for love icon */
+}
+
+.angry {
+  font-size: 20px;
+
+  color: orange; /* Example color for angry icon */
+}
+.icon{
+  color: black; /* Example color for angry icon */
+
+}
+.icon-stop{
+  color: black; /* Example color for angry icon */
+
+}

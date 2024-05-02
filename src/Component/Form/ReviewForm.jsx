@@ -1,3 +1,5 @@
+import React from 'react';
+
 function ReviewForm() {
   return (
     <form className="row" action="#" method="post">

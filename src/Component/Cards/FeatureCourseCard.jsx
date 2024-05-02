@@ -1,7 +1,9 @@
 import ProtoTypes from "prop-types";
 import { Link } from "react-router-dom";
-const bgCourse = "../../assets/images/course/l2.jpg"
+const bgCourse = "../../assets/images/course/course.png"
+
 const bgTeacher = "../../assets/images/course/1.jpg"
+import React from 'react';
 
 function FeatureCourseCard({ course, className, swiper }) {
   const {
@@ -18,8 +20,8 @@ function FeatureCourseCard({ course, className, swiper }) {
       <div className={`${className ? className : "feature-course-item-3"}`}>
         <div className="fcf-thumb">
           <img src={bgCourse} alt="" />
-          <Link className="enroll">
-            Enroll Now
+          <Link  to="/register" className="enroll">
+            Subscribe Now
           </Link>
         </div>
         <div className="fci-details">
@@ -33,7 +35,7 @@ function FeatureCourseCard({ course, className, swiper }) {
           <div style={{ marginBottom: "10px", fontSize: "14px", color: "black" }}>
             Number of quizzes : <span style={{ fontWeight: "bold" }}>{nbrQuiz}</span></div>
           <div className="author">
-            <img src={bgTeacher} alt="" />
+            Teacher:
             <Link>{teacher_name}</Link>
           </div>
           <div className="price-rate">

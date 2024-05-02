@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React from 'react';
+
 import Home from "./Pages/Home";
 import Home2 from "./Pages/Home-2";
 import Home3 from "./Pages/Home-3";
@@ -14,7 +16,12 @@ import Error from "./Pages/Error";
 import Blogs from "./Pages/Blogs";
 import SinglePost from "./Pages/SinglePost";
 import Contact from "./Pages/Contact";
-import ListEvent from "./Pages/Events/ListEvent";
+import BookList from "./Pages/BookStore/BookList";
+import Cart from "./Pages/BookStore/Cart";
+import ShowBook from "./Pages/BookStore/ShowBook";
+import CheckoutSuccess from "./Pages/BookStore/CheckoutSuccess";
+import Wishlist from "./Pages/BookStore/wishlist";
+import OrderHistory from "./Pages/BookStore/OrderHistory";
 import StudentReport from "./Component/Reports/StudentReport";
 import TeacherReport from "./Component/Reports/TeacherReport";
 import CartEvent from "./Pages/Events/CartEvent";
@@ -31,6 +38,22 @@ import { SocketProvider } from './Component/VoiceChatSys/SocketContext';
 import VoiceChat from "./Component/VoiceChatSys/VoiceChat";
 
 
+import ListEvent from "./Pages/Events/ListEvent";
+import PriceCard from "./Component/price-card/price-card.component";
+import PriceDetails from "./Component/Pricedetails/pricedetails";
+import QuizAssignment from "./Component/Quiz/QuizAssignment";
+import QuizList from "./Component/Quiz/QuizList";
+import QuizUpdate from "./Component/Quiz/QuizUpdate";
+import QuizCodeInput from "./Component/Quiz/QuizCodeInput";
+import QuizDisplay from "./Component/Quiz/QuizDisplay";
+import QuizDisplayParent from "./Component/Quiz/QuizDisplayParent";
+import QuestionForm from "./Component/Questions/QuestionForm";
+import QuestionList from "./Component/Questions/QuestionList";
+import UpdateQuestion from "./Component/Questions/UpdateQuestion";
+import Recommendations from "./Pages/Events/Recommendations";
+import ChatbotComponent from "./Component/Chatbot/chatBott";
+import ClaimForm from "./Component/Claims/ClaimForm";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,18 +64,92 @@ const router = createBrowserRouter([
     element: <Chekout/>,
   },
   {
-    path: "/checkout-success",
-    element: <Chekout/>,
+    path: "/Recommendations",
+    element: <Recommendations/>,
   },
   {
-    path: "/EventList",
-    element: <ListEvent/>,
+    path: "/wishlist",
+    element: < Wishlist/>,
   },
+  
+  
+  
+  {
+    path: "/books/details/:id",
+    element: <ShowBook/>,
+  },
+  {
+    path: "/ChatbotComponent",
+    element: <ChatbotComponent />, 
+  },
+  
+  {
+    path: "/book/checkout-success",
+    element: <CheckoutSuccess/>,
+  },
+  {
+    path: "/History",
+    element: <OrderHistory/>,
+  },
+  
+ {
+    path: "/books",
+    element: <BookList/>, 
+  },
+  {
+    path: "/cartBook",
+    element: <Cart/>,
+  }, 
+  {path: "/QuizAssignment",
+  element: <QuizAssignment/>,
+},
+{path: "/quiz",
+element: <QuizList/>,
+},
+{path: "/quiz/update/:id",
+element: <QuizUpdate/>,
+},
+
+{path: "/question/new",
+element: <QuestionForm/>,
+},
+{path: "/questions",
+element: <QuestionList/>,
+},
+{path: "/question/update/:id",
+element: <UpdateQuestion/>,
+},
+
+{
+  path: "/quiz-display", // Définissez une route pour afficher le composant QuizDisplayParent
+  element: <QuizDisplayParent />, // Utilisez QuizDisplayParent comme élément à afficher pour cette route
+},
+{path: "/QuizCodeInput",
+element: <QuizCodeInput/>,
+},
+{path: "/QuizDisplay/:code",
+element: <QuizDisplay/>,
+},
+ 
+ 
   {path: "/StudentReport",
   element: <StudentReport/>,
 },
 {path: "/TeacherReport",
   element: <TeacherReport/>,
+},
+
+{path: "/claimform",
+  element: <ClaimForm/>,
+},
+{
+  path: "/ChatbotComponent",
+  element: <ChatbotComponent />, 
+},
+
+{
+  path: "/EventList",
+  element: <ListEvent/>,
 },
   {
     path: "/Cart",
@@ -84,6 +181,11 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterFormik />,
+  },
+
+  {
+    path: "/paiementInscri/:userId",
+    element: <PriceDetails/>,
   },
 
   {
@@ -122,6 +224,7 @@ const router = createBrowserRouter([
     path: "/profilestudent",
     element: <StudentProfile />,
   },
+
   {
     path: "/blog",
     element: <Blogs />,

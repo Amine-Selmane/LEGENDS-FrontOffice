@@ -1,5 +1,7 @@
 import { course } from "../../Data/course";
 import FeatureCourseCard from "../Cards/FeatureCourseCard";
+import React from 'react';
+
 function FeatureCourse() {
   return (
     <section
