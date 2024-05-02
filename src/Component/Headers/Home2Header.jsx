@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react"; // Make sure to import React
-import React, { useState, useEffect } from "react"; // Make sure to import React
 import useWindowPosition from "../../Hooks/useWindowPosition";
-import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
 import {
   UncontrolledDropdown,
   DropdownToggle,
