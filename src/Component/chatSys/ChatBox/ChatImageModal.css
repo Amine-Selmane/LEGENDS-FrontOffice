@@ -1,0 +1,20 @@
+.custom-modal {
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .custom-image {
+    max-height: 90vh; /* Limite la hauteur de l'image */
+    width: auto;
+    max-width: 100%; /* Ajuste la largeur de l'image */
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .custom-modal .modal-content {
+    background-color: transparent;
+    border: none; /* Supprime la bordure du modal */
+  }

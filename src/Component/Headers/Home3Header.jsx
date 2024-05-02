@@ -205,6 +205,7 @@ function Home3Header() {
               </Link>
               {/* Nav Menu End  */}
 
+
               <div className="dropdown ml-auto">
   {userData && (
     <UncontrolledDropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
@@ -228,7 +229,7 @@ function Home3Header() {
   </Link>
 </DropdownItem>
 <DropdownItem>
-  <Link to="#" className="text-dark text-decoration-none">
+  <Link to="/msg" className="text-dark text-decoration-none">
     <FontAwesomeIcon icon={faEnvelope} className="me-2 text-info" /> {/* Utilisez une autre classe de couleur, par exemple text-info */}
     Inbox
   </Link>
