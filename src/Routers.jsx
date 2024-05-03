@@ -32,6 +32,11 @@ import RecoverPassword from "./Component/auth/RecoverPassword";
 import Maintanance from "./Component/auth/Maintanance";
 import LockScreen from "./Component/auth/LockScreen";
 import StudentProfile from "./Pages/StudentProfile";
+import Chat from "./Component/chatSys/pages/Chat/Chat";
+import Auth from "./Component/chatSys/middlware/auth";
+import { SocketProvider } from './Component/VoiceChatSys/SocketContext';
+import VoiceChat from "./Component/VoiceChatSys/VoiceChat";
+
 
 import ListEvent from "./Pages/Events/ListEvent";
 import PriceCard from "./Component/price-card/price-card.component";
@@ -45,6 +50,9 @@ import QuizDisplayParent from "./Component/Quiz/QuizDisplayParent";
 import QuestionForm from "./Component/Questions/QuestionForm";
 import QuestionList from "./Component/Questions/QuestionList";
 import UpdateQuestion from "./Component/Questions/UpdateQuestion";
+import Recommendations from "./Pages/Events/Recommendations";
+import ChatbotComponent from "./Component/Chatbot/chatBott";
+import ClaimForm from "./Component/Claims/ClaimForm";
 
 const router = createBrowserRouter([
   {
@@ -55,17 +63,26 @@ const router = createBrowserRouter([
     path: "/checkout-success",
     element: <Chekout/>,
   },
-  
+  {
+    path: "/Recommendations",
+    element: <Recommendations/>,
+  },
   {
     path: "/wishlist",
     element: < Wishlist/>,
   },
   
+  
+  
   {
     path: "/books/details/:id",
     element: <ShowBook/>,
   },
-   
+  {
+    path: "/ChatbotComponent",
+    element: <ChatbotComponent />, 
+  },
+  
   {
     path: "/book/checkout-success",
     element: <CheckoutSuccess/>,
@@ -120,6 +137,14 @@ element: <QuizDisplay/>,
 },
 {path: "/TeacherReport",
   element: <TeacherReport/>,
+},
+
+{path: "/claimform",
+  element: <ClaimForm/>,
+},
+{
+  path: "/ChatbotComponent",
+  element: <ChatbotComponent />, 
 },
 
 {
@@ -212,10 +237,18 @@ element: <QuizDisplay/>,
     path: "/contact",
     element: <Contact />,
   },
+
+  { path: '/msg', name: 'form-validation', exact: true, element:<Auth> <Chat /> </Auth>},
+
+  { path: '/call', name: 'form-validation', exact: true, element:<SocketProvider> <VoiceChat /> </SocketProvider>},
   {
     path: "*",
     element: <Error />,
-  },
+  }
+
+        
+
+ 
 ]);
 
 function Routers() {

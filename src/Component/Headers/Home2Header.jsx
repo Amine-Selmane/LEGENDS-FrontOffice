@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"; // Make sure to import React
 import useWindowPosition from "../../Hooks/useWindowPosition";
-import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 import {
   UncontrolledDropdown,
   DropdownToggle,
@@ -203,6 +203,9 @@ function Home2Header() {
 
                     </ul>
                     </li>
+                    <li>
+                        <Link to="/ChatbotComponent">Chatbot</Link>
+                      </li>
                 </ul>
               </div>
                       {/* Basket Icon */}
@@ -238,7 +241,7 @@ function Home2Header() {
                         </Link>
                       </DropdownItem>
                       <DropdownItem>
-                        <Link to="#" className="text-dark text-decoration-none">
+                        <Link to="/msg" className="text-dark text-decoration-none">
                           <FontAwesomeIcon icon={faEnvelope} className="me-2 text-info" />
                           Inbox
                         </Link>

@@ -187,6 +187,9 @@ function Home3Header() {
 
                     </ul>
                     </li>
+                    <li>
+                        <Link to="/ChatbotComponent">Chatbot</Link>
+                      </li>
                 </ul>
               </div>
                       {/* Basket Icon */}
@@ -201,6 +204,7 @@ function Home3Header() {
                 <FaHeart style={{ color: 'black', fontSize: '24px', marginLeft: '10px' }} />
               </Link>
               {/* Nav Menu End  */}
+
 
               <div className="dropdown ml-auto">
   {userData && (
@@ -225,7 +229,7 @@ function Home3Header() {
   </Link>
 </DropdownItem>
 <DropdownItem>
-  <Link to="#" className="text-dark text-decoration-none">
+  <Link to="/msg" className="text-dark text-decoration-none">
     <FontAwesomeIcon icon={faEnvelope} className="me-2 text-info" /> {/* Utilisez une autre classe de couleur, par exemple text-info */}
     Inbox
   </Link>

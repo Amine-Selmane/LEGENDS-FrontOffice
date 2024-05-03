@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Preloader from "../../Component/Preloader";
 import Header from "../../Component/Headers";
 import Footer from "../../Component/Footer/Footer";
@@ -8,6 +8,7 @@ import axios from "axios"; // Import Axios for making HTTP requests
 import { format } from "date-fns";
 import converToBase64 from "../../Component/helper/convert";
 import { Table } from "react-bootstrap";
+import { useReactToPrint } from "react-to-print";
 
 import {
   CardBody,
@@ -88,6 +89,8 @@ function StudentProfile() {
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [scheduleSessions, setScheduleSessions] = useState([]);
 
+  const componentPDF = useRef();
+
   const daySlots = [
     { name: "Monday", value: "monday" },
     { name: "Tuesday", value: "tuesday" },
@@ -126,6 +129,12 @@ function StudentProfile() {
       getScheduleSessions(userData._id);
     }
   }, [activeTab]);
+
+  const generatePDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Schedule data",
+    onAfterPrint: () => alert("Data saved in PDF"),
+  });
 
   const getScheduleSessions = async (id) => {
     const TeacherParams = { params: { teacher: id } };
@@ -1401,7 +1410,7 @@ function StudentProfile() {
                           >
                             <table className="result-table">
                               <thead>
-                                {}
+                                { }
                                 <tr>
                                   <th
                                     className="course"
@@ -1474,6 +1483,7 @@ function StudentProfile() {
                             className="tab-pane fade show in active"
                             id="all"
                             role="tabpanel"
+                            ref={componentPDF}
                           >
                             <Table responsive striped>
                               <thead>
@@ -1525,44 +1535,28 @@ function StudentProfile() {
                                 </tr>
                               </thead>
                               <tbody>
-                                {scheduleSessions?.map((session, index) =>
-                                  dayTimeSlots?.map((slot) => (
-                                    <tr key={slot.id} scope="row">
-                                      {slot.time ==
-                                      `${session.startDateTime} - ${session.endDateTime}` ? (
-                                        <>
-                                          <td className="text-center bg-primary">
-                                            {slot.time}
-                                          </td>
-                                          {slot.days.map((day) => {
-                                            day.value == session.day ? (
-                                              <td className="bg-primary">
-                                                Session {index + 1}
-                                              </td>
-                                            ) : (
-                                              <td></td>
-                                            );
-                                          })}
-                                        </>
-                                      ) : (
-                                        <td className="text-center">
-                                          {slot.time}
+                                {dayTimeSlots.map((slot, index) => (
+                                  <tr key={index} scope="row">
+                                    <th className="text-center">{slot.time}</th>
+                                    {slot.days.map((day, index) =>
+                                      scheduleSessions.some(
+                                        (session) =>
+                                          `${session.startDateTime} - ${session.endDateTime}` === slot.time && session.day === day.value
+                                      ) ? (
+                                        <td key={index} className="text-center bg-primary">
+                                          Course
                                         </td>
-                                      )}
-
-                                      {/*  {daySlots.map((day) =>
-                                        day.value == session.day ? (
-                                          <td className="bg-primary">Class</td>
-                                        ) : (
-                                            <td></td>
-                                        )
-                                      )} */}
-                                    </tr>
-                                  ))
-                                )}
+                                      ) : (
+                                        <td key={index}></td>
+                                      )
+                                    )}
+                                  </tr>
+                                ))}
                               </tbody>
                             </Table>
                           </div>
+                          <Button onClick={generatePDF}>Export to PDF</Button>
+
                         </div>
                         {/* Tab Content  */}
                       </div>
