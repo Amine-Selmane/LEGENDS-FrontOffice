@@ -35,6 +35,7 @@ function CheckoutBook() {
           </div>
         </section>
         <CallAction btnClass="bisylms-btn" />
+        
         <Footer />
         <GotoTop />
       </>

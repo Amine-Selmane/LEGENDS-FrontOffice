@@ -242,6 +242,7 @@ const ClaimForm = () => {
   
       console.log('Claim submitted successfully:', response.data);
       setSubmitted(true);
+      window.location.href = '/StudentReport';
     } catch (error) {
       console.error('Error submitting claim:', error);
       setError('An error occurred while submitting the claim.');
@@ -253,9 +254,9 @@ const ClaimForm = () => {
   return (
     <div>
         {userData?.role === "student" && <Home2Header />}
-      <Banner title="Send Claim" background="assets/images/banner3.jpg" />
+      <Banner title="Student Reclamation" background="assets/images/banner3.jpg" />
       <div style={styles.container}>
-        <h2>Submit a Claim</h2>
+        <h2>Reclamation</h2>
         {error && <div>{error}</div>}
         <form onSubmit={handleSubmit}>
           <FormGroup>
