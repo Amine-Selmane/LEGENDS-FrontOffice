@@ -24,7 +24,6 @@ import {
   FaSmile,
 } from 'react-icons/fa';
 
-import "./ShowBook.css";
 import EmojiPicker from 'emoji-picker-react';
 import { addToCartBook } from './Action/cartSliceBook';
 const { TextArea } = Input;
