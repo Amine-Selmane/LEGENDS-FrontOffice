@@ -138,13 +138,13 @@ const TeacherReport = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {teacherReports.map(report => (
-                                                    <tr key={report._id}>
-                                                        <td>{report.student.firstName} {report.student.lastName}</td>
-                                                        <td>{report.course.name}</td>
-                                                        <td>{report.mark}</td>
-                                                    </tr>
-                                                ))}
+                                            {teacherReports.map(report => (
+    <tr key={report._id}>
+        <td>{report.student ? `${report.student.firstName} ${report.student.lastName}` : 'N/A'}</td>
+        <td>{report.course ? report.course.name : 'N/A'}</td>
+        <td>{report.mark}</td>
+    </tr>
+))}
                                                  <tr>
                                         <td colSpan="3" style={{ textAlign: 'center', backgroundColor:'gainsboro' }}>
                                             <strong>Class Average :</strong> {calculateClassAverage()}

@@ -143,7 +143,7 @@ const LogoSearch = ({ currentUser }) => {
         )}
         onChange={handleUserSelect}
       />
-<ThreePIcon onClick={createChat} disabled={!selectedUser} style={{ color: selectedUser ? 'rgb(28, 89, 0)' : 'gray' ,width: '600px',height:'50px'}} />
+<ThreePIcon onClick={createChat} disabled={!selectedUser} style={{ color: selectedUser ? 'rgb(28, 89, 0)' : 'gray' ,width: '475px',height:'50px'}} />
     <Toaster position='top-center' reverseOrder={false} />
     </div>
   );
