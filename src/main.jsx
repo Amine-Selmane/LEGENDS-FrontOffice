@@ -35,7 +35,7 @@ store.dispatch(getTotals());
 store.dispatch(getTotalBook());
 
 ReactDOM.render(
-  <React.StrictMode>
+  < React.StrictMode>
     <Provider store={store}>
       <App />
       <ToastContainer />
