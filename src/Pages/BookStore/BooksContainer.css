@@ -14,6 +14,34 @@
   height: 300px;
   position: relative;
 }
+.container {
+  display: flex; /* Utilisation de Flexbox pour disposer les cartes horizontalement */
+  flex-wrap: wrap; /* Permettre le retour à la ligne des cartes si nécessaire */
+  gap: 20px; /* Espacement entre les cartes */
+}
+
+.card {
+  /* Les styles des cartes restent inchangés */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  height: 100%; /* Assurez-vous que toutes les cartes ont la même hauteur */
+  flex: 1 0 300px; /* Largeur minimale et préférée de chaque carte */
+  max-width: calc(50% - 20px); /* Ajustement pour les écrans plus petits, 2 cartes par ligne */
+}
+
+@media (max-width: 991px) {
+  .card {
+    max-width: calc(50% - 20px); /* 2 cartes par ligne sur des écrans moyens */
+  }
+}
+
+@media (max-width: 767px) {
+  .card {
+    max-width: 100%; /* 1 carte par ligne sur des écrans petits */
+  }
+}
 
 /* Book image style */
 .book-image {

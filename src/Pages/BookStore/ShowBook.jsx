@@ -11,6 +11,8 @@ import { ReactMic } from 'react-mic';
 import AudioTimer from './AudioTimer';
 import Footer from '../../Component/Footer/Footer';
 import HTMLFlipBook from 'react-pageflip';
+import "./showbook.css" ;
+
 import {
   FaFacebookF,
   FaTwitter,
